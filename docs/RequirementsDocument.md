@@ -78,11 +78,12 @@ db -- (EZGas)
 |Gas Station List |XML |Internet |
 
 # Stories and personas
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
+I would propose to use Lorenzo’s description of stories and personas. 
+• Persona 1: middle age, middle-high income, professional
+• Persona 2: young, low income, student
+• Emily travels every day for a lot of time going and returning from work. She wants to get home early to spend more time with her family, so she uses EZGas to quickly find the nearest gas station.
+ • John lives in the town near to his university and each day he has to travel in his car to attend the lessons. Since he has little income he would like to save on fuel, which is a considerable expense, so John uses EZGas to find the best fuel price from gas stations along the way to university.
 
-\<Persona is-an-instance-of actor>
-
-\<stories will be formalized later as use cases>
 
 
 # Functional and non functional requirements
