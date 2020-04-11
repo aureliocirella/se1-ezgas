@@ -29,9 +29,16 @@ Version:
 # Stakeholders
 
 
+
 | Stakeholder name  | Description | 
 | ----------------- |:-----------:|
-|                   |             | 
+|         User          |He’s interested in searching for the nearest gas station or the cheapest one.| 
+|  Authenticated user   |He has the same interests as User and can, additionally, modify Gas Station information. | 
+|	Administrator       |He’s interested in monitoring how the users use the app if they behave correctly and manage account settings.| 
+|		Developer		|He’s interested in producing a well working and appealing application.| 
+|		Map System		|It provides an explorable and well design map on which Gas Stations are shown which is obtained from (www.openstreetmap.org).| 
+|		Database		|It offers a storage solution for managing account and Gas Station details. | 
+|	Gas Stations' list	|This is a free document obtained from (www.datiopen.it) which contains a starting point for the Gas Station list that EZGas will provide to the user.| 
 
 # Context Diagram and interfaces
 
