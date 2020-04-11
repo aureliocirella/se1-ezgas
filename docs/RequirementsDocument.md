@@ -43,9 +43,24 @@ Version:
 # Context Diagram and interfaces
 
 ## Context Diagram
-\<Define here Context diagram using UML use case diagram>
+```plantuml
+@startuml
+left to right direction
+actor User as a
+actor AuthenticatedUser as auth
+actor Administrator as admin
+actor MapSystem as Map
+actor GasStationList as list
+database Database as db
 
-\<actors are a subset of stakeholders>
+
+a -- (EZGas)
+Map -- (EZGas)
+admin --|> a
+auth --|> a
+list -- (EZGas)
+db -- (EZGas)
+@enduml
 
 ## Interfaces
 \<describe here each interface in the context diagram>
