@@ -64,13 +64,18 @@ db -- (EZGas)
 ```
 
 ## Interfaces
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
+```diff
+! TODO to be checked
+```
 
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
-|       |  |  |
+|User |GUI |Screen, keyboard, touchscreen |
+|Authenticated user |GUI |Screen, keyboard, touchscreen |
+|Administrator |GUI |Screen, keyboard, touchscreen |
+|Database |API |Internet |
+|Map System |API |Internet |
+|Gas Station List |XML |Internet |
 
 # Stories and personas
 \<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
