@@ -61,6 +61,7 @@ auth --|> a
 list -- (EZGas)
 db -- (EZGas)
 @enduml
+```
 
 ## Interfaces
 \<describe here each interface in the context diagram>
