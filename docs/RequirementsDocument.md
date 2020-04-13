@@ -40,7 +40,7 @@ Version:
 
 
 | Stakeholder name  | Description | 
-| ----------------- |:-----------:|
+| ----------------- |:-----------|
 |         User          |He’s interested in searching for the nearest gas station or the cheapest one.| 
 |  Authenticated user   |He has the same interests as User and can, additionally, modify Gas Station information. | 
 |	Administrator       |He’s interested in monitoring how the users use the app if they behave correctly and manage account settings.| 
@@ -78,7 +78,7 @@ db -- (EZGas)
 ```
 
 | Actor | Logical Interface | Physical Interface  |
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:| :-----:|
 |User |GUI |Screen, keyboard, touchscreen |
 |Authenticated user |GUI |Screen, keyboard, touchscreen |
 |Administrator |GUI |Screen, keyboard, touchscreen |
@@ -100,24 +100,45 @@ db -- (EZGas)
 
 ## Functional Requirements
 
-\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
-
-\<will match to high level use cases>
-
 | ID        | Description  |
-| ------------- |:-------------:| 
-|  FR1     |  |
-|  FR2     |   |
+| ------------- |:-------------| 
+|  FR1	   | User registration |
+|  FR2     | Sign in |  
+|  FR3    | Show the gas station list.|
+|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR3.1     | Locate for type of fuel|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.2     | Locate for price|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.3     | Locate for distance|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.4     | Locate by name|
+|     FR4	   | Handle Gas Station item |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.1      | Select and Display gas station details.|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  FR4.2    | Show selected gas station on the map.|
+|  FR5	       | Handle Gas Station information |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.1     | Update the price of fuels in a gas station |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.2     | Update the state of the gas station (open, closed) |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.3     | Add a new gas station |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.4     | Remove a gas station |
+|  FR6	       | Handle user |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.1	   | Delete user |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.2	   | Manage closed Gas Station reports  |
+| FR7		   | Handle map |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR7.1	   | Center map |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR7.2	   | Resize map |
 
 ## Non Functional Requirements
 
-\<Describe constraints on functional requirements>
+| ID        | Type (efficiency, reliability, .. see iso 9126)           | Description  | Refers to |
+| ------------- |:----------:| :---------------| :-----:|
+|  NFR1     | Efficiency | All the function completed in less than 0.5 second.  | All FR |
+|  NFR2     | External | If the software is used in Europe, it has to treat personal data according to the current privacy laws (see: GDRP).  | All FR |
+|  NFR3     | Portability | The application runs on recent Android(v. 5) and iOS (v.11) devices.  | All FR |
+|  NFR4     | Portability | The application runs on all recent browsers(Safari v.10, Chrome v.68, Firefox v.60).  | All FR |
+|  NFR5     | Safety | The application should advertise the user to not use the application while driving.  | All FR |
+|  NFR6     | Localisation | Decimal numbers use . (dot) as decimal separator | All FR |
+|  NFR7		| Reliability | Shown data are referred to the last confirmed update| All FR |
+|  NFR8	    | Functionality | Currencies are changed basing on the country. | All FR |
 
-| ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
-| ------------- |:-------------:| :-----:| -----:|
-|  NFR1     |   |  | |
-|  NFR2     | |  | |
-|  NFR3     | | | |
+
+
 
 
 # Use case diagram and use cases
