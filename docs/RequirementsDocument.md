@@ -13,17 +13,26 @@ Version:
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
 	
+- [Requirements Document](#requirements-document)
+- [Contents](#contents)
+- [Stakeholders](#stakeholders)
+- [Context Diagram and interfaces](#context-diagram-and-interfaces)
+	- [Context Diagram](#context-diagram)
+	- [Interfaces](#interfaces)
 - [Stories and personas](#stories-and-personas)
 - [Functional and non functional requirements](#functional-and-non-functional-requirements)
-	+ [Functional Requirements](#functional-requirements)
-	+ [Non functional requirements](#non-functional-requirements)
+	- [Functional Requirements](#functional-requirements)
+	- [Non Functional Requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
-	+ [Use case diagram](#use-case-diagram)
-	+ [Use cases](#use-cases)
-    	+ [Relevant scenarios](#relevant-scenarios)
+	- [Use case diagram](#use-case-diagram)
+		- [Use case 1, UC1](#use-case-1-uc1)
+				- [Scenario 1.1](#scenario-11)
+				- [Scenario 1.2](#scenario-12)
+		- [Use case 2, UC2](#use-case-2-uc2)
+		- [Use case](#use-case)
 - [Glossary](#glossary)
-- [System design](#system-design)
-- [Deployment diagram](#deployment-diagram)
+- [System Design](#system-design)
+- [Deployment Diagram](#deployment-diagram)
 
 
 # Stakeholders
@@ -78,10 +87,11 @@ db -- (EZGas)
 |Gas Station List |XML |Internet |
 
 # Stories and personas
-I would propose to use Lorenzo’s description of stories and personas. 
-• Persona 1: middle age, middle-high income, professional
-• Persona 2: young, low income, student
+
+• Persona 1: middle age, middle-high income, professional<br>
 • Emily travels every day for a lot of time going and returning from work. She wants to get home early to spend more time with her family, so she uses EZGas to quickly find the nearest gas station.
+ <br><br>
+• Persona 2: young, low income, student <br>
  • John lives in the town near to his university and each day he has to travel in his car to attend the lessons. Since he has little income he would like to save on fuel, which is a considerable expense, so John uses EZGas to find the best fuel price from gas stations along the way to university.
 
 
