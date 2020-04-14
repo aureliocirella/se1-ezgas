@@ -104,14 +104,16 @@ db -- (EZGas)
 |  FR1     | Handle user account  |  
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.1	   | Account creation |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.2    | Log in|  
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.3    | Log out |  
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.4    | Account deletion |  
 |  FR2    | Show the gas station list.|
-|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR2.1     | Locate for type of fuel|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.2     | Locate for price|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.3     | Locate for distance|
+|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR2.1     | Locate by type of fuel|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.2     | Locate by price order|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.3     | Locate by distance order|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.4     | Locate by name|
 |     FR3	   | Handle Gas Station item |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.1      | Select and Display gas station details.|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  FR3.2    | Show selected gas station on the map.|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  FR3.2    | Show selected gas station on the map|
 |  FR4	       | Handle Gas Station information |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.1     | Update the price of fuels in a gas station |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.2     | Update the state of the gas station (open, closed) |
@@ -158,18 +160,15 @@ db -- (EZGas)
 
 ##### Scenario 1.1 
 
-
-
 | Scenario 1.1 |  Account creation|
 | ------------- |:-------------| 
 |  Precondition     | - |
 |  Post condition     | Account created succesfully. |
-| Step#        | Description  |
-|  1     | Application is launched|  
-|  2	 |User access Account Management page|
-|  3     | Personal information is asked|
-|  4     | Once, provided, personal information is stored in database|
-|  5     | User can perform the log in|
+| Step#        | Description  | 
+|  1	 |User access Account Management page|
+|  2     | Personal information is asked|
+|  3     | Once, provided, personal information is stored in database|
+|  4     | User can perform the log in|
 
 
 ##### Scenario 1.2
@@ -178,18 +177,32 @@ db -- (EZGas)
 | ------------- |:-------------| 
 |  Precondition     | Account exists|
 |  Post condition     | User succesfully logged in |
-| Step#        | Description  |
-|  1     | Application is launched|  
-|  2	 |User access Account Management page|
-|  3     | Username and password are provided|
-|  4     | Application checks if this data is correct|
-|  5     | User accesses the main application functionalities.|
+| Step#        | Description  | 
+|  1	 | User access Account Management page|
+|  2     | Username and password are provided|
+|  3     | Application checks if this data is correct|
+|  4     | User accesses the main application functionalities.|
 
 
-### Use case
-..
+### Use case 2, UC2 - Show the gas station list
+| Actors Involved        | User |
+| ------------- |:-------------| 
+|  Pre condition     |  Main screen is correctly loaded |  
+|  Post condition     | Gas Station list is provided to the user |
+|  Nominal Scenario     | User wants a Gas Station list, filtered by a specific parameter. |
+|  Variants     | GPS doesn't work or User wants another starting position: User inserts manually the position|
 
+##### Scenario 2.1 
 
+| Scenario 1.1 |  Locate gas stations by price |
+| ------------- |:-------------| 
+|  Precondition     | Main screen is correctly loaded |
+|  Post condition     | Gas Station list is provided to the user |
+| Step#        | Description  | 
+|  1	 | User presses Search button|
+|  2	 | User selects the "Order by price" option|
+|  3	 | User selects the radius of the search|
+|  4     | Gas Station list is provided to the User|
 
 # Glossary
 
