@@ -25,10 +25,9 @@ Version:
 	- [Non Functional Requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
 	- [Use case diagram](#use-case-diagram)
-		- [Use case 1, UC1](#use-case-1-uc1)
+		- [Use case 1, UC1 - Handle user account](#use-case-1-uc1---handle-user-account)
 				- [Scenario 1.1](#scenario-11)
 				- [Scenario 1.2](#scenario-12)
-		- [Use case 2, UC2](#use-case-2-uc2)
 		- [Use case](#use-case)
 - [Glossary](#glossary)
 - [System Design](#system-design)
@@ -102,40 +101,43 @@ db -- (EZGas)
 
 | ID        | Description  |
 | ------------- |:-------------| 
-|  FR1	   | User registration |
-|  FR2     | Sign in |  
-|  FR3    | Show the gas station list.|
-|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR3.1     | Locate for type of fuel|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.2     | Locate for price|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.3     | Locate for distance|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.4     | Locate by name|
-|     FR4	   | Handle Gas Station item |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.1      | Select and Display gas station details.|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  FR4.2    | Show selected gas station on the map.|
-|  FR5	       | Handle Gas Station information |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.1     | Update the price of fuels in a gas station |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.2     | Update the state of the gas station (open, closed) |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.3     | Add a new gas station |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.4     | Remove a gas station |
-|  FR6	       | Handle user |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.1	   | Delete user |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.2	   | Manage closed Gas Station reports  |
-| FR7		   | Handle map |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR7.1	   | Center map |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR7.2	   | Resize map |
+|  FR1     | Handle user account  |  
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.1	   | Account creation |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.2    | Log in|  
+|  FR2    | Show the gas station list.|
+|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR2.1     | Locate for type of fuel|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.2     | Locate for price|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.3     | Locate for distance|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.4     | Locate by name|
+|     FR3	   | Handle Gas Station item |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.1      | Select and Display gas station details.|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  FR3.2    | Show selected gas station on the map.|
+|  FR4	       | Handle Gas Station information |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.1     | Update the price of fuels in a gas station |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.2     | Update the state of the gas station (open, closed) |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.3     | Add a new gas station |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.4     | Remove a gas station |
+|  FR5	       | Handle user |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.1	   | Delete user |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.2	   | Manage closed Gas Station reports  |
+| FR6		   | Handle map |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR6.1	   | Center map |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.2	   | Resize map |
 
 ## Non Functional Requirements
+
 
 | ID        | Type (efficiency, reliability, .. see iso 9126)           | Description  | Refers to |
 | ------------- |:----------:| :---------------| :-----:|
 |  NFR1     | Efficiency | All the function completed in less than 0.5 second.  | All FR |
 |  NFR2     | External | If the software is used in Europe, it has to treat personal data according to the current privacy laws (see: GDRP).  | All FR |
-|  NFR3     | Portability | The application runs on recent Android(v. 5) and iOS (v.11) devices.  | All FR |
-|  NFR4     | Portability | The application runs on all recent browsers(Safari v.10, Chrome v.68, Firefox v.60).  | All FR |
+|  NFR3     | Portability | The application runs on recent Android(v.5 on) and iOS (v.11 on) devices.  | All FR |
+|  NFR4     | Portability | The application runs on the following recent browsers(Safari v.10 on, Chrome v.68 on, Firefox v.60 on).  | All FR |
 |  NFR5     | Safety | The application should advertise the user to not use the application while driving.  | All FR |
-|  NFR6     | Localisation | Decimal numbers use . (dot) as decimal separator | All FR |
-|  NFR7		| Reliability | Shown data are referred to the last confirmed update| All FR |
-|  NFR8	    | Functionality | Currencies are changed basing on the country. | All FR |
+|  NFR6     | Localisation | Decimal numbers use . (dot) as decimal separator | FR2, FR3, FR4 |
+|  NFR7		| Reliability | Shown data are referred to the last confirmed update| FR2, FR3 |
+|  NFR8	    | Functionality | Currencies are changed basing on the country. | FR2, FR3, FR4, FR6 |
+|  NFR9	    | Functionality | English and Italian languages are supported. | All FR |
 
 
 
@@ -145,41 +147,44 @@ db -- (EZGas)
 
 
 ## Use case diagram
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
 
-
-\<next describe here each use case in the UCD>
-### Use case 1, UC1
-| Actors Involved        |  |
-| ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the UC can start> |  
-|  Post condition     | \<Boolean expression, must evaluate to true after UC is finished> |
-|  Nominal Scenario     | \<Textual description of actions executed by the UC> |
-|  Variants     | \<other executions, ex in case of errors> |
+### Use case 1, UC1 - Handle user account
+| Actors Involved        | User |
+| ------------- |:-------------| 
+|  Precondition     |  - |  
+|  Post condition     | Account created or login performed. |
+|  Nominal Scenario     | User wants to create a new account or log in in his account in order to interact in a better way with the application (contribute to add or remove Gas Station, update Gas Station prices and current state). |
+|  Variants     | User could desire to use the application without an account|
 
 ##### Scenario 1.1 
 
-\<describe here scenarios instances of UC1>
 
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
 
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-| Scenario 1.1 | |
-| ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the scenario can start> |
-|  Post condition     | \<Boolean expression, must evaluate to true after scenario is finished> |
+| Scenario 1.1 |  Account creation|
+| ------------- |:-------------| 
+|  Precondition     | - |
+|  Post condition     | Account created succesfully. |
 | Step#        | Description  |
-|  1     |  |  
-|  2     |  |
-|  ...     |  |
+|  1     | Application is launched|  
+|  2	 |User access Account Management page|
+|  3     | Personal information is asked|
+|  4     | Once, provided, personal information is stored in database|
+|  5     | User can perform the log in|
+
 
 ##### Scenario 1.2
 
-### Use case 2, UC2
-..
+| Scenario 1.2|  Log in|
+| ------------- |:-------------| 
+|  Precondition     | Account exists|
+|  Post condition     | User succesfully logged in |
+| Step#        | Description  |
+|  1     | Application is launched|  
+|  2	 |User access Account Management page|
+|  3     | Username and password are provided|
+|  4     | Application checks if this data is correct|
+|  5     | User accesses the main application functionalities.|
+
 
 ### Use case
 ..
