@@ -150,7 +150,7 @@ db -- (EZGas)
 
 ## Use case diagram
 
-### Use case 1, UC1 - Handle user account
+### Use case 1, UC1 - FR1 Handle user account
 | Actors Involved        | User |
 | ------------- |:-------------| 
 |  Precondition     |  - |  
@@ -184,12 +184,12 @@ db -- (EZGas)
 |  4     | User accesses the main application functionalities.|
 
 
-### Use case 2, UC2 - Show the gas station list
+### Use case 2, UC2 - FR2 Show the gas station list
 | Actors Involved        | User |
 | ------------- |:-------------| 
 |  Pre condition     |  Main screen is correctly loaded |  
 |  Post condition     | Gas Station list is provided to the user |
-|  Nominal Scenario     | User wants a Gas Station list, filtered by a specific parameter. |
+|  Nominal Scenario     | User wants a Gas Station list, ordered by a specific parameter. |
 |  Variants     | GPS doesn't work or User wants another starting position: User inserts manually the position|
 
 ##### Scenario 2.1 
@@ -197,12 +197,43 @@ db -- (EZGas)
 | Scenario 1.1 |  Locate gas stations by price |
 | ------------- |:-------------| 
 |  Precondition     | Main screen is correctly loaded |
-|  Post condition     | Gas Station list is provided to the user |
+|  Post condition     | Gas Station list is provided to the User |
 | Step#        | Description  | 
 |  1	 | User presses Search button|
 |  2	 | User selects the "Order by price" option|
 |  3	 | User selects the radius of the search|
 |  4     | Gas Station list is provided to the User|
+
+##### Scenario 2.2
+
+| Scenario 2.2 |  Locate gas stations by fuel type |
+| ------------- |:-------------| 
+|  Precondition     | Main screen is correctly loaded |
+|  Post condition     | Gas Station list is provided to the User |
+| Step#        | Description  | 
+|  1	 | User presses Search button|
+|  2	 | User selects the "Filter by fuel type" option|
+|  3	 | User selects the type of fuel|
+|  4	 | User selects the radius of the search|
+|  5     | Gas Station list is provided to the User|
+
+
+### Use case 3, UC3 - FR3 Handle gas station item
+| Actors Involved        | User |
+| ------------- |:-------------| 
+|  Pre condition     |  Gas station's state is "Open" |  
+|  Post condition     | Gas Station's position and details are shown |
+|  Nominal Scenario     | User wants to know Gas Station's position and details. |
+|  Variants     | |
+
+##### Scenario 3.1 
+
+| Scenario 3.1 |   |
+| ------------- |:-------------| 
+|  Pre condition     |  |
+|  Post condition     |  |
+| Step#        | Description  | 
+|  1	 | |
 
 # Glossary
 
