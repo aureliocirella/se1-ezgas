@@ -100,31 +100,29 @@ db -- (EZGas)
 ## Functional Requirements
 
 | ID        | Description  |
-| ------------- |:-------------| 
-|  FR1     | Handle user account  |  
+| -------------|:-------------| 
+|  FR1         | Handle User account  |  
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.1	   | Account creation |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.2    | Log in|  
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.3    | Log out |  
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.4    | Account deletion |  
-|  FR2    | Show the gas station list.|
-|   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR2.1     | Locate by type of fuel|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.2     | Locate by price order|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.3     | Locate by distance order|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.4     | Locate by name|
-|     FR3	   | Handle Gas Station item |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR3.1      | Select and Display gas station details.|
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  FR3.2    | Show selected gas station on the map|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.2       | Log in|  
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.3       | Log out |  
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.4       | Account deletion request |  
+|  FR2         | Show the Gas Station list.|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.1      | Locate by type of fuel|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.2      | Locate by price order|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.3      | Locate by distance order|
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.4      | Locate by name|
+|  FR3	       | Show Gas Station details and position |
 |  FR4	       | Handle Gas Station information |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.1     | Update the price of fuels in a gas station |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.2     | Update the state of the gas station (open, closed) |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.3     | Add a new gas station |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.4     | Remove a gas station |
-|  FR5	       | Handle user |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.1	   | Delete user |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.1      | Update the price of fuels in a Gas Station |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.2      | Update the state of the Gas Station (open, closed) |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.3      | Add a new Gas Station |
+|  FR5	       | Manage EZGas |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.1	   | Manage Account Deletion  |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.2	   | Manage closed Gas Station reports  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.3      | Remove a Gas Station |
 | FR6		   | Handle map |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR6.1	   | Center map |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.2	   | Resize map |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.1	   | Center map |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.2	   | Resize map |
 
 ## Non Functional Requirements
 
@@ -218,22 +216,113 @@ db -- (EZGas)
 |  5     | Gas Station list is provided to the User|
 
 
-### Use case 3, UC3 - FR3 Handle gas station item
+### Use case 3, UC3 - FR3 Handle gas station item and center the map on the gas station position
 | Actors Involved        | User |
 | ------------- |:-------------| 
-|  Pre condition     |  Gas station's state is "Open" |  
-|  Post condition     | Gas Station's position and details are shown |
-|  Nominal Scenario     | User wants to know Gas Station's position and details. |
-|  Variants     | |
+|  Pre condition     |  Gas station state is "Open" |  
+|  Post condition     | Gas Station position and details are shown |
+|  Nominal Scenario     | User wants to know Gas Station position and details. |
+|  Variants     | Gas station state is "Closed", only name, address and state are shown |
 
 ##### Scenario 3.1 
 
-| Scenario 3.1 |   |
+| Scenario 3.1 | Select and display gas station details |
 | ------------- |:-------------| 
-|  Pre condition     |  |
-|  Post condition     |  |
+|  Pre condition     | Map is loaded or list of Gas Stations is shown |
+|  Post condition     | Gas Station details are shown on the map |
 | Step#        | Description  | 
-|  1	 | |
+|  1	 | User selects one of the Gas Stations on the map or in the results list |
+|  2	 | Map is centered on selected Gas Station |
+|  3	 | A speech bubble in corrispondence of the Gas Station displays details |
+
+
+### Use case 4, UC4 - FR4 Handle Gas Station information
+| Actors Involved        | User |
+| ------------- |:-------------| 
+|  Pre condition     | Gas station state is "Open" |  
+|  Post condition     | Gas station details are updated |
+|  Nominal Scenario     | User wants to update Gas Station details. |
+|  Variants     | Users leaves empty fields so no updates are made |
+|| User updates are stored, but not yet published |
+|| Update fails because of poor connection |
+
+##### Scenario 4.1 
+
+| Scenario 4.1 | User submits new fuel prices |
+| ------------- |:-------------| 
+|  Pre condition     | Gas Station details are shown (look at UC3 for details) |
+|  Post condition     | User update is received by the EZGas server |
+| Step#        | Description  | 
+|  1	 | User selects Modify button on the speech bubble that appears |
+|  2	 | User selects one of the prices of current Gas Station |
+|  3	 | User inserts new values in the selected field |
+|  4	 | User presses the submit button |
+|  5	 | The new value is sent to the server |
+
+##### Scenario 4.2 
+
+| Scenario 4.2 | User submits change of the state of a Gas Station |
+| ------------- |:-------------| 
+|  Pre condition     | Gas Station details are shown (look at UC3 for details) |
+|  Post condition     | Closed Gas Station notification is received by the EZGas server |
+| Step#        | Description  | 
+|  1	 | User selects Modify button on the speech bubble that appears |
+|  2	 | User selects the Signal closed Gas Station button on the bubble speech |
+|  3	 | User fills the optional description popup |
+|  4	 | The new state is sent to the server |
+
+##### Scenario 4.3 
+
+| Scenario 4.3 | User inserts new Gas Station |
+| ------------- |:-------------| 
+|  Pre condition     | Gas Station doesn't exist in the database |
+|  Post condition     | Gas Station is inserted in the database |
+| Step#        | Description  | 
+|  1	 | User selects the add Gas Station button |
+|  2	 | User inserts Gas Station position |
+|  3	 | User fills the optional phone number field |
+|  4	 | User selects which kind of fuel type are sold |
+|  5	 | For each selected fuel type the User provides a price |
+
+
+
+### Use case 5, UC5 - FR5 Manage EZGas
+| Actors Involved        | Admin |
+| ------------- |:-------------| 
+|  Pre condition     |  User account exists |  
+|  Post condition     | User data are updated |
+|  Nominal Scenario     | Admin wants to delete inactive accounts or to check closed Gas Stations reports. |
+|  Variants     |  |
+
+##### Scenario 5.1 
+
+| Scenario 5.1 | Admin deletes inactive Users' accounts |
+| ------------- |:-------------| 
+|  Pre condition     | User details are shown |
+|  Post condition     | User account is deactivated |
+| Step#        | Description  | 
+|  1	 | Admin selects an inactive User's profile |
+|  2	 | Admin deletes all User's related info from database |
+
+
+### Use case 6, UC6 - FR6 Handle map
+| Actors Involved        | User, Map |
+| ------------- |:-------------| 
+|  Pre condition     | Map is loaded on User's device |  
+|  Post condition     | Map is scaled or centered on selected Gas Station |
+|  Nominal Scenario     | User wants to scale the map for better legibility or to center it on selected Gas Station. |
+|  Variants     | Loading fails due to connection problems |
+
+##### Scenario 6.1 
+
+| Scenario 6.1 | User center the Map on selected Gas Station |
+| ------------- |:-------------| 
+|  Pre condition     | List of Gas Stations is shown |
+|  Post condition     | Map is centered on selected Gas Station |
+| Step#        | Description  | 
+|  1	 | User clicks on one of the results of a search |
+|  2	 | Map is moved so that selected Gas Station finds itself in the middle of the viewport |
+
 
 # Glossary
 
