@@ -25,10 +25,22 @@ Version:
 	- [Non Functional Requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
 	- [Use case diagram](#use-case-diagram)
-		- [Use case 1, UC1 - Handle user account](#use-case-1-uc1---handle-user-account)
+		- [Use case 1, UC1 - FR1 Handle user account](#use-case-1-uc1---fr1-handle-user-account)
 				- [Scenario 1.1](#scenario-11)
 				- [Scenario 1.2](#scenario-12)
-		- [Use case](#use-case)
+		- [Use case 2, UC2 - FR2 Show the gas station list](#use-case-2-uc2---fr2-show-the-gas-station-list)
+				- [Scenario 2.1](#scenario-21)
+				- [Scenario 2.2](#scenario-22)
+		- [Use case 3, UC3 - FR3 Handle gas station item and center the map on the gas station position](#use-case-3-uc3---fr3-handle-gas-station-item-and-center-the-map-on-the-gas-station-position)
+				- [Scenario 3.1](#scenario-31)
+		- [Use case 4, UC4 - FR4 Handle Gas Station information](#use-case-4-uc4---fr4-handle-gas-station-information)
+				- [Scenario 4.1](#scenario-41)
+				- [Scenario 4.2](#scenario-42)
+				- [Scenario 4.3](#scenario-43)
+		- [Use case 5, UC5 - FR5 Manage EZGas](#use-case-5-uc5---fr5-manage-ezgas)
+				- [Scenario 5.1](#scenario-51)
+		- [Use case 6, UC6 - FR6 Handle map](#use-case-6-uc6---fr6-handle-map)
+				- [Scenario 6.1](#scenario-61)
 - [Glossary](#glossary)
 - [System Design](#system-design)
 - [Deployment Diagram](#deployment-diagram)
@@ -43,7 +55,7 @@ Version:
 |         User          |He’s interested in searching for the nearest gas station or the cheapest one.| 
 |  Authenticated user   |He has the same interests as User and can, additionally, modify Gas Station information. | 
 |	Administrator       |He’s interested in monitoring how the users use the app if they behave correctly and manage account settings.| 
-|		Developer		|He’s interested in producing a well working and appealing application.| 
+|		Developer		|He’s interested in producing a well working and appealing EZGas application.| 
 |		Map System		|It provides an explorable and well design map on which Gas Stations are shown which is obtained from (www.openstreetmap.org).| 
 |		Database		|It offers a storage solution for managing account and Gas Station details. | 
 |	Gas Stations' list	|This is a free document obtained from (www.datiopen.it) which contains a starting point for the Gas Station list that EZGas will provide to the user.| 
@@ -106,7 +118,7 @@ db -- (EZGas)
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.2       | Log in|  
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.3       | Log out |  
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.4       | Account deletion request |  
-|  FR2         | Show the Gas Station list.|
+|  FR2         | Show the Gas Station list|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.1      | Locate by type of fuel|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.2      | Locate by price order|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.3      | Locate by distance order|
@@ -131,9 +143,9 @@ db -- (EZGas)
 | ------------- |:----------:| :---------------| :-----:|
 |  NFR1     | Efficiency | All the function completed in less than 0.5 second.  | All FR |
 |  NFR2     | External | If the software is used in Europe, it has to treat personal data according to the current privacy laws (see: GDRP).  | All FR |
-|  NFR3     | Portability | The application runs on recent Android(v.5 on) and iOS (v.11 on) devices.  | All FR |
-|  NFR4     | Portability | The application runs on the following recent browsers(Safari v.10 on, Chrome v.68 on, Firefox v.60 on).  | All FR |
-|  NFR5     | Safety | The application should advertise the user to not use the application while driving.  | All FR |
+|  NFR3     | Portability | EZGas runs on recent Android(v.5 on) and iOS (v.11 on) devices.  | All FR |
+|  NFR4     | Portability | EZGas runs on the following recent browsers(Safari v.10 on, Chrome v.68 on, Firefox v.60 on).  | All FR |
+|  NFR5     | Safety | EZGas should advertise the user to not use the application while driving.  | All FR |
 |  NFR6     | Localisation | Decimal numbers use . (dot) as decimal separator | FR2, FR3, FR4 |
 |  NFR7		| Reliability | Shown data are referred to the last confirmed update| FR2, FR3 |
 |  NFR8	    | Functionality | Currencies are changed basing on the country. | FR2, FR3, FR4, FR6 |
@@ -153,8 +165,8 @@ db -- (EZGas)
 | ------------- |:-------------| 
 |  Precondition     |  - |  
 |  Post condition     | Account created or login performed. |
-|  Nominal Scenario     | User wants to create a new account or log in in his account in order to interact in a better way with the application (contribute to add or remove Gas Station, update Gas Station prices and current state). |
-|  Variants     | User could desire to use the application without an account|
+|  Nominal Scenario     | User wants to create a new account or log in in his account in order to interact in a better way with EZGas (contribute to add or remove Gas Station, update Gas Station prices and current state). |
+|  Variants     | User could desire to use EZGas without an account|
 
 ##### Scenario 1.1 
 
@@ -178,8 +190,8 @@ db -- (EZGas)
 | Step#        | Description  | 
 |  1	 | User access Account Management page|
 |  2     | Username and password are provided|
-|  3     | Application checks if this data is correct|
-|  4     | User accesses the main application functionalities.|
+|  3     | EZGas checks if this data is correct|
+|  4     | User accesses EZGas functionalities.|
 
 
 ### Use case 2, UC2 - FR2 Show the gas station list
@@ -251,7 +263,7 @@ db -- (EZGas)
 | Scenario 4.1 | User submits new fuel prices |
 | ------------- |:-------------| 
 |  Pre condition     | Gas Station details are shown (look at UC3 for details) |
-|  Post condition     | User update is received by the EZGas server |
+|  Post condition     | User update is received by EZGas server |
 | Step#        | Description  | 
 |  1	 | User selects Modify button on the speech bubble that appears |
 |  2	 | User selects one of the prices of current Gas Station |
@@ -264,7 +276,7 @@ db -- (EZGas)
 | Scenario 4.2 | User submits change of the state of a Gas Station |
 | ------------- |:-------------| 
 |  Pre condition     | Gas Station details are shown (look at UC3 for details) |
-|  Post condition     | Closed Gas Station notification is received by the EZGas server |
+|  Post condition     | Closed Gas Station notification is received by  EZGas server |
 | Step#        | Description  | 
 |  1	 | User selects Modify button on the speech bubble that appears |
 |  2	 | User selects the Signal closed Gas Station button on the bubble speech |
