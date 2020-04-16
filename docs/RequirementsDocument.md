@@ -25,10 +25,10 @@ Version:
 	- [Non Functional Requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
 	- [Use case diagram](#use-case-diagram)
-		- [Use case 1, UC1 - FR1 Handle user account](#use-case-1-uc1---fr1-handle-user-account)
+		- [Use case 1, UC1 - FR1 Handle User Account](#use-case-1-uc1---fr1-handle-user-account)
 				- [Scenario 1.1](#scenario-11)
 				- [Scenario 1.2](#scenario-12)
-		- [Use case 2, UC2 - FR2 Show the gas station list](#use-case-2-uc2---fr2-show-the-gas-station-list)
+		- [Use case 2, UC2 - FR2 Show the Gas Station List](#use-case-2-uc2---fr2-show-the-gas-station-list)
 				- [Scenario 2.1](#scenario-21)
 				- [Scenario 2.2](#scenario-22)
 		- [Use case 3, UC3 - FR3 Handle gas station item and center the map on the gas station position](#use-case-3-uc3---fr3-handle-gas-station-item-and-center-the-map-on-the-gas-station-position)
@@ -58,7 +58,7 @@ Version:
 |		Developer		|He’s interested in producing a well working and appealing EZGas application.| 
 |		Map System		|It provides an explorable and well design map on which Gas Stations are shown which is obtained from (www.openstreetmap.org).| 
 |		Database		|It offers a storage solution for managing account and Gas Station details. | 
-|	Gas Stations list	|This is a free document obtained from (www.datiopen.it) which contains a starting point for the Gas Station list that EZGas will provide to the user.| 
+| Gas Stations Source |This is a free file obtained from (www.datiopen.it) which contains a starting point for the Gas Station List that EZGas will provide to the user for the first usage.|
 
 # Context Diagram and interfaces
 
@@ -118,7 +118,7 @@ db -- (EZGas)
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.2       | Log in|  
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.3       | Log out |  
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.4       | Account deletion request |  
-|  FR2         | Show the Gas Station list|
+|  FR2         | Show the Gas Station List|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.1      | Locate by type of fuel|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.2      | Locate by price order|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.3      | Locate by distance order|
@@ -160,8 +160,8 @@ db -- (EZGas)
 
 ## Use case diagram
 
-### Use case 1, UC1 - FR1 Handle user account
-| Actors Involved        | User |
+### Use case 1, UC1 - FR1 Handle User Account
+| Actors Involved        | User, Database |
 | ------------- |:-------------| 
 |  Precondition     |  - |  
 |  Post condition     | Account created or login performed. |
@@ -177,7 +177,7 @@ db -- (EZGas)
 | Step#        | Description  | 
 |  1	 |User access Account Management page|
 |  2     | Personal information is asked|
-|  3     | Once, provided, personal information is stored in database|
+|  3     | Once, provided, personal information is stored in Database|
 |  4     | User can perform the log in|
 
 
@@ -194,12 +194,12 @@ db -- (EZGas)
 |  4     | User accesses full EZGas functionalities|
 
 
-### Use case 2, UC2 - FR2 Show the gas station list
-| Actors Involved        | User |
+### Use case 2, UC2 - FR2 Show the Gas Station List
+| Actors Involved        | User, Gas Station List, Database |
 | ------------- |:-------------| 
 |  Pre condition     |  Main screen is correctly loaded |  
-|  Post condition     | Gas Station list is provided to the user |
-|  Nominal Scenario     | User wants to see Gas Station list ordered by a specific parameter. |
+|  Post condition     | Gas Station List is provided to the user |
+|  Nominal Scenario     | User wants to see Gas Station List ordered by a specific parameter. |
 |  Variants     | GPS doesn't work or User selects another initial position: User inserts manually the initial position|
 
 ##### Scenario 2.1 
@@ -207,29 +207,29 @@ db -- (EZGas)
 | Scenario 1.1 |  Locate gas stations by price |
 | ------------- |:-------------| 
 |  Precondition     | Main screen is correctly loaded |
-|  Post condition     | Gas Station list is provided to the User |
+|  Post condition     | Gas Station List is provided to the User |
 | Step#        | Description  | 
 |  1	 | User presses Search button|
 |  2	 | User selects the "Order by price" option|
 |  3	 | User selects the radius of the search|
-|  4     | Gas Station list is provided to the User|
+|  4     | Gas Station List is provided to the User|
 
 ##### Scenario 2.2
 
 | Scenario 2.2 |  Locate gas stations by fuel type |
 | ------------- |:-------------| 
 |  Precondition     | Main screen is correctly loaded |
-|  Post condition     | Sorted Gas Station list is provided to the User |
+|  Post condition     | Sorted Gas Station List is provided to the User |
 | Step#        | Description  | 
 |  1	 | User presses Search button|
 |  2	 | User selects the "Filter by fuel type" option|
 |  3	 | User selects the type of fuel|
 |  4	 | User selects the radius of the search|
-|  5     | Sorted Gas Station list is provided to the User|
+|  5     | Sorted Gas Station List is provided to the User|
 
 
 ### Use case 3, UC3 - FR3 Handle gas station item and center the map on the gas station position
-| Actors Involved        | User |
+| Actors Involved        | User, Database, Map System |
 | ------------- |:-------------| 
 |  Pre condition     |  Gas station state is "Open" |  
 |  Post condition     | Gas Station position and details are shown |
@@ -249,7 +249,7 @@ db -- (EZGas)
 
 
 ### Use case 4, UC4 - FR4 Handle Gas Station item
-| Actors Involved        | User |
+| Actors Involved        | User, Gas Station List, Database |
 | ------------- |:-------------| 
 |  Pre condition     | User is authenticated  |  
 |  Post condition     | Gas station details are updated or Gas Station item is added |
@@ -299,7 +299,7 @@ db -- (EZGas)
 
 
 ### Use case 5, UC5 - FR5 Manage EZGas
-| Actors Involved        | Administrator |
+| Actors Involved        | Administrator, Database |
 | ------------- |:-------------| 
 |  Pre condition     |  A Request has to be managed |  
 |  Post condition     | Administrator has managed the request |
@@ -319,7 +319,7 @@ db -- (EZGas)
 
 
 ### Use case 6, UC6 - FR6 Handle map
-| Actors Involved        | User, Map |
+| Actors Involved        | User, Map System |
 | ------------- |:-------------| 
 |  Pre condition     | Map is loaded on User's device |  
 |  Post condition     | Map is scaled or centered on selected Gas Station |
@@ -349,7 +349,7 @@ rectangle system {
 	(FR1.2 Log in) as FR1.2
 	(FR1.3 Log out) as FR1.3
 	(FR1.4 Account deletion request) as FR1.4
-	(FR2 Show the Gas Station list) as FR2
+	(FR2 Show the Gas Station List) as FR2
 	(FR2.1 Locate by type of fuel) as FR2.1
 	(FR2.2 Locate by price order) as FR2.2
 	(FR2.3 Locate by distance order) as FR2.3
