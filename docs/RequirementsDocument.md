@@ -41,6 +41,7 @@ Version:
 				- [Scenario 5.1](#scenario-51)
 		- [Use case 6, UC6 - FR6 Handle Map](#use-case-6-uc6---fr6-handle-map)
 				- [Scenario 6.1](#scenario-61)
+		- [Use case 7, UC7 - FR7 Initialize Database](#use-case-7-uc7---fr7-initialize-database)
 - [Glossary](#glossary)
 - [System Design](#system-design)
 - [Deployment Diagram](#deployment-diagram)
@@ -131,10 +132,11 @@ db -- (EZGas)
 |  FR5	       | Manage EZGas |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.1	   | Manage Account deletion Requests |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.2	   | Manage open/closed Report for a given Gas Station Item  |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.3      | Remove a Gas Station |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.3      | Remove a Gas Station definitely |
 | FR6		   | Handle map |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.1	   | Center map |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.2	   | Resize map |
+| FR7		   | Initialize Database |
 
 ## Non Functional Requirements
 
@@ -157,6 +159,91 @@ db -- (EZGas)
 
 # Use case diagram and use cases
 
+```plantuml
+@startuml
+left to right direction
+actor Administrator as a
+actor User as u
+actor "Authicated User" as auth
+actor "Map System" as m
+database "Database" as db
+
+rectangle EZGas {
+	(FR1 Handle User Account) as FR1
+	(FR1.1 Account creation) as FR1.1
+	(FR1.2 Log in) as FR1.2
+	(FR1.3 Log out) as FR1.3
+	(FR1.4 Request Account deletion) as FR1.4
+	(FR2 Show the Gas Station List) as FR2
+	(FR2.1 Locate by type of fuel) as FR2.1
+	(FR2.2 Locate by price order) as FR2.2
+	(FR2.3 Locate by distance order) as FR2.3
+	(FR2.4 Locate by name) as FR2.4
+	(FR3 Display Gas Station details and center the Map on the Gas Station position) as FR3
+	(FR4 Handle Gas Station Item) as FR4
+	(FR4.1 Update the price of fuels in a Gas Station) as FR4.1
+	(FR4.2 Send open/closed Report for a given Gas Station Item) as FR4.2
+	(FR4.3 Add a new Gas Station Item) as FR4.3
+	(FR5 Manage EZGas) as FR5
+	(FR5.1 Manage Account deletion Request) as FR5.1
+	(FR5.2 Manage open/closed Report for a given Gas Station Item) as FR5.2
+	(FR5.3 Remove a Gas Station definitely) as FR5.3
+	(FR6 Handle Map) as FR6
+	(FR6.1 Center Map) as FR6.1
+	(FR6.2 Resize Map) as FR6.2
+	(FR7 Initialize Database) as FR7
+	
+}
+
+FR1 .-> FR1.1 : <<include>>
+FR1 .-> FR1.2 : <<include>>
+FR1 .-> FR1.3 : <<include>>
+FR1 .-> FR1.4 : <<include>>
+
+FR2 .-> FR2.1 : <<include>>
+FR2 .-> FR2.2 : <<include>>
+FR2 .-> FR2.3 : <<include>>
+FR2 .-> FR2.4 : <<include>>
+
+FR4 .-> FR4.1 : <<include>>
+FR4 .-> FR4.2 : <<include>>
+FR4 .-> FR4.3 : <<include>>
+
+FR5 .-> FR5.1 : <<include>>
+FR5 .-> FR5.2 : <<include>>
+FR5 .-> FR5.3 : <<include>>
+
+FR6 .-> FR6.1 : <<include>>
+FR6 <.- FR6.2 : <<include>>
+
+a -|>u
+u <|- auth 
+db -- FR1
+u -- FR1
+
+u -- FR2
+db -- FR2
+
+u -- FR3
+db -- FR3
+m -- FR3
+
+u -- FR4
+db -- FR4
+a -- FR4
+
+u -- FR5
+db -- FR5
+a -- FR5
+
+u -- FR6
+m -- FR6
+
+u -- FR7
+a -- FR7
+m -- FR7
+@enduml
+```
 
 ## Use case diagram
 
@@ -238,7 +325,7 @@ db -- (EZGas)
 
 ##### Scenario 3.1 
 
-| Scenario 3.1 | Select and display gas station details |
+| Scenario 3.1 | Select and display Gas Station details |
 | ------------- |:-------------| 
 |  Pre condition     | Map is loaded or Gas Stations List is shown |
 |  Post condition     | Gas Station details are shown on the Map |
@@ -249,7 +336,7 @@ db -- (EZGas)
 
 
 ### Use case 4, UC4 - FR4 Handle Gas Station Item
-| Actors Involved        | User, Database, Administrator |
+| Actors Involved        | Authenticated User, Database, Administrator |
 | ------------- |:-------------| 
 |  Pre condition     | User is authenticated  |  
 |  Post condition     | Gas Station details are submitted or Gas Station Item is added |
@@ -281,7 +368,7 @@ db -- (EZGas)
 |  1	 | User selects Modify button on the speech bubble that appears |
 |  2	 | User selects the Send closed Report button on the bubble speech |
 |  3	 | User fills the optional description popup |
-|  4	 | The closed Report is sent to the Administrator|
+|  4	 | The closed Report is sent to the server in order to be validated by the Administrator|
 
 ##### Scenario 4.3 
 
@@ -336,70 +423,16 @@ db -- (EZGas)
 |  1	 | User selects a Gas Station Item from the Gas Station List |
 |  2	 | Map is moved so that selected Gas Station Item finds itself in the middle of the viewport |
 
-```plantuml
-@startuml
-left to right direction
-actor Administrator as a
-actor User as u
-actor Map as m
+### Use case 7, UC7 - FR7 Initialize Database
+| Actors Involved        | Admin, Database, Gas Station Source |
+| ------------- |:-------------| 
+|  Pre condition     |No Gas Station Item is stored in the Database   |  
+|  Post condition     |Database stores Gas Station Items  |
+|  Nominal Scenario     |Before EZGas is launched on the market, the Database is initialized using the Gas Station source file. From this point on, Users will interact with Database only.  |
+|  Variants     |Database Initialization is performed as soon as EZGas development is finished for testing reasons |
 
-rectangle system {
-	(FR1 Handle User account) as FR1
-	(FR1.1 Account creation) as FR1.1
-	(FR1.2 Log in) as FR1.2
-	(FR1.3 Log out) as FR1.3
-	(FR1.4 Account deletion request) as FR1.4
-	(FR2 Show the Gas Station List) as FR2
-	(FR2.1 Locate by type of fuel) as FR2.1
-	(FR2.2 Locate by price order) as FR2.2
-	(FR2.3 Locate by distance order) as FR2.3
-	(FR2.4 Locate by name) as FR2.4
-	(FR3 Show Gas Station details and position) as FR3
-	(FR4 Handle Gas Station information) as FR4
-	(FR4.1 Update the price of fuels in a Gas Station) as FR4.1
-	(FR4.2 Update the state of the Gas Station [open, closed]) as FR4.2
-	(FR4.3 Add a new Gas Station) as FR4.3
-	(FR5 Manage EZGas) as FR5
-	(FR5.1 Manage Account Deletion) as FR5.1
-	(FR5.2 Manage closed Gas Station reports) as FR5.2
-	(FR5.3 Remove a Gas Station) as FR5.3
-	(FR6 Handle map) as FR6
-	(FR6.1 Center map) as FR6.1
-	(FR6.2 Resize map) as FR6.2
-}
 
-FR1 <.- FR1.1 : <<extend>>
-FR1 <.- FR1.2 : <<extend>>
-FR1 <.- FR1.3 : <<extend>>
-FR1 <.- FR1.4 : <<extend>>
 
-FR2 .-> FR2.1 : <<include>>
-FR2 .-> FR2.2 : <<include>>
-FR2 .-> FR2.3 : <<include>>
-FR2 .-> FR2.4 : <<include>>
-
-FR4 .-> FR4.1 : <<include>>
-FR4 .-> FR4.2 : <<include>>
-FR4 .-> FR4.3 : <<include>>
-
-FR5 .-> FR5.1 : <<include>>
-FR5 .-> FR5.2 : <<include>>
-FR5 .-> FR5.3 : <<include>>
-
-FR6 .-> FR6.1 : <<include>>
-FR6 <.- FR6.2 : <<extend>>
-	
-u -- FR1
-u -- FR2
-u -- FR3
-m -- FR3
-u -- FR4
-a -- FR5
-u -- FR6
-m -- FR6
-@enduml
-```
-    
 
 # Glossary
 
