@@ -31,15 +31,15 @@ Version:
 		- [Use case 2, UC2 - FR2 Show the Gas Station List](#use-case-2-uc2---fr2-show-the-gas-station-list)
 				- [Scenario 2.1](#scenario-21)
 				- [Scenario 2.2](#scenario-22)
-		- [Use case 3, UC3 - FR3 Handle gas station item and center the map on the gas station position](#use-case-3-uc3---fr3-handle-gas-station-item-and-center-the-map-on-the-gas-station-position)
+		- [Use case 3, UC3 - FR3 Display Gas Station details and center the Map on the Gas Station position](#use-case-3-uc3---fr3-display-gas-station-details-and-center-the-map-on-the-gas-station-position)
 				- [Scenario 3.1](#scenario-31)
-		- [Use case 4, UC4 - FR4 Handle Gas Station item](#use-case-4-uc4---fr4-handle-gas-station-item)
+		- [Use case 4, UC4 - FR4 Handle Gas Station Item](#use-case-4-uc4---fr4-handle-gas-station-item)
 				- [Scenario 4.1](#scenario-41)
 				- [Scenario 4.2](#scenario-42)
 				- [Scenario 4.3](#scenario-43)
 		- [Use case 5, UC5 - FR5 Manage EZGas](#use-case-5-uc5---fr5-manage-ezgas)
 				- [Scenario 5.1](#scenario-51)
-		- [Use case 6, UC6 - FR6 Handle map](#use-case-6-uc6---fr6-handle-map)
+		- [Use case 6, UC6 - FR6 Handle Map](#use-case-6-uc6---fr6-handle-map)
 				- [Scenario 6.1](#scenario-61)
 - [Glossary](#glossary)
 - [System Design](#system-design)
@@ -53,12 +53,12 @@ Version:
 | Stakeholder name  | Description | 
 | ----------------- |:-----------|
 |         User          |He’s interested in searching for the nearest gas station or the cheapest one.| 
-|  Authenticated user   |He has the same interests as User and can, additionally, modify Gas Station information. | 
+|  Authenticated User   |He has the same interests as User and can, additionally, modify Gas Station information. | 
 |	Administrator       |He’s interested in monitoring how the users use the app if they behave correctly and manage account settings.| 
 |		Developer		|He’s interested in producing a well working and appealing EZGas application.| 
 |		Map System		|It provides an explorable and well design map on which Gas Stations are shown which is obtained from (www.openstreetmap.org).| 
 |		Database		|It offers a storage solution for managing account and Gas Station details. | 
-| Gas Stations Source |This is a free file obtained from (www.datiopen.it) which contains a starting point for the Gas Station List that EZGas will provide to the user for the first usage.|
+| Gas Stations Source |This is a free file obtained from (www.datiopen.it) which contains a starting point to initialize the Database at his first usage.|
 
 # Context Diagram and interfaces
 
@@ -91,7 +91,7 @@ db -- (EZGas)
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| :-----:|
 |User |GUI |Screen, keyboard, touchscreen |
-|Authenticated user |GUI |Screen, keyboard, touchscreen |
+|Authenticated User |GUI |Screen, keyboard, touchscreen |
 |Administrator |GUI |Screen, keyboard, touchscreen |
 |Database |API |Internet |
 |Map System |API |Internet |
@@ -113,24 +113,24 @@ db -- (EZGas)
 
 | ID        | Description  |
 | -------------|:-------------| 
-|  FR1         | Handle User account  |  
+|  FR1         | Handle User Account  |  
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.1	   | Account creation |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.2       | Log in|  
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.3       | Log out |  
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.4       | Account deletion request |  
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR1.4       | Request Account deletion  |  
 |  FR2         | Show the Gas Station List|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.1      | Locate by type of fuel|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.2      | Locate by price order|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.3      | Locate by distance order|
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR2.4      | Locate by name|
-|  FR3	       | Show Gas Station details and position |
-|  FR4	       | Handle Gas Station information |
+|  FR3	       | Display Gas Station details and center the Map on the Gas Station position |
+|  FR4	       | Handle Gas Station Item |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.1      | Update the price of fuels in a Gas Station |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.2      | Update the state of the Gas Station (open, closed) |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.3      | Add a new Gas Station |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.2      | Send open/closed Report for a given Gas Station Item |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR4.3      | Add a new Gas Station Item |
 |  FR5	       | Manage EZGas |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.1	   | Manage Account Deletion  |
-|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.2	   | Manage closed Gas Station reports  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.1	   | Manage Account deletion Requests |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.2	   | Manage open/closed Report for a given Gas Station Item  |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR5.3      | Remove a Gas Station |
 | FR6		   | Handle map |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FR6.1	   | Center map |
@@ -195,7 +195,7 @@ db -- (EZGas)
 
 
 ### Use case 2, UC2 - FR2 Show the Gas Station List
-| Actors Involved        | User, Gas Station List, Database |
+| Actors Involved        | User, Database |
 | ------------- |:-------------| 
 |  Pre condition     |  Main screen is correctly loaded |  
 |  Post condition     | Gas Station List is provided to the user |
@@ -204,31 +204,31 @@ db -- (EZGas)
 
 ##### Scenario 2.1 
 
-| Scenario 1.1 |  Locate gas stations by price |
+| Scenario 2.1 |  Locate gas stations by price order|
 | ------------- |:-------------| 
 |  Precondition     | Main screen is correctly loaded |
-|  Post condition     | Gas Station List is provided to the User |
+|  Post condition     | Sorted Gas Station List is provided to the User |
 | Step#        | Description  | 
 |  1	 | User presses Search button|
 |  2	 | User selects the "Order by price" option|
 |  3	 | User selects the radius of the search|
-|  4     | Gas Station List is provided to the User|
+|  4     | Sorted Gas Station List is provided to the User|
 
 ##### Scenario 2.2
 
 | Scenario 2.2 |  Locate gas stations by fuel type |
 | ------------- |:-------------| 
 |  Precondition     | Main screen is correctly loaded |
-|  Post condition     | Sorted Gas Station List is provided to the User |
+|  Post condition     | Gas Station List is provided to the User |
 | Step#        | Description  | 
 |  1	 | User presses Search button|
 |  2	 | User selects the "Filter by fuel type" option|
 |  3	 | User selects the type of fuel|
 |  4	 | User selects the radius of the search|
-|  5     | Sorted Gas Station List is provided to the User|
+|  5     | Gas Station List is provided to the User|
 
 
-### Use case 3, UC3 - FR3 Handle gas station item and center the map on the gas station position
+### Use case 3, UC3 - FR3 Display Gas Station details and center the Map on the Gas Station position
 | Actors Involved        | User, Database, Map System |
 | ------------- |:-------------| 
 |  Pre condition     |  Gas station state is "Open" |  
@@ -240,23 +240,23 @@ db -- (EZGas)
 
 | Scenario 3.1 | Select and display gas station details |
 | ------------- |:-------------| 
-|  Pre condition     | Map is loaded or list of Gas Stations is shown |
-|  Post condition     | Gas Station details are shown on the map |
+|  Pre condition     | Map is loaded or Gas Stations List is shown |
+|  Post condition     | Gas Station details are shown on the Map |
 | Step#        | Description  | 
-|  1	 | User selects one of the Gas Stations on the map or in the results list |
-|  2	 | Map is centered on selected Gas Station |
-|  3	 | A speech bubble in corrispondence of the Gas Station displays details |
+|  1	 | User selects one of the Gas Stations on the Map or in the Gas Station List |
+|  2	 | Map is centered on selected Gas Station Item |
+|  3	 | A speech bubble in corrispondence of the Gas Station position on the Map displays details |
 
 
-### Use case 4, UC4 - FR4 Handle Gas Station item
-| Actors Involved        | User, Gas Station List, Database |
+### Use case 4, UC4 - FR4 Handle Gas Station Item
+| Actors Involved        | User, Database, Administrator |
 | ------------- |:-------------| 
 |  Pre condition     | User is authenticated  |  
-|  Post condition     | Gas station details are updated or Gas Station item is added |
-|  Nominal Scenario     | User wants to update Gas Station details or ad a new Gas Station |
-|  Variants     | Users leaves empty fields so no updates are made |
-|| User updates are stored, but not yet published |
+|  Post condition     | Gas Station details are submitted or Gas Station Item is added |
+|  Nominal Scenario     | User wants to update Gas Station details or add a new Gas Station |
+|  Variants     | User leaves empty fields so no updates are made |
 || Update fails because of poor connection |
+
 
 ##### Scenario 4.1 
 
@@ -269,19 +269,19 @@ db -- (EZGas)
 |  2	 | User selects one of the prices of current Gas Station |
 |  3	 | User inserts new values in the selected field |
 |  4	 | User presses the submit button |
-|  5	 | The new value is sent to the server |
+|  5	 | The new value is sent to the server for being accepted by the algorithm |
 
 ##### Scenario 4.2 
 
-| Scenario 4.2 | User submits change of the state of a Gas Station |
+| Scenario 4.2 | Send closed Report for a given Gas Station Item |
 | ------------- |:-------------| 
 |  Pre condition     | Gas Station details are shown (look at UC3 for details) |
-|  Post condition     | Closed Gas Station notification is received by  EZGas server |
+|  Post condition     | Administrator receives closed Gas Station Report |
 | Step#        | Description  | 
 |  1	 | User selects Modify button on the speech bubble that appears |
-|  2	 | User selects the Signal closed Gas Station button on the bubble speech |
+|  2	 | User selects the Send closed Report button on the bubble speech |
 |  3	 | User fills the optional description popup |
-|  4	 | The new state is sent to the server |
+|  4	 | The closed Report is sent to the Administrator|
 
 ##### Scenario 4.3 
 
@@ -299,42 +299,42 @@ db -- (EZGas)
 
 
 ### Use case 5, UC5 - FR5 Manage EZGas
-| Actors Involved        | Administrator, Database |
+| Actors Involved        | Administrator, Database, User |
 | ------------- |:-------------| 
-|  Pre condition     |  A Request has to be managed |  
-|  Post condition     | Administrator has managed the request |
+|  Pre condition     |  A Request/Report has to be managed |  
+|  Post condition     | Administrator has managed the Request/Report |
 |  Nominal Scenario     | Administrator has to manage Account deletion Requests and Closed Gas Station Reports. |
 |  Variants     |  |
 
 ##### Scenario 5.1 
 
-| Scenario 5.1 | Administrator deletes Account that requested deletion |
+| Scenario 5.1 | Manage Account deletion Requests |
 | ------------- |:-------------| 
 |  Pre condition     | User has requested for account deletion  |
 |  Post condition     | User account is deleted |
 | Step#        | Description  | 
-|  1	 | Administrator accesses Management page (from the Account section from the home screen) and select Account deletion Request |
+|  1	 | Administrator accesses Management page (from the Account section from the Main screen) and select Account deletion Request |
 |  2	 | Administrator selects the Request to manage |
 |  2	 | Administrator deletes all User information from database |
 
 
-### Use case 6, UC6 - FR6 Handle map
+### Use case 6, UC6 - FR6 Handle Map
 | Actors Involved        | User, Map System |
 | ------------- |:-------------| 
 |  Pre condition     | Map is loaded on User's device |  
-|  Post condition     | Map is scaled or centered on selected Gas Station |
-|  Nominal Scenario     | User wants to scale the map for better legibility or to center it on selected Gas Station. |
-|  Variants     | Loading fails due to connection problems |
+|  Post condition     | Map is scaled or centered on selected Gas Station Item |
+|  Nominal Scenario     | User wants to scale the map for better legibility or to center it on selected Gas Station Item |
+|  Variants     | |
 
 ##### Scenario 6.1 
 
-| Scenario 6.1 | User center the Map on selected Gas Station |
+| Scenario 6.1 | User centers the Map on selected Gas Station Item |
 | ------------- |:-------------| 
 |  Pre condition     | List of Gas Stations is shown |
-|  Post condition     | Map is centered on selected Gas Station |
+|  Post condition     | Map is centered on selected Gas Station Item |
 | Step#        | Description  | 
-|  1	 | User selects a Gas Station from the list |
-|  2	 | Map is moved so that selected Gas Station finds itself in the middle of the viewport |
+|  1	 | User selects a Gas Station Item from the Gas Station List |
+|  2	 | Map is moved so that selected Gas Station Item finds itself in the middle of the viewport |
 
 ```plantuml
 @startuml
