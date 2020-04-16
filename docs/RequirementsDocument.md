@@ -323,6 +323,70 @@ db -- (EZGas)
 |  1	 | User clicks on one of the results of a search |
 |  2	 | Map is moved so that selected Gas Station finds itself in the middle of the viewport |
 
+```plantuml
+@startuml
+left to right direction
+actor Administrator as a
+actor User as u
+actor Map as m
+
+rectangle system {
+	(FR1 Handle User account) as FR1
+	(FR1.1 Account creation) as FR1.1
+	(FR1.2 Log in) as FR1.2
+	(FR1.3 Log out) as FR1.3
+	(FR1.4 Account deletion request) as FR1.4
+	(FR2 Show the Gas Station list) as FR2
+	(FR2.1 Locate by type of fuel) as FR2.1
+	(FR2.2 Locate by price order) as FR2.2
+	(FR2.3 Locate by distance order) as FR2.3
+	(FR2.4 Locate by name) as FR2.4
+	(FR3 Show Gas Station details and position) as FR3
+	(FR4 Handle Gas Station information) as FR4
+	(FR4.1 Update the price of fuels in a Gas Station) as FR4.1
+	(FR4.2 Update the state of the Gas Station [open, closed]) as FR4.2
+	(FR4.3 Add a new Gas Station) as FR4.3
+	(FR5 Manage EZGas) as FR5
+	(FR5.1 Manage Account Deletion) as FR5.1
+	(FR5.2 Manage closed Gas Station reports) as FR5.2
+	(FR5.3 Remove a Gas Station) as FR5.3
+	(FR6 Handle map) as FR6
+	(FR6.1 Center map) as FR6.1
+	(FR6.2 Resize map) as FR6.2
+}
+
+FR1 <.- FR1.1 : <<extend>>
+FR1 <.- FR1.2 : <<extend>>
+FR1 <.- FR1.3 : <<extend>>
+FR1 <.- FR1.4 : <<extend>>
+
+FR2 .-> FR2.1 : <<include>>
+FR2 .-> FR2.2 : <<include>>
+FR2 .-> FR2.3 : <<include>>
+FR2 .-> FR2.4 : <<include>>
+
+FR4 .-> FR4.1 : <<include>>
+FR4 .-> FR4.2 : <<include>>
+FR4 .-> FR4.3 : <<include>>
+
+FR5 .-> FR5.1 : <<include>>
+FR5 .-> FR5.2 : <<include>>
+FR5 .-> FR5.3 : <<include>>
+
+FR6 .-> FR6.1 : <<include>>
+FR6 <.- FR6.2 : <<extend>>
+	
+u -- FR1
+u -- FR2
+u -- FR3
+m -- FR3
+u -- FR4
+a -- FR5
+u -- FR6
+m -- FR6
+@enduml
+```
+    
 
 # Glossary
 
