@@ -160,13 +160,15 @@ db -- (EZGas)
 # Use case diagram and use cases
 
 ```plantuml
+
 @startuml
 left to right direction
 actor Administrator as a
-actor User as u
-actor "Authicated User" as auth
-actor "Map System" as m
-database "Database" as db
+actor User as u #0024ff/7888ed
+actor "Authicated User" as auth 
+actor "Map System" as m #92ff00/92ff00
+database "Database" as db #7c00fb/9b5ed9
+actor "Gas Station Source" as gss
 
 rectangle EZGas {
 	(FR1 Handle User Account) as FR1
@@ -214,34 +216,38 @@ FR5 .-> FR5.2 : <<include>>
 FR5 .-> FR5.3 : <<include>>
 
 FR6 .-> FR6.1 : <<include>>
-FR6 <.- FR6.2 : <<include>>
+FR6 .-> FR6.2 : <<include>>
 
 a -|>u
-u <|- auth 
-db -- FR1
-u -- FR1
+auth -|> u 
 
-u -- FR2
-db -- FR2
 
-u -- FR3
-db -- FR3
-m -- FR3
 
-u -- FR4
-db -- FR4
-a -- FR4
+:db: -up- FR1 #7c00fb 
+u -- FR1 #0024ff
 
-u -- FR5
-db -- FR5
+u -- FR2 #0024ff
+:db: -up- FR2 #7c00fb 
+
+
+
+auth -- FR4
+:db: -up- FR4 #7c00fb 
+
 a -- FR5
+:db: -up- FR5 #7c00fb 
 
-u -- FR6
-m -- FR6
 
-u -- FR7
+u -- FR6 #0024ff
+:m: -down- FR6 #92ff00
+
+u -- FR3 #0024ff
+:db: -up- FR3 #7c00fb 
+:m: -down- FR3 #92ff00
+
 a -- FR7
-m -- FR7
+:db: -up- FR7 #7c00fb 
+gss -- FR7
 @enduml
 ```
 
