@@ -442,9 +442,48 @@ gss -- FR7
 
 # Glossary
 
-\<use UML class diagram to define important concepts in the domain of the system, and their relationships> 
+```plantuml
+class User {
++ name
++ surname
+}
+class Administrator {
 
-\<concepts are used consistently all over the document, ex in use cases, requirements etc>
+}
+
+class GasStationList {
++url
+}
+
+class GasStationItem {
++ name
++ address
++ position
+}
+
+class Map {
++ url
+
+}
+
+
+EZGas -- "*" User :serve >
+GasSationSource -down- Database :  initialize > 
+Database -- GasStationList : provide >
+AuthenticatedUser -- Account :set up >
+Administrator -- "*" Account : manage >
+User <|-- Administrator 
+GasStationList -right- "*" GasStationItem :list >
+User <|-down- AuthenticatedUser 
+GasStationItem "*"-- Map : < show position
+User -- GasStationList : access >
+GasStationItem -- "Open/Closed Report" :< modify 
+Administrator -- "Open/Closed Report" :  manage >
+Database -- "Price Update" :  store >
+Account -- "Open/Closed Report" : produce >
+Account -- "Price Update" : produce >
+GasStationItem -- Database : < modify
+```
 
 # System Design
 \<describe here system design>
