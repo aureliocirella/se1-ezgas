@@ -384,11 +384,11 @@ gss -- FR7
 |  Post condition     | Gas Station is inserted in the database |
 | Step#        | Description  | 
 |  1	 | User selects the add Gas Station button |
-|  2	 | User inserts Gas Station position |
-|  3	 | User fills the optional phone number field |
-|  4	 | User selects which kind of fuel type are sold |
-|  5	 | For each selected fuel type the User provides a price |
-
+|  2	 | User selects a company from a list of the available companies |
+|  3	 | User inserts Gas Station address |
+|  4	 | User fills the optional phone number field |
+|  5	 | User selects which kind of fuel type are sold from a list of available fuel types |
+|  6	 | For each selected fuel type the User provides a price |
 
 
 ### Use case 5, UC5 - FR5 Manage EZGas
