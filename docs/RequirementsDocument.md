@@ -362,7 +362,7 @@ gss -- FR7
 |  2	 | User selects one of the prices of current Gas Station |
 |  3	 | User inserts new values in the selected field |
 |  4	 | User presses the submit button |
-|  5	 | The new value is sent to the server for being accepted by the algorithm |
+|  5	 | The new value is sent to the Database for being accepted by the algorithm |
 
 ##### Scenario 4.2 
 
@@ -374,7 +374,7 @@ gss -- FR7
 |  1	 | User selects Modify button on the speech bubble that appears |
 |  2	 | User selects the Send closed Report button on the bubble speech |
 |  3	 | User fills the optional description popup |
-|  4	 | The closed Report is sent to the server in order to be validated by the Administrator|
+|  4	 | The closed Report is sent to the Database in order to be validated by the Administrator|
 
 ##### Scenario 4.3 
 
