@@ -423,10 +423,10 @@ gss -- FR7
 
 | Scenario 6.1 | User centers the Map on selected Gas Station Item |
 | ------------- |:-------------| 
-|  Pre condition     | List of Gas Stations is shown |
+|  Pre condition     | Gas Station Item is selected from Gas Station List and EZGas has fetched its position from the Database |
 |  Post condition     | Map is centered on selected Gas Station Item |
 | Step#        | Description  | 
-|  1	 | User selects a Gas Station Item from the Gas Station List |
+|  1	 | EZGas provides to the Map System the Gas Station position |
 |  2	 | Map is moved so that selected Gas Station Item finds itself in the middle of the viewport |
 
 ### Use case 7, UC7 - FR7 Initialize Database
