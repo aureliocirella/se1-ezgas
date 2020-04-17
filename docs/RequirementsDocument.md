@@ -59,7 +59,7 @@ Version:
 |		Developer		|He’s interested in producing a well working and appealing EZGas application.| 
 |		Map System		|It provides an explorable and well design map on which Gas Stations are shown which is obtained from (www.openstreetmap.org).| 
 |		Database		|It offers a storage solution for managing account and Gas Station details. | 
-| Gas Stations Source |This is a free file obtained from (www.datiopen.it) which contains a starting point to initialize the Database at his first usage.|
+| Gas Stations Source |This is a free file obtained from (www.datiopen.it) which contains a starting point to initialize the Database at its first usage.|
 
 # Context Diagram and interfaces
 
@@ -496,7 +496,7 @@ Database -- "*"  "Price Update" :  store >
 AuthenticatedUser-- "*" "Open/Closed Report" : produce >
 AuthenticatedUser-- "*"  "Price Update" : produce >
 GasStationItem "*" -- Database : < modify
-GasStationItem  -- "*" Fuel : > Has
+GasStationItem  -- "*" Fuel : > offer
 ```
 
 # System Design
