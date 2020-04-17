@@ -444,8 +444,6 @@ class User {
 }
 class Administrator {
 + email
-+ password
-
 }
 
 class Fuel {
@@ -471,6 +469,7 @@ class "Open/Closed Report"{
 class "Price Update"{
 + date
 + price
++fuel type
 }
 
 class Map {
@@ -480,8 +479,6 @@ class Map {
 
 class AuthenticatedUser{
 + email
-+ password
-
 }
 
 EZGas -- "*" User :serve >
