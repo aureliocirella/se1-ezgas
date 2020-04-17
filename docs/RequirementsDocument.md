@@ -336,7 +336,7 @@ m -- FR7
 
 
 ### Use case 4, UC4 - FR4 Handle Gas Station Item
-| Actors Involved        | Authenticated User, Database, Administrator |
+| Actors Involved        | Authenticated User, Database |
 | ------------- |:-------------| 
 |  Pre condition     | User is authenticated  |  
 |  Post condition     | Gas Station details are submitted or Gas Station Item is added |
@@ -350,7 +350,7 @@ m -- FR7
 | Scenario 4.1 | User submits new fuel prices |
 | ------------- |:-------------| 
 |  Pre condition     | Gas Station details are shown (look at UC3 for details) |
-|  Post condition     | User update is received by EZGas server |
+|  Post condition     | User update is received by Database |
 | Step#        | Description  | 
 |  1	 | User selects Modify button on the speech bubble that appears |
 |  2	 | User selects one of the prices of current Gas Station |
@@ -363,7 +363,7 @@ m -- FR7
 | Scenario 4.2 | Send closed Report for a given Gas Station Item |
 | ------------- |:-------------| 
 |  Pre condition     | Gas Station details are shown (look at UC3 for details) |
-|  Post condition     | Administrator receives closed Gas Station Report |
+|  Post condition     | Gas Station Report is sent to the Database |
 | Step#        | Description  | 
 |  1	 | User selects Modify button on the speech bubble that appears |
 |  2	 | User selects the Send closed Report button on the bubble speech |
@@ -424,7 +424,7 @@ m -- FR7
 |  2	 | Map is moved so that selected Gas Station Item finds itself in the middle of the viewport |
 
 ### Use case 7, UC7 - FR7 Initialize Database
-| Actors Involved        | Admin, Database, Gas Station Source |
+| Actors Involved        | Administrator, Database, Gas Station Source |
 | ------------- |:-------------| 
 |  Pre condition     |No Gas Station Item is stored in the Database   |  
 |  Post condition     |Database stores Gas Station Items  |
