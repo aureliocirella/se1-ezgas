@@ -85,15 +85,10 @@ db -- (EZGas)
 ```
 
 ## Interfaces
-```diff
-! TODO to be checked
-```
 
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| :-----:|
 |User |GUI |Screen, keyboard, touchscreen |
-|Authenticated User |GUI |Screen, keyboard, touchscreen |
-|Administrator |GUI |Screen, keyboard, touchscreen |
 |Database |API |Internet |
 |Map System |API |Internet |
 |Gas Station List |XML |Internet |
