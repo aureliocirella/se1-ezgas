@@ -480,6 +480,8 @@ class Map {
 class AuthenticatedUser{
 + email
 }
+ 
+ 
 
 EZGas -- "*" User :serve >
 GasSationSource -down- Database :  initialize > 
@@ -493,6 +495,14 @@ User -- "*"  GasStationList : query >
 GasStationItem -- "*" "Open/Closed Report" :< modify 
 Administrator -- "*"  "Open/Closed Report" :  manage >
 Database -- "*"  "Price Update" :  store >
+note right on link  
+It exploits Firebase trigger to manage the 
+updates submitted by users. Triggers are
+used to evaluate a variable threshold 
+of the minimum submission needed for each 
+proposed price value to make the submission
+ effective.
+end note
 AuthenticatedUser-- "*" "Open/Closed Report" : produce >
 AuthenticatedUser-- "*"  "Price Update" : produce >
 GasStationItem "*" -- Database : < modify
