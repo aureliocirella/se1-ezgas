@@ -448,6 +448,11 @@ class Administrator {
 
 }
 
+class Fuel {
++type
++price
+}
+
 class GasStationList {
 +url
 }
@@ -494,6 +499,7 @@ Database -- "*"  "Price Update" :  store >
 AuthenticatedUser-- "*" "Open/Closed Report" : produce >
 AuthenticatedUser-- "*"  "Price Update" : produce >
 GasStationItem "*" -- Database : < modify
+GasStationItem  -- "*" Fuel : > Has
 ```
 
 # System Design
