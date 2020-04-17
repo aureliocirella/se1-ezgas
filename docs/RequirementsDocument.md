@@ -448,6 +448,8 @@ class User {
 + surname
 }
 class Administrator {
++ email
++ password
 
 }
 
@@ -461,28 +463,42 @@ class GasStationItem {
 + position
 }
 
+class "Open/Closed Report"{
++ date
+
+}
+
+class "Price Update"{
++ date
++ price
+}
+
 class Map {
 + url
 
 }
 
+class AuthenticatedUser{
++ email
++ password
+
+}
 
 EZGas -- "*" User :serve >
 GasSationSource -down- Database :  initialize > 
 Database -- GasStationList : provide >
-AuthenticatedUser -- Account :set up >
-Administrator -- "*" Account : manage >
+Administrator -- AuthenticatedUser: manage >
 User <|-- Administrator 
 GasStationList -right- "*" GasStationItem :list >
-User <|-down- AuthenticatedUser 
+User <|-right- AuthenticatedUser 
 GasStationItem "*"-- Map : < show position
-User -- GasStationList : access >
-GasStationItem -- "Open/Closed Report" :< modify 
-Administrator -- "Open/Closed Report" :  manage >
-Database -- "Price Update" :  store >
-Account -- "Open/Closed Report" : produce >
-Account -- "Price Update" : produce >
-GasStationItem -- Database : < modify
+User -- "*"  GasStationList : query >
+GasStationItem -- "*" "Open/Closed Report" :< modify 
+Administrator -- "*"  "Open/Closed Report" :  manage >
+Database -- "*"  "Price Update" :  store >
+AuthenticatedUser-- "*" "Open/Closed Report" : produce >
+AuthenticatedUser-- "*"  "Price Update" : produce >
+GasStationItem "*" -- Database : < modify
 ```
 
 # System Design
