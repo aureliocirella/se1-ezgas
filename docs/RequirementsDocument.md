@@ -507,5 +507,20 @@ GasStationItem "*" -- Database : < modify
 \<must be consistent with Context diagram>
 
 # Deployment Diagram 
+```plantuml
+@startuml
+left to right direction
+Node Database as db <<server>>
 
-\<describe here deployment diagram >
+Node PC as pc <<device>> {
+Artifact "PC client" as pcc
+}
+
+Node Smartphone as sm <<device>> {
+Artifact "Smartphone client" as smc
+}
+
+db -- pc : internet
+db -- sm : internet
+@enduml
+```
