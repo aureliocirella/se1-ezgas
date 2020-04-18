@@ -264,9 +264,10 @@ gss -- FR7
 |  Post condition     | Account created succesfully. |
 | Step#        | Description  | 
 |  1	 |User access Account Management page|
-|  2     | Personal information is asked|
-|  3     | Once, provided, personal information is stored in Database|
-|  4     | User can perform the log in|
+|  2     | User clicks on the create account link|
+|  3     | Personal information is asked|
+|  4     | Once, provided, personal information is stored in Database|
+|  5     | User can perform the log in|
 
 
 ##### Scenario 1.2
@@ -277,7 +278,7 @@ gss -- FR7
 |  Post condition     | User succesfully logged in |
 | Step#        | Description  | 
 |  1	 | User access Account Management page|
-|  2     | Username and password are provided|
+|  2     | Email and password are provided|
 |  3     | EZGas checks if this data is correct|
 |  4     | User accesses full EZGas functionalities|
 
@@ -298,9 +299,10 @@ gss -- FR7
 |  Post condition     | Sorted Gas Station List is provided to the User |
 | Step#        | Description  | 
 |  1	 | User presses Search button|
-|  2	 | User selects the "Order by price" option|
+|  2	 | User selects the "Sort by price" option|
 |  3	 | User selects the radius of the search|
-|  4     | Sorted Gas Station List is provided to the User|
+|  4     | User selects self or full service|
+|  5     | Sorted Gas Station List is provided to the User|
 
 ##### Scenario 2.2
 
@@ -357,7 +359,7 @@ gss -- FR7
 |  2	 | User selects one of the prices of current Gas Station |
 |  3	 | User inserts new values in the selected field |
 |  4	 | User presses the submit button |
-|  5	 | The new value is sent to the Database for being accepted by the algorithm |
+|  5	 | The update is not immediately effective: the new value is sent to the Database for being accepted by the system algorithm  |
 
 ##### Scenario 4.2 
 
@@ -403,7 +405,7 @@ gss -- FR7
 | Step#        | Description  | 
 |  1	 | Administrator accesses Management page (from the Account section from the Main screen) and select Account deletion Request |
 |  2	 | Administrator selects the Request to manage |
-|  2	 | Administrator deletes all User information from database |
+|  3	 | Administrator deletes all User information from database |
 
 
 ### Use case 6, UC6 - FR6 Handle Map
@@ -484,7 +486,14 @@ class AuthenticatedUser{
  
 
 EZGas -- "*" User :serve >
-GasSationSource -down- Database :  initialize > 
+GasStationSource -down- Database :  initialize > 
+note top of GasStationSource
+This is a free file obtained from (www.datiopen.it) 
+which contains a starting point to initialize 
+the Database at its first usage. It is used by the 
+developers before the launch and doesn't interact 
+with users.
+end note
 Database -- GasStationList : provide >
 Administrator -- AuthenticatedUser: manage >
 User <|-- Administrator 
@@ -495,8 +504,8 @@ User -- "*"  GasStationList : query >
 GasStationItem -- "*" "Open/Closed Report" :< modify 
 Administrator -- "*"  "Open/Closed Report" :  manage >
 Database -- "*"  "Price Update" :  store >
-note right on link  
-It exploits Firebase trigger to manage the 
+note right on link
+Database exploits Firebase trigger to manage the 
 updates submitted by users. Triggers are
 used to evaluate a variable threshold 
 of the minimum submission needed for each 
