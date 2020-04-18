@@ -519,9 +519,17 @@ GasStationItem  -- "*" Fuel : > offer
 ```
 
 # System Design
-\<describe here system design>
+```plantuml
+@startuml
+left to right direction
+Node "Database server" as db
+Node "User PC" as pc
+Node "User smartphone" as sm
 
-\<must be consistent with Context diagram>
+db -- pc : internet
+db -- sm : internet
+@enduml
+```
 
 # Deployment Diagram 
 ```plantuml
