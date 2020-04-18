@@ -495,6 +495,7 @@ developers before the launch and doesn't interact
 with users.
 end note
 Database -- GasStationList : provide >
+Database -[hidden]- GasStationList 
 Administrator -- AuthenticatedUser: manage >
 User <|-- Administrator 
 GasStationList -right- "*" GasStationItem :list >
@@ -535,17 +536,21 @@ db -- sm : internet
 ```plantuml
 @startuml
 left to right direction
-Node Database as db <<server>>
+Node Database as db <<server>> {
+Artifact "Key value tables" as kvt
+Artifact "Trigger functions" as tf
+}
 
 Node PC as pc <<device>> {
-Artifact "PC client" as pcc
+Artifact "Application executable" as aexpc
 }
 
 Node Smartphone as sm <<device>> {
-Artifact "Smartphone client" as smc
+Artifact "Application executable" as aexs
 }
 
 db -- pc : internet
+db -[hidden]- pc
 db -- sm : internet
 @enduml
 ```
