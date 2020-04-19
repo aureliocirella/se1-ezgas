@@ -1,0 +1,287 @@
+[33mcommit 210548c47c733aefcf53dae324ac07da753db2b8[m[33m ([m[1;36mHEAD -> [m[1;32mProjectfiles[m[33m, [m[1;31morigin/Projectfiles[m[33m)[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sun Apr 19 16:54:58 2020 +0200
+
+    fix: remove url attribute from Gasstation list
+
+[33mcommit 106ec35d4bc3f8ef669754af788128572f3f7964[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sun Apr 19 16:12:20 2020 +0200
+
+    fix: some changes in step descriptions
+
+[33mcommit e9b8d3a7b4c9eeb6aa7201b42c4ff2eb395a8a94[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sun Apr 19 15:57:45 2020 +0200
+
+    fix: better expression in scenarios
+
+[33mcommit 2642a2c7bf010eae830a73739834f6a0fb050661[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sun Apr 19 15:55:29 2020 +0200
+
+    fix: some typos
+
+[33mcommit f72a53247f11681f2f87f3c97ccee331e0ce050e[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sun Apr 19 15:50:45 2020 +0200
+
+    fix: change login title in gui prototype
+
+[33mcommit caa0482e9faa52b7e1fa796428640805be1badcf[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sun Apr 19 15:31:22 2020 +0200
+
+    fix: change title for images
+
+[33mcommit c413e81a955d65b8a1596d53292573d8fc2a9a46[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sun Apr 19 14:10:49 2020 +0200
+
+    fix: solved titles problem for Markdown syntax
+
+[33mcommit d6efd19a9185aabbd6d5563b14bd07c80fcfd785[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sun Apr 19 13:33:10 2020 +0200
+
+    doc: Add GUI Prototypes for mobile views and remaing webviews
+
+[33mcommit dfae955bf9bccad276a07ac5579b2e6e32d33db1[m
+Author: Federica Giorgione s234436 <s234436@studenti.polito.it>
+Date:   Sat Apr 18 16:48:46 2020 +0200
+
+    fix: minor fixes
+
+[33mcommit 664af48bd58f2e213fe7fbff73558c5ea73a2a1d[m
+Author: Federica Giorgione s234436 <s234436@studenti.polito.it>
+Date:   Sat Apr 18 13:26:02 2020 +0200
+
+    add: deployment diagram
+
+[33mcommit b0240a78a1eadb0b3492d1c8b38899e148b64d7c[m
+Author: Federica Giorgione s234436 <s234436@studenti.polito.it>
+Date:   Sat Apr 18 12:28:38 2020 +0200
+
+    add: system design
+
+[33mcommit e58cb79f98625097fd6ba785dbbb61c092c04fef[m
+Author: Federica Giorgione s234436 <s234436@studenti.polito.it>
+Date:   Sat Apr 18 12:12:49 2020 +0200
+
+    fix: minor changes in scenario 1.1, 1.2, 2.1, 4.1; add: notes in the glossary
+
+[33mcommit 2a8758a48e925984c6f63883e81d729b57ee702e[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sat Apr 18 00:11:00 2020 +0200
+
+    fix: add note to glossary and add images of UI
+
+[33mcommit 75c96359ccc56f8b5658cb54a7a8b8cae382a519[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 23:37:37 2020 +0200
+
+    fix: some minor changes in expressions
+
+[33mcommit 029d408d92cbf5caac69b1e50b62b04715893bc4[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 22:49:16 2020 +0200
+
+    fix: change some attributes in glossary
+
+[33mcommit cfcfc355662e85a3a2b6e53b91e0ef3af533a53b[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 20:28:29 2020 +0200
+
+    fix: add Fuel to glossary
+
+[33mcommit d85cd37db46bbc90527a388e55b29fd35f24b398[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 20:04:36 2020 +0200
+
+    fix: Remove Administrator and AuthenticatedUser as we have user in Interfaces
+
+[33mcommit dbae099cc682dbe1a6909dbcb9c1da049990aa7c[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 19:17:52 2020 +0200
+
+    fix: change scenario 4.3 to be more clear and related
+
+[33mcommit 801b678ab26144ad7d25f0f5f865b7d62fb0f9d4[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 18:46:14 2020 +0200
+
+    doc: Add Deployment Diagram
+
+[33mcommit 7e10bdd76ad5efded3562eaec1265f1bd998d870[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 17:23:07 2020 +0200
+
+    fix: some fixes in user part and attributes
+
+[33mcommit 377f43bd832238b5b67164cf420905aa981d8133[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 12:36:07 2020 +0200
+
+    doc: Add Glossary section
+
+[33mcommit a121d2a89cdc6540dc1be491a6042bac5e97b553[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 11:43:12 2020 +0200
+
+    fix: change in usecase 6 precondition and steps
+
+[33mcommit 829286756bde9cdef792406085f70da03b5105c0[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 11:03:30 2020 +0200
+
+    fix: change some terms in usecases to be more clear
+
+[33mcommit 2f14af040f71ef0d1cad7355abedb09368a653c0[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 11:00:43 2020 +0200
+
+    fix: some changes in uscase
+
+[33mcommit 8ca5e40ac78029fa7864010ffffc116de33c8fb5[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Fri Apr 17 10:53:51 2020 +0200
+
+    fix: uc 4.2 changes in post condition
+
+[33mcommit 8e8042bee5e67fd138cb90a1ff3f1f9a8f9a5b13[m
+Author: aurelio.cirella <aurelio.cirella@studenti.polito.it>
+Date:   Thu Apr 16 23:38:59 2020 +0200
+
+    doc: RC7 and UC7 added. FR5.3, UC4, UC Diagram fixed
+
+[33mcommit c47f8d5280001904b81513eded026a23d8c3ffad[m
+Author: aurelio.cirella <aurelio.cirella@studenti.polito.it>
+Date:   Thu Apr 16 19:27:08 2020 +0200
+
+    fix: Use Case terminology and minor fixes, Scenarios main review
+
+[33mcommit d4160dea250ffb58abd6edb5cd544fa3beaa855c[m
+Author: aurelio.cirella <aurelio.cirella@studenti.polito.it>
+Date:   Thu Apr 16 18:01:58 2020 +0200
+
+    fix: Actors details among the document fixed
+
+[33mcommit a74bae4db2af45ed8db712297cbc7aebd0b1d4d2[m
+Author: aurelio.cirella <aurelio.cirella@studenti.polito.it>
+Date:   Thu Apr 16 16:49:17 2020 +0200
+
+    fix: Use Cases and Scenarios details fixed
+
+[33mcommit 0f3d072fe6ff632221bddc331e5aaf9fd98bc223[m
+Author: aurelio.cirella <aurelio.cirella@studenti.polito.it>
+Date:   Thu Apr 16 12:55:41 2020 +0200
+
+    fix: minor terminology issues fixed
+
+[33mcommit f0d9a90cd21ac543217bbfff2b6dcc6d133ad0a2[m
+Author: SirLire <62445994+SirLire@users.noreply.github.com>
+Date:   Thu Apr 16 12:31:45 2020 +0200
+
+    doc: added context diagram
+
+[33mcommit 1ad700c5546f057da97c635cac2da35001f6abee[m
+Author: SirLire <62445994+SirLire@users.noreply.github.com>
+Date:   Thu Apr 16 00:05:55 2020 +0200
+
+    doc: FR1, FR3, FR5, UC3 fixed and scenario 3.1; UC4,UC5,UC6 and related scenarios added
+
+[33mcommit 0afb7644b9f8514c04aac049a1f12d5888da41c9[m
+Author: Federica Giorgione s234436 <s234436@studenti.polito.it>
+Date:   Tue Apr 14 23:27:24 2020 +0200
+
+    doc: Scenario 2.2 and UC3 added
+
+[33mcommit 51edf4b1b55b28130d47b25f25a3cf9415a154ea[m
+Author: Federica Giorgione s234436 <s234436@studenti.polito.it>
+Date:   Tue Apr 14 20:42:11 2020 +0200
+
+    doc: FR1.3, FR1.4, UC2 and Scenario 2.1 added, Scenario 1.1 and 1.2 fixed
+
+[33mcommit 98336fd22ce9413aaf6b7f04188d9c277a7baa42[m
+Author: aurelio.cirella <aurelio.cirella@studenti.polito.it>
+Date:   Tue Apr 14 09:19:36 2020 +0200
+
+    doc: UC1, Scenarios 1.1 and 1.2 added, FR and NFR fixed
+
+[33mcommit 0f2e85f5cb095a3077aa4f54d7fa867defcaecb4[m
+Author: aurelio.cirella <aurelio.cirella@studenti.polito.it>
+Date:   Mon Apr 13 20:05:40 2020 +0200
+
+    doc: added FR and NFR in RequirementDocument
+
+[33mcommit 9017a5cb09c13294b413da25b28a3dafb389d6a0[m
+Author: aurelio.cirella <aurelio.cirella@studenti.polito.it>
+Date:   Mon Apr 13 16:46:13 2020 +0200
+
+    fix: Storied and Personas formatting
+
+[33mcommit 621b562ae95474b12d79f6d4a3be28d6d01160e7[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sat Apr 11 19:59:17 2020 +0200
+
+    doc: Add Stories and personas
+
+[33mcommit 8edad539ca97a6bc2f0059e2581abf65d6e2ad9b[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sat Apr 11 19:36:12 2020 +0200
+
+    doc: Add Interfaces
+
+[33mcommit 8a4ed65e0150e5744996beb175cdcac22221eb08[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sat Apr 11 19:25:04 2020 +0200
+
+    fix: Problem in context diagram syntax
+
+[33mcommit 5d4476dcde47404dd9706c8865d37ff05ff2d26d[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sat Apr 11 19:16:58 2020 +0200
+
+    doc: Add Context Diagram
+
+[33mcommit 581cae8e38153948afc7eaa36f8304e13c129799[m
+Author: behnam263 <behnam263@yahoo.com>
+Date:   Sat Apr 11 19:09:23 2020 +0200
+
+    doc: Add stakeholders
+
+[33mcommit 635ce9da96657ec898faabdf852aa711e68908f0[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Luca Ardito <luca.ardito@polito.it>
+Date:   Mon Apr 6 19:00:59 2020 +0000
+
+    docs: fix tables in requirements
+
+[33mcommit 2e62bc006d8c3d19607a82d729add2d1aa396c2f[m
+Author: Luca Ardito <luca.ardito@polito.it>
+Date:   Mon Apr 6 15:47:17 2020 +0000
+
+    docs: minor updates to md templates
+
+[33mcommit 2c64da575a2bc652597534e8a6a10f1223b1c663[m
+Author: Luca Ardito <luca.ardito@polito.it>
+Date:   Mon Apr 6 13:08:22 2020 +0000
+
+    docs: add UI_prototype Document
+
+[33mcommit 1cc8ab5ec60a5fd08e4546efab192766d8d3c7f1[m
+Author: Luca Ardito <luca.ardito@polito.it>
+Date:   Mon Apr 6 12:18:11 2020 +0000
+
+    docs: add Requirements Document
+
+[33mcommit e9a43c46995bd6edcfe3ef2c343928e1863ec0b3[m
+Author: Luca Ardito <luca.ardito@polito.it>
+Date:   Mon Apr 6 12:12:47 2020 +0000
+
+    docs: add EZGas software description
+
+[33mcommit 320533f6e9f06b3c371ef902dbd3ad5f4fafc5b3[m
+Author: Luca Ardito <luca.ardito@polito.it>
+Date:   Mon Apr 6 12:12:07 2020 +0000
+
+    Initial commit

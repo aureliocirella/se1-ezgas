@@ -446,10 +446,10 @@ class User {
 }
 
 note right of User
-User only can explore the Map 
+User only can explore the map 
 and see the list of GasStationItems.
-For editing, User need to log in and 
-becomes an Authenticated User
+For editing, user need to login and 
+become an Authenticated User
 end note
 
 
@@ -460,7 +460,7 @@ class Administrator {
 note left of Administrator
 Adminsitrator is an Authenticated User
 who has permissions to manage 
-the application (Reports and Requests).
+the application like reports.
 end note
 
 
@@ -470,13 +470,14 @@ class Fuel {
 }
 
 class GasStationList {
- 
+
 }
 
 class GasStationItem {
 + name
 + address
-+ position
++ latitude
++ longitude
 }
 
 
@@ -515,23 +516,24 @@ with users.
 end note
 Database -- GasStationList : provide >
 Database -[hidden]- GasStationList 
-Administrator -- AuthenticatedUser: manage >
+Database -- "*" Fuel : modify >
+Administrator --"*" AuthenticatedUser: manage >
 User <|-- Administrator 
 GasStationList -right- "*" GasStationItem :list >
 User <|-right- AuthenticatedUser 
 GasStationItem "*"-- Map : < show position
-User -- "*"  GasStationList : query >
+User "*" -- GasStationList : query >
 GasStationItem -- "*" "Open/Closed Report" :< modify 
 Administrator -- "*"  "Open/Closed Report" :  manage >
 note right on link
-After checking the Report, Admin can
-accept or reject it.
+After checking reports admin can
+accept or reject the report.
 end note
 Database -- "*"  "Price Update" :  store >
 note right on link
-Database exploits Firebase trigger to manage the 
-updates submitted by users. Triggers are
-used to evaluate a variable threshold 
+Database exploits Firebase trigger to manage
+the price updates submitted by users. Triggers
+are used to evaluate a variable threshold 
 of the minimum submission needed for each 
 proposed price value to make the submission
  effective.
