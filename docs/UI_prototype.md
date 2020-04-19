@@ -6,6 +6,9 @@ Date: 18/04/2020
 
 Version: 1
 
+# Example of application flow
+![Application flow](https://i.ibb.co/XxwzKNq/Application-flow-example.jpg)
+
 # WebView
 
 ### Homepage:
