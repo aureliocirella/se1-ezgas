@@ -470,7 +470,7 @@ class Fuel {
 }
 
 class GasStationList {
-+url
+ 
 }
 
 class GasStationItem {
