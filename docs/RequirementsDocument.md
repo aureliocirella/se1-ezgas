@@ -403,7 +403,7 @@ gss -- FR7
 |  Pre condition     | User has Requested for Account deletion  |
 |  Post condition     | User Account is deleted |
 | Step#        | Description  | 
-|  1	 | Administrator accesses Management page (from the Account section of the Main screen) and selects Account deletion Request |
+|  1	 | Administrator presses wrench icon and enters Administrator Management Page and selects Account deletion Request |
 |  2	 | Administrator selects the Request to manage |
 |  3	 | Administrator deletes all User information from Database |
 
