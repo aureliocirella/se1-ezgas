@@ -264,7 +264,7 @@ gss -- FR7
 |  Post condition     | Account created successfully |
 | Step#        | Description  | 
 |  1	 |User access Account Management page|
-|  2     | User clicks on the create Account link|
+|  2     | User selects the create Account link|
 |  3     | Personal information is asked|
 |  4     | Once, provided, personal information is stored in Database|
 |  5     | User can perform the log in|
@@ -358,7 +358,7 @@ gss -- FR7
 |  1	 | User selects Modify button on the speech bubble that appears |
 |  2	 | User selects one of the prices of current Gas Station |
 |  3	 | User inserts new values in the selected field |
-|  4	 | User presses the submit button |
+|  4	 | User presses the confirm button |
 |  5	 | The update is not immediately effective: the new value is sent to the Database for being accepted by the system algorithm  |
 
 ##### Scenario 4.2 
