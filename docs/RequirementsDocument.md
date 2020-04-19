@@ -264,7 +264,7 @@ gss -- FR7
 |  Post condition     | Account created successfully |
 | Step#        | Description  | 
 |  1	 |User access Account Management page|
-|  2     | User selects the create Account link|
+|  2     | User presses the create Account link|
 |  3     | Personal information is asked|
 |  4     | Once, provided, personal information is stored in Database|
 |  5     | User can perform the log in|
