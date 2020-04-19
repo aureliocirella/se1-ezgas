@@ -7,7 +7,7 @@ Date: 18/04/2020
 Version: 1
 
 # Example of application flow
-![Application flow](https://i.ibb.co/XxwzKNq/Application-flow-example.jpg)
+![Application flow](https://i.ibb.co/v1nPtgW/Flow.png)
 
 # WebView
 
@@ -15,7 +15,7 @@ Version: 1
 ![Main Page](https://i.ibb.co/DpXjtTs/Homepage.png)
 
 ### Administrator Homepage:
-![Selected Item edit](https://i.ibb.co/RBgK2BJ/Homepage-administrator.png)
+![Selected Item edit](https://i.ibb.co/HYRRmxM/Homepage-administrator.png)
 
 ### Create Account:
 ![SignUp](https://i.ibb.co/fGbCcdL/Sign-up.png)
@@ -36,7 +36,7 @@ Version: 1
 ![Selected Item edit](https://i.ibb.co/gggsXbS/Modify-gas-station.png)
 
 ### Settings:
-![Selected Item edit](https://i.ibb.co/pRFsPzr/Settings.png)
+![Selected Item edit](https://i.ibb.co/RCbmNhb/Settings.png)
 
  
 
@@ -46,7 +46,7 @@ Version: 1
 ![Homepage-mobile](https://i.ibb.co/JCs6mZd/Homepage-mobile.png)
 
 ### Administrator Homepage:
-![Homepage-administrator-mobile](https://i.ibb.co/ZXKmQw5/Homepage-administrator-mobile.png)
+![Homepage-administrator-mobile](https://i.ibb.co/9scxBz3/Homepage-administrator-mobile.png)
 
 ### Create Account:
 ![Sign-up-mobile](https://i.ibb.co/kMbTGRn/Sign-up-mobile.png)
@@ -68,5 +68,5 @@ Version: 1
 ![Modify-gas-station-mobile](https://i.ibb.co/tB0rwPj/Modify-gas-station-mobile.png)
 
 ### Settings:
-![Settings-mobile](https://i.ibb.co/tBHM5mD/Settings-mobile.png)
+![Settings-mobile](https://i.ibb.co/RT491L9/Settings-mobile.png)
 
