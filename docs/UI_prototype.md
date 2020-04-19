@@ -14,7 +14,7 @@ Version: 1
 ### Administrator Homepage:
 ![Selected Item edit](https://i.ibb.co/Y0S6cHv/Homepage-administrator.png)
 
-### Sign-up:
+### Create Account:
 ![SignUp](https://i.ibb.co/xHKHd0H/Sign-up.png)
 
 ### Login:
@@ -45,7 +45,7 @@ Version: 1
 ### Administrator Homepage:
 ![Homepage-administrator-mobile](https://i.ibb.co/XXGzb9C/Homepage-administrator-mobile.png)
 
-### Sign-up:
+### Create Account :
 ![Sign-up-mobile](https://i.ibb.co/NKX9vvH/Sign-up-mobile.png)
 
 ### Login:
