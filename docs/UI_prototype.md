@@ -17,7 +17,7 @@ Version: 1
 ### Create Account:
 ![SignUp](https://i.ibb.co/xHKHd0H/Sign-up.png)
 
-### Login:
+### Account Management:
 ![Login Page](https://i.ibb.co/RHnD25k/Login.png)
 
 ### Add Gas Station:
@@ -45,10 +45,10 @@ Version: 1
 ### Administrator Homepage:
 ![Homepage-administrator-mobile](https://i.ibb.co/XXGzb9C/Homepage-administrator-mobile.png)
 
-### Create Account :
+### Create Account:
 ![Sign-up-mobile](https://i.ibb.co/NKX9vvH/Sign-up-mobile.png)
 
-### Login:
+### Account Management:
 ![Login-mobile](https://i.ibb.co/p3WGjWQ/Login-mobile.png)
 
 ### Add Gas Station: 
