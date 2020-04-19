@@ -369,7 +369,7 @@ gss -- FR7
 |  Post condition     | Gas Station Report is sent to the Database |
 | Step#        | Description  | 
 |  1	 | User selects Modify button on the speech bubble that appears |
-|  2	 | User selects the Send Closed Report button on the bubble speech |
+|  2	 | User presses the wrench icon near the Gas Station State icon |
 |  3	 | User fills the optional description popup |
 |  4	 | The Closed Report is sent to the Database in order to be validated by the Administrator|
 
