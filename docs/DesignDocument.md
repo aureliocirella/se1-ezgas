@@ -220,8 +220,153 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 # Low level design
 
-<Based on the official requirements and on the Spring Boot design guidelines, define the required classes (UML class diagram) of the back-end in the proper packages described in the high-level design section.>
+```plantuml
+@startuml
+package "Backend" {
 
+hide circle
+hide members
+
+
+
+package "it.polito.ezgas.converter" as pconv {
+Class PriceListConverter{
+
+    }
+Class UserConverter{
+
+    }
+Class CarSharingCompanyConverter{
+
+    }
+
+Class GasStationConverter{
+
+    }
+Class GeoPointConverter{
+
+    }
+}
+
+package "it.polito.ezgas.dto" as pd{
+Class LoginDto{
+
+    }
+  Class PriceListDto{
+
+    }
+Class UserDto{
+
+    }
+Class CarSharingCompanyDto{
+
+    }
+
+Class GasStationDto{
+
+    }
+Class GeoPointDto{
+
+    }
+}
+
+package "it.polito.ezgas.controller" as pcont {
+Class UserController{
+
+    }
+Class GasStationController{
+
+    }
+}
+
+package "it.polito.ezgas.service"  as ps {
+   interface "GasStationService"
+   interface "UserService"
+} 
+
+
+package "it.polito.ezgas.repository" as pr{
+  Class PriceListRepository{
+
+    }
+Class UserRepository{
+
+    }
+Class CarSharingCompanyRepository{
+
+    }
+
+Class GasStationRepository{
+
+    }
+Class GeoPointRepository{
+
+    }
+}
+
+package "it.polito.ezgas.entity" as pe{
+  class PriceList {
++ time_tag
++ dieselPrice
++ gasolinePridce
++ premiumDieselPrice
++ premiumGasolinePrice
++ LPGPrice
++ methanePrice
++ trustLevel
++ updateTrustLevelPriceList()
+}
+
+
+class user {
++ account_name
++ account_pwd
++ email
++ thrust_level
++ createUser()
++ modifyUser()
++ deleteUser()
++ getUserList()
++ searchUser()
++ manageRights()
++ createGasStation()
++ modifyGasStation()
++ deleteGasStation()
++ getGasStationList()
++ searchGasStationByGeoPoint()
++ searchGasStationByAddress()
++ showGasStationOnMap()
++ sortGasStationSetByFuel()
++ filterGasStationSetByFuel()
++ filterGasStationSetByCarSharing()
++ createAndAttachPriceList()
++ evaluatePriceList()
+}
+
+class CarSharingCompany {
++ name
+}
+
+class GasStation {
++ ID
++ name
++ address
++ brand
++ hasDiesel
++ hasGasoline
++ hasLPG
++ hasMethane
+}
+
+class GeoPoint {
++ latitude
++ longitude
+}
+}
+
+pcont -up.- ps
+@enduml
+```
 
 
 
@@ -235,8 +380,24 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 # Verification traceability matrix
 
-\<for each functional requirement from the requirement document, list which classes concur to implement it>
-
+|  |  |  |  |  |  |  |  |  |  |  | | |  |
+| :-------: |:-------:| :-----:| :-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| FR1.1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR1.2 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR1.3 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR1.4 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR2   |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR3.1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR3.2 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR3.3 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR4.1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR4.2 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR4.3 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR4.4 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR4.5 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR5.1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR5.2 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| FR5.3 |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
 
 
