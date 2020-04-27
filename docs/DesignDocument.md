@@ -314,6 +314,8 @@ package "it.polito.ezgas.entity" as pe{
 + LPGPrice
 + methanePrice
 + trustLevel
++ UserRef
++ evaluatePriceList()
 + updateTrustLevelPriceList()
 }
 
@@ -322,7 +324,8 @@ class user {
 + account_name
 + account_pwd
 + email
-+ thrust_level
++ trust_level
++ GeoPointRef
 + createUser()
 + modifyUser()
 + deleteUser()
@@ -340,7 +343,7 @@ class user {
 + filterGasStationSetByFuel()
 + filterGasStationSetByCarSharing()
 + createAndAttachPriceList()
-+ evaluatePriceList()
++ updateTrust()
 }
 
 class CarSharingCompany {
@@ -356,6 +359,9 @@ class GasStation {
 + hasGasoline
 + hasLPG
 + hasMethane
++ PriceListRef
++ CarSharingCompanyRef
++ GeoPointRef
 }
 
 class GeoPoint {
@@ -381,7 +387,7 @@ pcont -up.- ps
 # Verification traceability matrix
 
 |  | CarSharingCompany | GasStation | GeoPoint | PriceList | User |
-| :-------: |:-------:| :-----:| :-----:|:-----:|:-----:|
+| :------- |:-------:| :-----:| :-----:|:-----:|:-----:|
 | FR1.1 |  |  |  |  | x |
 | FR1.2 |  |  |  |  | x |
 | FR1.3 |  |  |  |  | x |
@@ -409,9 +415,32 @@ pcont -up.- ps
 
 
 # Verification sequence diagrams 
-\<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
+## Scenario 10.1
+```plantuml
+@startuml
+GUI -> GasStation: "1: select GasStation"
+GasStation -> PriceList: "2: getPrice()" 
+note right of PriceList: calls the default getters for each type of fuel
+PriceList -> GasStation: "3: return prices"
+GasStation -> GUI: "4: return prices"
+GUI -> User: "5: signal prices are right"
+User -> PriceList: "6: evaluatePriceList()"
+PriceList -> User: "7: updateTrust() (increase trust of User who submitted the PriceList)"
+User -> GUI: "8: received"
+@enduml
+```
 
+## Use case 6 
 
+```plantuml
+@startuml
+Note right of GUI: Actor: Admin
+GUI -> GasStation: "1: select GasStation"
+GasStation -> User: "2: deleteGasStation()" 
+User-> GasStation: "3: return"
+GasStation -> GUI: "4: received"
+@enduml
+```
 
 
 
