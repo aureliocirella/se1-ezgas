@@ -227,6 +227,8 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 # Low level design
 
+
+
 ```plantuml
 @startuml
 package "Backend" {
@@ -234,6 +236,43 @@ package "Backend" {
 
 
 note top of pkgserv: These classes methods\n are called by Controller\n classes methods. In a cascade fashion \nService class methods \ncall Repository class methods.
+package "it.polito.ezgas.service" as pkgserv{
+} 
+
+
+note top of pkgcontr: These classes methods call\nService class methods.
+
+package "it.polito.ezgas.controller" as pkgcontr {
+
+}
+
+
+package "it.polito.ezgas.converter" {
+}
+
+package "it.polito.ezgas.dto" {
+}
+
+package "it.polito.ezgas.entity" as pkgent {
+}
+
+note top of pkgrep: These classes methods\n are called by Service\n classes methods in order\n to access database 
+
+package "it.polito.ezgas.repository" as pkgrep {
+}
+
+
+pkgcontr ---> pkgserv 
+pkgserv ---> pkgrep
+pkgcontr ---> pkgent
+
+    
+}
+@enduml
+```
+
+```plantuml
+@startuml
 package "it.polito.ezgas.service" as pkgserv{
   
    class GasStationService {
@@ -262,11 +301,12 @@ package "it.polito.ezgas.service" as pkgserv{
 
 
    }
-} 
+}
+@enduml
+```
 
-
-note top of pkgcontr: These classes methods call\nService class methods.
-
+```plantuml
+@startuml
 package "it.polito.ezgas.controller" as pkgcontr {
  class GasStatioController {
        
@@ -298,8 +338,12 @@ package "it.polito.ezgas.controller" as pkgcontr {
 
 
 }
+@enduml
+```
 
 
+```plantuml
+@startuml
 package "it.polito.ezgas.converter" {
  class UserConverter{
 +UserDto convert(User source)
@@ -327,6 +371,16 @@ class GeoPointConverter {
 
 }
 
+UserConverter --"*" PriceReportConverter
+UserConverter "*"-- GeoPointConverter
+GasStationConverter -- GeoPointConverter
+GasStationConverter "*"--"0..1" CarSharingCompanyConverter
+PriceReportConverter "0..1"--GasStationConverter
+@enduml
+```
+
+```plantuml
+@startuml
 package "it.polito.ezgas.dto" {
 
     note top of IdPw : Class used to allow \nthe user to perform \nthe login, it's sent from \nthe front end
@@ -373,7 +427,18 @@ class GeoPointDto {
 + double longitude
 }
 }
+UserDto --"*" PriceReportDto
+UserDto "*"-- GeoPointDto
+GasStationDto -- GeoPointDto
+GasStationDto "*"--"0..1" CarSharingCompanyDto
+PriceReportDto "0..1"--GasStationDto
+UserDto -- LoginDto
+UserDto -- IdPw
+@enduml
+```
 
+```plantuml
+@startuml
 package "it.polito.ezgas.entity" as pkgent {
 
 
@@ -431,8 +496,17 @@ class GeoPoint {
 
 }
 
-note top of pkgrep: These classes methods\n are called by Service\n classes methods in order\n to access database 
 
+User --"*" PriceReport
+User "*"-- GeoPoint
+GasStation -- GeoPoint
+GasStation "*"--"0..1" CarSharingCompany
+PriceReport "0..1"--GasStation
+@enduml
+```
+
+```plantuml
+@startuml
 package "it.polito.ezgas.repository" as pkgrep {
 
 class PriceReportRepository{
@@ -450,6 +524,7 @@ class UserRepository {
        +LoginDto login(IdPw credentials)
        +Integer increaseUserReputation(Integer userId)
        +Integer decreaseUserReputation(Integer userId)
+       +manageRights(Integer userId, String newRole)
  
 }
 
@@ -466,9 +541,10 @@ class GasStationRepository {
     +List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
     +void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
     +List<GasStationDto> getGasStationByCarSharing(String carSharing)
-+ showGasStationOnMap(GasStationDto gsdto) ? 
-+ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity) ?
-+ updatePriceReportTrustLevel(GasStationDto gsdto) ?
++ showGasStationOnMap(GasStationDto gsdto) 
++ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity) 
++ updatePriceReportTrustLevel(GasStationDto gsdto) 
+
 
 }
 
@@ -481,40 +557,12 @@ class GeoPointRepository {
 
 }
 
-User --"*" PriceReport
-User "*"-- GeoPoint
-GasStation -- GeoPoint
-GasStation "*"--"0..1" CarSharingCompany
-PriceReport "0..1"--GasStation
-
-UserConverter --"*" PriceReportConverter
-UserConverter "*"-- GeoPointConverter
-GasStationConverter -- GeoPointConverter
-GasStationConverter "*"--"0..1" CarSharingCompanyConverter
-PriceReportConverter "0..1"--GasStationConverter
 
 UserRepository --"*" PriceReportRepository
 UserRepository "*"-- GeoPointRepository
 GasStationRepository -- GeoPointRepository
 GasStationRepository "*"--"0..1" CarSharingCompanyRepository
 PriceReportRepository "0..1"--GasStationRepository
-
-
-UserDto --"*" PriceReportDto
-UserDto "*"-- GeoPointDto
-GasStationDto -- GeoPointDto
-GasStationDto "*"--"0..1" CarSharingCompanyDto
-PriceReportDto "0..1"--GasStationDto
-UserDto -- LoginDto
-UserDto -- IdPw
-
-
-pkgcontr ---> pkgserv 
-pkgserv ---> pkgrep
-pkgcontr ---> pkgent
-
-    
-}
 @enduml
 ```
 
@@ -528,29 +576,27 @@ pkgcontr ---> pkgent
 
 
 
+
 # Verification traceability matrix
 
-|  | CarSharingCompany | GasStation | GeoPoint | PriceList | User |
-| :------- |:-------:| :-----:| :-----:|:-----:|:-----:|
-| FR1.1 |  |  |  |  | x |
-| FR1.2 |  |  |  |  | x |
-| FR1.3 |  |  |  |  | x |
-| FR1.4 |  |  |  |  | x |
-| FR2   |  |  |  |  | x |
-| FR3.1 |  | x | x |  | x |
-| FR3.2 |  | x | x |  | x |
-| FR3.3 |  | x | x |  | x |
-| FR4.1 |  | x | x |  | x |
-| FR4.2 |  | x | x |  | x |
-| FR4.3 |  | x | x |  | x |
-| FR4.4 |  | x |  |  | x |
-| FR4.5 | x | x |  |  | x |
-| FR5.1 |  |  |  | x | x |
-| FR5.2 |  |  |  | x | x |
-| FR5.3 |  |  |  | x | x |
-
-
-
+|  | UserController | GasSationController | UserService | GasStationService | UserRepository| GasStationRepository|User|GasStation|
+| :------- |:-------:| :-----:| :-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| FR1.1 | x |  | x |  | x| |||
+| FR1.2 | x |  | x |  | x| |||
+| FR1.3 | x |  | x |  | x| |||
+| FR1.4 | x |  | x |  | x| |||
+| FR2   | x |  |  |  | x | |x||
+| FR3.1 |  | x |  | x | | x|||
+| FR3.2 |  | x |  | x | | x|||
+| FR3.3 |  | x |  | x | | x|||
+| FR4.1 |  | x |  | x | | x|||
+| FR4.2 |  | x |  | x | | x|||
+| FR4.3 |  | x |  | x | | x|||
+| FR4.4 |  | x |  | x | | x|||
+| FR4.5 |  | x |  | x | | x|||
+| FR5.1 |  | x |  | x | | x|||
+| FR5.2 |  | x |  |  | | x||x|
+| FR5.3 |  | x |  |  | | x||x|
 
 
 
