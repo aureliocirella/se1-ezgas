@@ -247,10 +247,10 @@ package "it.polito.ezgas.controller" as pkgcontr {
 }
 
 
-package "it.polito.ezgas.converter" {
+package "it.polito.ezgas.converter" as pkgconv{
 }
 
-package "it.polito.ezgas.dto" {
+package "it.polito.ezgas.dto" as pkgdto {
 }
 
 package "it.polito.ezgas.entity" as pkgent {
@@ -264,6 +264,9 @@ package "it.polito.ezgas.repository" as pkgrep {
 
 pkgcontr ---> pkgserv 
 pkgserv ---> pkgrep
+pkgent ---> pkgrep
+pkgent ---> pkgconv
+pkgconv ---> pkgdto
 pkgcontr ---> pkgent
 
     
@@ -608,15 +611,18 @@ PriceReportRepository "0..1"--GasStationRepository
 ## Scenario 10.1
 ```plantuml
 @startuml
-GUI -> GasStation: "1: select GasStation"
-GasStation -> PriceList: "2: getPrice()" 
-note right of PriceList: calls the default getters for each type of fuel
-PriceList -> GasStation: "3: return prices"
-GasStation -> GUI: "4: return prices"
-GUI -> User: "5: signal prices are right"
-User -> PriceList: "6: evaluatePriceList()"
-PriceList -> User: "7: updateTrust() (increase trust of User who submitted the PriceList)"
-User -> GUI: "8: received"
+GasStationController -> GasStationService: getGasStationById()
+GasStationService -> GasStationRepo.: getGasStationById()
+GasStationRepo. -> GasStationController: return GasStationDto
+GasStationController -> GasStation: evaluatePriceReport()
+GasStation -> GasStationRepo.: evaluatePriceReport()
+GasStationService -> UserService: getUserById()
+UserService -> UserRepository : getUserById()
+UserRepository -> UserService: return UserDto
+UserService -> UserRepository: increase/decreaseUserReputation()
+GasStationService -> GasStation: updatePriceReportTrustLevel()
+GasStation -> GasStationRepo.: updatePriceReportTrustLevel()
+
 @enduml
 ```
 
@@ -624,11 +630,12 @@ User -> GUI: "8: received"
 
 ```plantuml
 @startuml
-Note right of GUI: Actor: Admin
-GUI -> GasStation: "1: select GasStation"
-GasStation -> User: "2: deleteGasStation()" 
-User-> GasStation: "3: return"
-GasStation -> GUI: "4: received"
+
+GasStationController -> GasStationService: getGasStationById()
+GasStationService -> GasStationRepo.: getGasStationById()
+GasStationRepo. -> GasStationController: return GasStationDto
+GasStationController -> GasStationService: deleteGasStation()
+GasStationService -> GasStationRepo.: deleteGasStation()
 @enduml
 ```
 
