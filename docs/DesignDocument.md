@@ -1,11 +1,11 @@
 # Design Document 
 
 
-Authors: 
+Authors: Aurelio Cirella, Behnam Lotfi, Federica Giorgione, Lorenzo Cardone
 
-Date:
+Date: 01/05/2020
 
-Version:
+Version: 1
 
 
 # Contents
@@ -253,10 +253,11 @@ package "it.polito.ezgas.converter" as pkgconv{
 package "it.polito.ezgas.dto" as pkgdto {
 }
 
+note top of pkgent: Here are implemented\n all those methods needed\n but not implemented in Service
 package "it.polito.ezgas.entity" as pkgent {
 }
 
-note top of pkgrep: These classes methods\n are called by Service\n classes methods in order\n to access database 
+note top of pkgrep: These classes methods\n are called by Service\n and Enity classes\n methods in order to access\n database 
 
 package "it.polito.ezgas.repository" as pkgrep {
 }
@@ -394,7 +395,6 @@ package "it.polito.ezgas.dto" {
     note top of LoginDto : Class used to allow \nthe system to get user \ndetails using its userId
     class LoginDto{
         +Integer userId
-        //other attributes should be added
 
     }
     class UserDto{
@@ -608,7 +608,7 @@ PriceReportRepository "0..1"--GasStationRepository
 
 
 # Verification sequence diagrams 
-## Scenario 10.1
+## Scenario 10.1 - Evaluate price as correct
 ```plantuml
 @startuml
 GasStationController -> GasStationService: getGasStationById()
@@ -626,7 +626,7 @@ GasStation -> GasStationRepo.: updatePriceReportTrustLevel()
 @enduml
 ```
 
-## Use case 6 
+## Use case 6 - Delete Gas Station
 
 ```plantuml
 @startuml
