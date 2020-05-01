@@ -1,10 +1,10 @@
 # Project Estimation  
 
-Authors:
+Authors: Aurelio Cirella, Behnam Lotfi, Federica Giorgione, Lorenzo Cardone
 
-Date:
+Date: 01/05/2020
 
-Version:
+Version: 1
 
 # Contents
 
