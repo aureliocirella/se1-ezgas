@@ -1,19 +1,26 @@
 # Design Document 
 
 
-Authors: 
+Authors: Aurelio Cirella, Behnam Lotfi, Federica Giorgione, Lorenzo Cardone
 
-Date:
+Date: 01/05/2020
 
-Version:
+Version: 1
 
 
 # Contents
 
-- [High level design](#package-diagram)
-- [Low level design](#class-diagram)
+- [Design Document](#design-document)
+- [Contents](#contents)
+- [Instructions](#instructions)
+- [High level design](#high-level-design)
+  - [Front End](#front-end)
+  - [Back End](#back-end)
+- [Low level design](#low-level-design)
 - [Verification traceability matrix](#verification-traceability-matrix)
 - [Verification sequence diagrams](#verification-sequence-diagrams)
+  - [Scenario 10.1](#scenario-101)
+  - [Use case 6](#use-case-6)
 
 # Instructions
 
@@ -220,7 +227,347 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 # Low level design
 
-<Based on the official requirements and on the Spring Boot design guidelines, define the required classes (UML class diagram) of the back-end in the proper packages described in the high-level design section.>
+
+
+```plantuml
+@startuml
+package "Backend" {
+
+
+
+note top of pkgserv: These classes methods\n are called by Controller\n classes methods. In a cascade fashion \nService class methods \ncall Repository class methods.
+package "it.polito.ezgas.service" as pkgserv{
+} 
+
+
+note top of pkgcontr: These classes methods call\nService class methods.
+
+package "it.polito.ezgas.controller" as pkgcontr {
+
+}
+
+
+package "it.polito.ezgas.converter" as pkgconv{
+}
+
+package "it.polito.ezgas.dto" as pkgdto {
+}
+
+note top of pkgent: Here are implemented\n all those methods needed\n but not implemented in Service
+package "it.polito.ezgas.entity" as pkgent {
+}
+
+note top of pkgrep: These classes methods\n are called by Service\n and Enity classes\n methods in order to access\n database 
+
+package "it.polito.ezgas.repository" as pkgrep {
+}
+
+
+pkgcontr ---> pkgserv 
+pkgserv ---> pkgrep
+pkgent ---> pkgrep
+pkgent ---> pkgconv
+pkgconv ---> pkgdto
+pkgcontr ---> pkgent
+
+    
+}
+@enduml
+```
+
+```plantuml
+@startuml
+package "it.polito.ezgas.service" as pkgserv{
+  
+   class GasStationService {
+       
+    +GasStationDto getGasStationById(Integer gasStationId)
+    +GasStationDto saveGasStation(GasStationDto gasStationDto)
+    +List<GasStationDto> getAllGasStations()
+    +Boolean deleteGasStation(Integer gasStationId)
+    +List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+    +List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+    +List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+    +List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+    +void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+    +List<GasStationDto> getGasStationByCarSharing(String carSharing)
+
+    
+    }
+   class "UserService"{
+       +UserDto getUserById(Integer userId)
+       +UserDto saveUser(UserDto userDto)
+       +List<UserDto> getAllUsers()
+       +Boolean deleteUser(Integer userId)
+       +LoginDto login(IdPw credentials)
+       +Integer increaseUserReputation(Integer userId)
+       +Integer decreaseUserReputation(Integer userId)
+
+
+   }
+}
+@enduml
+```
+
+```plantuml
+@startuml
+package "it.polito.ezgas.controller" as pkgcontr {
+ class GasStatioController {
+       
+    +GasStationDto getGasStationById(Integer gasStationId)
+    +GasStationDto saveGasStation(GasStationDto gasStationDto)
+    +List<GasStationDto> getAllGasStations()
+    +Boolean deleteGasStation(Integer gasStationId)
+    +List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+    +List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+    +List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+    +List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+    +void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+    +List<GasStationDto> getGasStationByCarSharing(String carSharing)
++ showGasStationOnMap(GasStationDto gsdto)
++ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity)
++ updatePriceReportTrustLevel(GasStationDto gsdto)
+    
+    }
+   class "UserController"{
+       +UserDto getUserById(Integer userId)
+       +UserDto saveUser(UserDto userDto)
+       +List<UserDto> getAllUsers()
+       +Boolean deleteUser(Integer userId)
+       +LoginDto login(IdPw credentials)
+       +Integer increaseUserReputation(Integer userId)
+       +Integer decreaseUserReputation(Integer userId)
+       +manageRights(Integer userId, String newRole)
+   }
+
+
+}
+@enduml
+```
+
+
+```plantuml
+@startuml
+package "it.polito.ezgas.converter" {
+ class UserConverter{
++UserDto convert(User source)
++User convert(UserDto source)
+    }
+    class GasStationConverter{
++GasStationDto convert(GasStation source)
++GasStation convert(GasStationDto source)
+        
+    }
+    class PriceReportConverter{
++ PriceReportDto convert(PriceReport source)
++ PriceReportDto convert(PriceReportDto source)
+       
+    }
+class CarSharingCompanyConverter {
++ CarSharingCompanyDto convert(CarSharingCompany source)
++ CarSharingCompany convert(CarSharingCompanyDto source)
+
+}
+class GeoPointConverter {
++ GeoPointDto convert(GeoPoint source)
++ GeoPoint convert(GeoPointDto source)
+}
+
+}
+
+UserConverter --"*" PriceReportConverter
+UserConverter "*"-- GeoPointConverter
+GasStationConverter -- GeoPointConverter
+GasStationConverter "*"--"0..1" CarSharingCompanyConverter
+PriceReportConverter "0..1"--GasStationConverter
+@enduml
+```
+
+```plantuml
+@startuml
+package "it.polito.ezgas.dto" {
+
+    note top of IdPw : Class used to allow \nthe user to perform \nthe login, it's sent from \nthe front end
+    class IdPw{
+        +Integer userId
+        +String userPassword
+    }
+    note top of LoginDto : Class used to allow \nthe system to get user \ndetails using its userId
+    class LoginDto{
+        +Integer userId
+
+    }
+    class UserDto{
+        +Integer userId
++ manageRights(Integer userId, String newRole)
+         
+        
+    }
+    class GasStationDto{
+        +Integer gasStationId
+        +String gasolineType
+        +double lat
+        +double lon
+        +String carSharing
+        +PriceReport priceReportDto
++ showGasStationOnMap(GasStationDto gsdto)
++ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity)
++ updatePriceReportTrustLevel(GasStationDto gsdto)
+    }
+    class PriceReportDto{
+        +double dieselPrice
+        +double superPrice
+        +double superPlusPrice
+        +double gasPrice
+        +double methanePrice
+        +Integer userId
+    }
+class CarSharingCompanyDto {
++ String name
+}
+class GeoPointDto {
++ double latitude
++ double longitude
+}
+}
+UserDto --"*" PriceReportDto
+UserDto "*"-- GeoPointDto
+GasStationDto -- GeoPointDto
+GasStationDto "*"--"0..1" CarSharingCompanyDto
+PriceReportDto "0..1"--GasStationDto
+UserDto -- LoginDto
+UserDto -- IdPw
+@enduml
+```
+
+```plantuml
+@startuml
+package "it.polito.ezgas.entity" as pkgent {
+
+
+class PriceReport {
++Integer priceReportID
++double dieselPrice
++double superPrice
++double superPlusPrice
++double gasPrice
++double methanePrice
++Integer userId
+
+}
+
+
+
+note top of User:Spring SetRole method will be\nused to differentiate \ndifferent kind of users.
+
+
+
+
+class User {
++ String role
++ Integer userId
++ String userPassword
++ String email
++ Integer trustLevel
++ manageRights(Integer userId, String newRole)
+
+
+
+}
+
+
+
+class GasStation {
++Integer gasStationId
++String gasolineType
++double lat
++double lon
++String carSharing
++PriceReport priceReportDto
++ showGasStationOnMap(GasStationDto gsdto)
++ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity)
++ updatePriceReportTrustLevel(GasStationDto gsdto)
+}
+
+class CarSharingCompany {
++ String name
+}
+class GeoPoint {
++ double latitude
++ double longitude
+}
+
+}
+
+
+User --"*" PriceReport
+User "*"-- GeoPoint
+GasStation -- GeoPoint
+GasStation "*"--"0..1" CarSharingCompany
+PriceReport "0..1"--GasStation
+@enduml
+```
+
+```plantuml
+@startuml
+package "it.polito.ezgas.repository" as pkgrep {
+
+class PriceReportRepository{
+
+}
+
+
+class UserRepository {
+
+
+ +UserDto getUserById(Integer userId)
+       +UserDto saveUser(UserDto userDto)
+       +List<UserDto> getAllUsers()
+       +Boolean deleteUser(Integer userId)
+       +LoginDto login(IdPw credentials)
+       +Integer increaseUserReputation(Integer userId)
+       +Integer decreaseUserReputation(Integer userId)
+       +manageRights(Integer userId, String newRole)
+ 
+}
+
+
+
+class GasStationRepository {
+ +GasStationDto getGasStationById(Integer gasStationId)
+    +GasStationDto saveGasStation(GasStationDto gasStationDto)
+    +List<GasStationDto> getAllGasStations()
+    +Boolean deleteGasStation(Integer gasStationId)
+    +List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
+    +List<GasStationDto> getGasStationsByProximity(double lat, double lon)
+    +List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
+    +List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
+    +void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
+    +List<GasStationDto> getGasStationByCarSharing(String carSharing)
++ showGasStationOnMap(GasStationDto gsdto) 
++ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity) 
++ updatePriceReportTrustLevel(GasStationDto gsdto) 
+
+
+}
+
+class CarSharingCompanyRepository {
+
+}
+class GeoPointRepository {
+
+}
+
+}
+
+
+UserRepository --"*" PriceReportRepository
+UserRepository "*"-- GeoPointRepository
+GasStationRepository -- GeoPointRepository
+GasStationRepository "*"--"0..1" CarSharingCompanyRepository
+PriceReportRepository "0..1"--GasStationRepository
+@enduml
+```
 
 
 
@@ -235,11 +582,24 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 # Verification traceability matrix
 
-\<for each functional requirement from the requirement document, list which classes concur to implement it>
-
-
-
-
+|  | UserController | GasSationController | UserService | GasStationService | UserRepository| GasStationRepository|User|GasStation|
+| :------- |:-------:| :-----:| :-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| FR1.1 | x |  | x |  | x| |||
+| FR1.2 | x |  | x |  | x| |||
+| FR1.3 | x |  | x |  | x| |||
+| FR1.4 | x |  | x |  | x| |||
+| FR2   | x |  |  |  | x | |x||
+| FR3.1 |  | x |  | x | | x|||
+| FR3.2 |  | x |  | x | | x|||
+| FR3.3 |  | x |  | x | | x|||
+| FR4.1 |  | x |  | x | | x|||
+| FR4.2 |  | x |  | x | | x|||
+| FR4.3 |  | x |  | x | | x|||
+| FR4.4 |  | x |  | x | | x|||
+| FR4.5 |  | x |  | x | | x|||
+| FR5.1 |  | x |  | x | | x|||
+| FR5.2 |  | x |  |  | | x||x|
+| FR5.3 |  | x |  |  | | x||x|
 
 
 
@@ -248,9 +608,36 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 
 # Verification sequence diagrams 
-\<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
+## Scenario 10.1 - Evaluate price as correct
+```plantuml
+@startuml
+GasStationController -> GasStationService: getGasStationById()
+GasStationService -> GasStationRepo.: getGasStationById()
+GasStationRepo. -> GasStationController: return GasStationDto
+GasStationController -> GasStation: evaluatePriceReport()
+GasStation -> GasStationRepo.: evaluatePriceReport()
+GasStationService -> UserService: getUserById()
+UserService -> UserRepository : getUserById()
+UserRepository -> UserService: return UserDto
+UserService -> UserRepository: increase/decreaseUserReputation()
+GasStationService -> GasStation: updatePriceReportTrustLevel()
+GasStation -> GasStationRepo.: updatePriceReportTrustLevel()
 
+@enduml
+```
 
+## Use case 6 - Delete Gas Station
+
+```plantuml
+@startuml
+
+GasStationController -> GasStationService: getGasStationById()
+GasStationService -> GasStationRepo.: getGasStationById()
+GasStationRepo. -> GasStationController: return GasStationDto
+GasStationController -> GasStationService: deleteGasStation()
+GasStationService -> GasStationRepo.: deleteGasStation()
+@enduml
+```
 
 
 
