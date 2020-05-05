@@ -21,7 +21,7 @@ import it.polito.ezgas.service.GasStationService;
 import it.polito.ezgas.utils.Constants;
 
 
-@RequestMapping("/gasstation")
+@RequestMapping("/gasstation")		//This class is instantiated when /gasstation URL is called
 @RestController
 
 public class GasStationController {
