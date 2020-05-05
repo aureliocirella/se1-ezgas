@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity
+@Entity  //this annotation make this class a table in the database, each properties have its own annotation to define columns
 public class GasStation implements Serializable {
 	
 	

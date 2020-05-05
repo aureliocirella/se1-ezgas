@@ -11,6 +11,7 @@ import javax.persistence.Id;
 /**
  * Created by softeng on 27/4/2020.
  */
+
 @Entity
 public class User implements Serializable{
 
