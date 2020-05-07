@@ -1,6 +1,8 @@
 package it.polito.ezgas.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,15 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public LoginDto login(IdPw credentials) throws InvalidLoginDataException {
-		// TODO Auto-generated method stub
+		//System.out.println(credentials.getUser() + ", " + credentials.getPw());
+		for (Iterator<User> userIt = userRepository.findAll().iterator(); userIt.hasNext(); ) {
+			User user =  userIt.next();
+			//System.out.println("* " + user.getEmail() + ", " + user.getPassword());
+			if(user.getEmail().equals(credentials.getUser()) && user.getPassword().equals(credentials.getPw()) ) {
+				  //System.out.println("Found");
+				  return new LoginDto(user.getUserId(), user.getUserName(), UUID.randomUUID().toString(), user.getEmail(), user.getReputation());		 
+			 }
+		 }
 		return null;
 	}
 

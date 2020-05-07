@@ -1,5 +1,6 @@
 package it.polito.ezgas.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -33,10 +34,13 @@ public class GasStationServiceimpl implements GasStationService {
 	ModelMapper modelMapper = new ModelMapper(); 
 	@Override
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
-		// TODO Auto-generated method stub
-		return null;
+		GasStation gasStation = gasStationRepository.findOne(gasStationId);		
+		
+		if(gasStation != null)
+			return modelMapper.map(gasStation, GasStationDto.class);
+		else		
+			return null;
 	}
-
 	@Override
 	public GasStationDto saveGasStation(GasStationDto gasStationDto) throws PriceException, GPSDataException {
 		
@@ -49,8 +53,10 @@ public class GasStationServiceimpl implements GasStationService {
 		
 		
 		List<GasStation> listEntity= (List<GasStation>)gasStationRepository.findAll();
-		listEntity.forEach((gs)->{modelMapper.map(gs, GasStationDto.class);});
-		return null;
+	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
+		
+		listEntity.forEach((gs)->{gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class));});
+		return gasStationDtoList;
 	}
 
 	@Override
@@ -104,13 +110,12 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public List<GasStationDto> getGasStationByCarSharing(String carSharing) {
-		// TODO Auto-generated method stub
-		return null;
+	    List<GasStation> gasStationList = (List<GasStation>) gasStationRepository.findByCarSharing(carSharing);
+	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
+	    
+	    gasStationList.forEach((gs)->{gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class));});
+	    
+        return gasStationDtoList;
 	}
-	
-	
-	
-	
-	
 
 }
