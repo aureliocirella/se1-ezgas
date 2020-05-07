@@ -26,7 +26,7 @@ public class BootEZGasApplication {
 	public void setupDbWithData() throws SQLException{
 		
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-		conn.close();
+		
 		
 		
 		
@@ -38,8 +38,12 @@ public class BootEZGasApplication {
 			user.setUserId(1); 
 			userRepo.save(user); 
 			
-			User firsttry = userRepo.findOne(1); 
-			System.out.println("admin username: ");
+//			User firsttry = userRepo.findOne(1); 
+//			for(int i = 0; i<20; i++)
+//			{	
+//				System.out.println(firsttry.getEmail());
+//			}
+			conn.close();
 			
 			
 		//and then save it in the db
