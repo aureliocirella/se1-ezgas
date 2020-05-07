@@ -2,6 +2,8 @@ package it.polito.ezgas.service.impl;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import exception.GPSDataException;
@@ -10,7 +12,11 @@ import exception.InvalidGasTypeException;
 import exception.InvalidUserException;
 import exception.PriceException;
 import it.polito.ezgas.dto.GasStationDto;
+import it.polito.ezgas.entity.GasStation;
+import it.polito.ezgas.repository.GasStationRepository;
+import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.GasStationService;
+import javassist.bytecode.Descriptor.Iterator;
 
 /**
  * Created by softeng on 27/4/2020.
@@ -18,6 +24,13 @@ import it.polito.ezgas.service.GasStationService;
 @Service
 public class GasStationServiceimpl implements GasStationService {
 
+	@Autowired 
+	GasStationRepository gasStationRepository; 
+	
+	@Autowired
+	UserRepository userRepository; 
+
+	ModelMapper modelMapper = new ModelMapper(); 
 	@Override
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
 		// TODO Auto-generated method stub
@@ -26,13 +39,17 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public GasStationDto saveGasStation(GasStationDto gasStationDto) throws PriceException, GPSDataException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		gasStationRepository.save(modelMapper.map(gasStationDto, GasStation.class)); 
+		return gasStationDto;
 	}
 
 	@Override
 	public List<GasStationDto> getAllGasStations() {
-		// TODO Auto-generated method stub
+		
+		
+		List<GasStation> listEntity= (List<GasStation>)gasStationRepository.findAll();
+		listEntity.forEach((gs)->{modelMapper.map(gs, GasStationDto.class);});
 		return null;
 	}
 
@@ -72,7 +89,16 @@ public class GasStationServiceimpl implements GasStationService {
 	public void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice,
 			double gasPrice, double methanePrice, Integer userId)
 			throws InvalidGasStationException, PriceException, InvalidUserException {
-		// TODO Auto-generated method stub
+		
+		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
+		gasStationRepository.delete(gasStationId);
+		gasStation.setDieselPrice(dieselPrice);
+		gasStation.setSuperPrice(superPrice);
+		gasStation.setSuperPlusPrice(superPlusPrice);
+		gasStation.setGasPrice(gasPrice);
+		gasStation.setMethanePrice(methanePrice);
+		gasStation.setUser(userRepository.findOne(userId));
+		gasStationRepository.save(gasStation); 
 		
 	}
 
