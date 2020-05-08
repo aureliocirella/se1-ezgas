@@ -113,7 +113,7 @@ public class GasStationServiceimpl implements GasStationService {
 	    List<GasStation> gasStationList = (List<GasStation>) gasStationRepository.findByCarSharing(carSharing);
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
 	    
-	    gasStationList.forEach((gs)->{gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class));});
+	    gasStationList.forEach((gs)->{gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class)); System.out.println(gs.getGasStationName());});
 	    
         return gasStationDtoList;
 	}
