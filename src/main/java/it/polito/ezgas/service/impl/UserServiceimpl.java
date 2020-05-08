@@ -64,7 +64,7 @@ public class UserServiceimpl implements UserService {
 			//System.out.println("* " + user.getEmail() + ", " + user.getPassword());
 			if(user.getEmail().equals(credentials.getUser()) && user.getPassword().equals(credentials.getPw()) ) {
 				  //System.out.println("Found");
-				  return new LoginDto(user.getUserId(), user.getUserName(), UUID.randomUUID().toString(), user.getEmail(), user.getReputation());		 
+				  return modelMapper.map(user, LoginDto.class);		 
 			 }
 		 }
 		return null;
