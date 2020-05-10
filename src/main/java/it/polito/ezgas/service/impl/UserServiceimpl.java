@@ -3,6 +3,7 @@ package it.polito.ezgas.service.impl;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import exception.InvalidUserException;
 import it.polito.ezgas.dto.IdPw;
 import it.polito.ezgas.dto.LoginDto;
 import it.polito.ezgas.dto.UserDto;
+import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.UserService;
@@ -46,14 +48,21 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public List<UserDto> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return ((List<User>) userRepository.findAll())
+		        .stream()
+		        .map(source-> modelMapper.map(source,UserDto.class))
+		        .collect(Collectors.toList());
 	}
 
 	@Override
 	public Boolean deleteUser(Integer userId) throws InvalidUserException {
-		// TODO Auto-generated method stub
-		return null;
+		if(  userRepository.exists(userId)) {
+			 userRepository.delete(userId);			
+			  return true;
+		}
+		else
+	 
+		return false;
 	}
 
 	@Override
