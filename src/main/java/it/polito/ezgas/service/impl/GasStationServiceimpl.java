@@ -2,6 +2,7 @@ package it.polito.ezgas.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+ 
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +74,25 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public List<GasStationDto> getGasStationsByGasolineType(String gasolinetype) throws InvalidGasTypeException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		boolean hasDiesel =(gasolinetype.contains("Disel"))?true:false;
+		boolean hasSuper=(gasolinetype.contains("Super"))?true:false; 
+        boolean hasSuperPlus=(gasolinetype.contains("SuperPlus"))?true:false;
+        boolean hasGas=(gasolinetype.contains("Gas"))?true:false; 
+        boolean hasMethane=(gasolinetype.contains("Methane"))?true:false;
+ 
+	 List<GasStation> gasStationList = (List<GasStation>) gasStationRepository.findByHasDieselOrHasSuperOrHasSuperPlusOrHasGasOrHasMethane( hasDiesel,hasSuper,hasSuperPlus,hasGas,hasMethane);
+	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
+	    gasStationList.forEach((gs)->{
+		  gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class)); 
+	  System.out.println(gs.getGasStationName());
+	  });
+		   
+        // List<GasStationDto> postDTOList = modelMapper.map(gslist, listType);
+         return gasStationDtoList;
+		   
+ 
+		 
 	}
 
 	@Override
