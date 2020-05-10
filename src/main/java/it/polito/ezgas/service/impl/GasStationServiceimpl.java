@@ -61,8 +61,14 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public Boolean deleteGasStation(Integer gasStationId) throws InvalidGasStationException {
-		// TODO Auto-generated method stub
-		return null;
+		if(  gasStationRepository.exists(gasStationId)) {
+			gasStationRepository.delete(gasStationId);			
+			  return true;
+		}
+		else
+	 
+		return false;
+		
 	}
 
 	@Override
