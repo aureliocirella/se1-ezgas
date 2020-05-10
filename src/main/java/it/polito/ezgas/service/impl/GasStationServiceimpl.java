@@ -102,6 +102,9 @@ public class GasStationServiceimpl implements GasStationService {
 	}
 
 	private static double distance(double lat1, double lon1, double lat2, double lon2) {
+		if (lat1 == lat2 && lon1 == lon2) {
+			return 0.0;
+		}
 		double EarthRadius = 6371e3; // metres
 		double φ1 = lat1 * Math.PI/180; // φ, λ in radians
 		double φ2 = lat2 * Math.PI/180;
@@ -119,13 +122,19 @@ public class GasStationServiceimpl implements GasStationService {
 	@Override
 	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype,
 			String carsharing) throws InvalidGasTypeException, GPSDataException {
+		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < 180.0) {
+			throw new GPSDataException("Invalid coordinates!");
+		}
 		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
 		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
 		gasStationDtoList.forEach((gs)->
 		{
-			if(distance(lat, lon, gs.getLat(), gs.getLon())<1.0e3)
+			if(gs.getCarSharing()==carsharing)
 			{
-				gasStationDtoReturnList.add(gs);
+				if(distance(lat, lon, gs.getLat(), gs.getLon())<1.0e3)
+				{
+					gasStationDtoReturnList.add(gs);
+				}
 			}
 		});
 		return gasStationDtoReturnList;
