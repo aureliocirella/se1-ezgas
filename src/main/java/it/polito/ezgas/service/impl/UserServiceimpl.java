@@ -79,16 +79,29 @@ public class UserServiceimpl implements UserService {
 		return null;
 	}
 
+	private Integer changeUserReputation(Integer userId, Integer var) throws InvalidUserException {
+		if(userRepository.exists(userId)) {
+			User user = userRepository.findOne(userId);
+			UserDto userDto = modelMapper.map(user, UserDto.class);
+			int reputation = userDto.getReputation() + 1;
+			userDto.setReputation(reputation);
+			userRepository.delete(userId);
+			userRepository.save(modelMapper.map(userDto, User.class));
+			return reputation;
+		}
+		else {
+			throw new InvalidUserException("Selected user does not exist!");
+		}
+	}
+	
 	@Override
 	public Integer increaseUserReputation(Integer userId) throws InvalidUserException {
-		// TODO Auto-generated method stub
-		return null;
+		return changeUserReputation(userId, 1);
 	}
 
 	@Override
 	public Integer decreaseUserReputation(Integer userId) throws InvalidUserException {
-		// TODO Auto-generated method stub
-		return null;
+		return changeUserReputation(userId, -1);
 	}
 	
 }
