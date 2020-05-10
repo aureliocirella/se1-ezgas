@@ -101,18 +101,49 @@ public class GasStationServiceimpl implements GasStationService {
 		return null;
 	}
 
+	private static double distance(double lat1, double lon1, double lat2, double lon2) {
+		double EarthRadius = 6371e3; // metres
+		double φ1 = lat1 * Math.PI/180; // φ, λ in radians
+		double φ2 = lat2 * Math.PI/180;
+		double Δφ = (lat2-lat1) * Math.PI/180;
+		double Δλ = (lon2-lon1) * Math.PI/180;
+
+		double a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+		          Math.cos(φ1) * Math.cos(φ2) *
+		          Math.sin(Δλ/2) * Math.sin(Δλ/2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		
+		return EarthRadius * c;
+	}
+	
 	@Override
 	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype,
 			String carsharing) throws InvalidGasTypeException, GPSDataException {
-		// TODO Auto-generated method stub
-		return null;
+		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
+		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
+		gasStationDtoList.forEach((gs)->
+		{
+			if(distance(lat, lon, gs.getLat(), gs.getLon())<1.0e3)
+			{
+				gasStationDtoReturnList.add(gs);
+			}
+		});
+		return gasStationDtoReturnList;
 	}
 
 	@Override
 	public List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
 			throws InvalidGasTypeException {
-		// TODO Auto-generated method stub
-		return null;
+		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
+		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
+		gasStationDtoList.forEach((gs)->
+		{
+			if(gs.getCarSharing()==carsharing)
+			{
+				gasStationDtoReturnList.add(gs);
+			}
+		});
+		return gasStationDtoReturnList;
 	}
 
 	@Override
