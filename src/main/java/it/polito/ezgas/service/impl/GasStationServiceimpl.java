@@ -35,6 +35,7 @@ public class GasStationServiceimpl implements GasStationService {
 	ModelMapper modelMapper = new ModelMapper(); 
 	@Override
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
+		System.out.println("getGasStationById\ninput: " + gasStationId);
 		GasStation gasStation = gasStationRepository.findOne(gasStationId);		
 		
 		if(gasStation != null)
@@ -44,14 +45,14 @@ public class GasStationServiceimpl implements GasStationService {
 	}
 	@Override
 	public GasStationDto saveGasStation(GasStationDto gasStationDto) throws PriceException, GPSDataException {
-		
+		System.out.println("saveGasStation");
 		gasStationRepository.save(modelMapper.map(gasStationDto, GasStation.class)); 
 		return gasStationDto;
 	}
 
 	@Override
 	public List<GasStationDto> getAllGasStations() {
-		
+		System.out.println("getAllGasStations");
 		
 		List<GasStation> listEntity= (List<GasStation>)gasStationRepository.findAll();
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
@@ -62,6 +63,7 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public Boolean deleteGasStation(Integer gasStationId) throws InvalidGasStationException {
+		System.out.println("deleteGasStation");
 		if(  gasStationRepository.exists(gasStationId)) {
 			gasStationRepository.delete(gasStationId);			
 			  return true;
@@ -74,8 +76,8 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public List<GasStationDto> getGasStationsByGasolineType(String gasolinetype) throws InvalidGasTypeException {
-		
-		boolean hasDiesel =(gasolinetype.contains("Disel"))?true:false;
+		System.out.println("getGasStationsByGasolineType\ninput: " + gasolinetype);
+		boolean hasDiesel =(gasolinetype.contains("Diesel"))?true:false;
 		boolean hasSuper=(gasolinetype.contains("Super"))?true:false; 
         boolean hasSuperPlus=(gasolinetype.contains("SuperPlus"))?true:false;
         boolean hasGas=(gasolinetype.contains("Gas"))?true:false; 
@@ -85,7 +87,6 @@ public class GasStationServiceimpl implements GasStationService {
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
 	    gasStationList.forEach((gs)->{
 		  gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class)); 
-	  System.out.println(gs.getGasStationName());
 	  });
 		   
         // List<GasStationDto> postDTOList = modelMapper.map(gslist, listType);
@@ -97,8 +98,22 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public List<GasStationDto> getGasStationsByProximity(double lat, double lon) throws GPSDataException {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("getGasStationsByProximity\ninput: lat=" + lat + ", lon=" + lon);
+		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < -180.0) {
+			throw new GPSDataException("Invalid coordinates!");
+		}
+		List<GasStation> gasStationList= (List<GasStation>)gasStationRepository.findAll();
+		List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
+		
+		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
+		gasStationDtoList.forEach((gs)->
+		{
+			if(distance(lat, lon, gs.getLat(), gs.getLon())<1.0e3)
+			{
+				gasStationDtoReturnList.add(gs);
+			}
+		});
+		return gasStationDtoReturnList;
 	}
 
 	private static double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -122,7 +137,8 @@ public class GasStationServiceimpl implements GasStationService {
 	@Override
 	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype,
 			String carsharing) throws InvalidGasTypeException, GPSDataException {
-		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < 180.0) {
+		System.out.println("getGasStationsWithCoordinates\ninput: " + lat + ", " + lon + ", " + gasolinetype + ", " + carsharing);
+		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
 		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
@@ -143,6 +159,7 @@ public class GasStationServiceimpl implements GasStationService {
 	@Override
 	public List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
 			throws InvalidGasTypeException {
+		System.out.println("getGasStationsWithoutCoordinates\ninput: " + gasolinetype + ", " + carsharing);
 		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
 		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
 		gasStationDtoList.forEach((gs)->
@@ -159,6 +176,7 @@ public class GasStationServiceimpl implements GasStationService {
 	public void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice,
 			double gasPrice, double methanePrice, Integer userId)
 			throws InvalidGasStationException, PriceException, InvalidUserException {
+		System.out.println("setReport\ninput: " + gasStationId + ", " + dieselPrice + ", " + superPrice + ", " + gasPrice + ", " + methanePrice + ", " + userId);
 		
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		gasStationRepository.delete(gasStationId);
@@ -174,10 +192,12 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public List<GasStationDto> getGasStationByCarSharing(String carSharing) {
+		System.out.println("getGasStationByCarSharing\ninput: " + carSharing);
+
 	    List<GasStation> gasStationList = (List<GasStation>) gasStationRepository.findByCarSharing(carSharing);
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
 	    
-	    gasStationList.forEach((gs)->{gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class)); System.out.println(gs.getGasStationName());});
+	    gasStationList.forEach((gs)->{gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class)); System.out.println(gs.getGasStationName() + " " + carSharing);});
 	    
         return gasStationDtoList;
 	}

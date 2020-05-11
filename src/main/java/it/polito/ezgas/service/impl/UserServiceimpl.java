@@ -76,7 +76,7 @@ public class UserServiceimpl implements UserService {
 				  return modelMapper.map(user, LoginDto.class);		 
 			 }
 		 }
-		return null;
+		throw new InvalidLoginDataException("Login failed for " + credentials.getUser());
 	}
 
 	private Integer changeUserReputation(Integer userId, Integer var) throws InvalidUserException {
