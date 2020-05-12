@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
  
 
-import org.modelmapper.ModelMapper;
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.GasStationService;
-import javassist.bytecode.Descriptor.Iterator;
+ 
 
 /**
  * Created by softeng on 27/4/2020.

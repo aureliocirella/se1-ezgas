@@ -39,7 +39,7 @@ public class UserServiceimpl implements UserService {
 		{
 			throw new InvalidUserException("Invalid userId!"); 
 		}
-		if(userRepository.exists(userId))
+		if(!userRepository.exists(userId))
 		{
 			return null; 
 		}
@@ -66,13 +66,19 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public Boolean deleteUser(Integer userId) throws InvalidUserException {
-		if(  userRepository.exists(userId)) {
-			 userRepository.delete(userId);			
-			  return true;
+		 
+		if(userId<0)
+		{
+			throw new InvalidUserException("Invalid userId!"); 
 		}
-		else
-	 
-		return false;
+		if(!userRepository.exists(userId))
+		{
+			return null; 
+		}
+		 userRepository.delete(userId);	
+		  return true;
+		 
+		
 	}
 
 	@Override
