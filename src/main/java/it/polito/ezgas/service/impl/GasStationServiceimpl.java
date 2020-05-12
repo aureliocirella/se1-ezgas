@@ -13,6 +13,7 @@ import exception.InvalidGasStationException;
 import exception.InvalidGasTypeException;
 import exception.InvalidUserException;
 import exception.PriceException;
+import it.polito.ezgas.converter.GasStationConverter;
 import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.repository.GasStationRepository;
@@ -32,14 +33,17 @@ public class GasStationServiceimpl implements GasStationService {
 	@Autowired
 	UserRepository userRepository; 
 
-	ModelMapper modelMapper = new ModelMapper(); 
+	@Autowired 
+	GasStationConverter gasStationConverter; 
+	
+	
 	@Override
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
 		System.out.println("getGasStationById\ninput: " + gasStationId);
 		GasStation gasStation = gasStationRepository.findOne(gasStationId);		
 		
 		if(gasStation != null)
-			return modelMapper.map(gasStation, GasStationDto.class);
+			return gasStationConverter.map(gasStation, GasStationDto.class);
 		else		
 			return null;
 	}
@@ -54,7 +58,7 @@ public class GasStationServiceimpl implements GasStationService {
 		if (gasStationDto.getLat() > 90.0 || gasStationDto.getLat() < -90.0 || gasStationDto.getLon() > 180.0 || gasStationDto.getLon() < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
-		gasStationRepository.save(modelMapper.map(gasStationDto, GasStation.class)); 
+		gasStationRepository.save(gasStationConverter.map(gasStationDto, GasStation.class)); 
 		return gasStationDto;
 	}
 
@@ -65,7 +69,7 @@ public class GasStationServiceimpl implements GasStationService {
 		List<GasStation> listEntity= (List<GasStation>)gasStationRepository.findAll();
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
 		
-		listEntity.forEach((gs)->{gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class));});
+		listEntity.forEach((gs)->{gasStationDtoList.add(gasStationConverter.map(gs, GasStationDto.class));});
 		return gasStationDtoList;
 	}
 
@@ -94,7 +98,7 @@ public class GasStationServiceimpl implements GasStationService {
 	 List<GasStation> gasStationList = (List<GasStation>) gasStationRepository.findByHasDieselOrHasSuperOrHasSuperPlusOrHasGasOrHasMethane( hasDiesel,hasSuper,hasSuperPlus,hasGas,hasMethane);
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
 	    gasStationList.forEach((gs)->{
-		  gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class)); 
+		  gasStationDtoList.add(gasStationConverter.map(gs, GasStationDto.class)); 
 	  });
 		   
         // List<GasStationDto> postDTOList = modelMapper.map(gslist, listType);
@@ -217,7 +221,7 @@ public class GasStationServiceimpl implements GasStationService {
 	    List<GasStation> gasStationList = (List<GasStation>) gasStationRepository.findByCarSharing(carSharing);
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
 	    
-	    gasStationList.forEach((gs)->{gasStationDtoList.add(modelMapper.map(gs, GasStationDto.class)); System.out.println(gs.getGasStationName() + " " + carSharing);});
+	    gasStationList.forEach((gs)->{gasStationDtoList.add(gasStationConverter.map(gs, GasStationDto.class)); System.out.println(gs.getGasStationName() + " " + carSharing);});
 	    
         return gasStationDtoList;
 	}
