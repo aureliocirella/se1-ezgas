@@ -1,6 +1,7 @@
 package it.polito.ezgas.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -110,16 +111,16 @@ public class GasStationServiceimpl implements GasStationService {
         //Get the stream of gasstations and then filter by the gas type
 	 Stream<GasStation> gasStationList =   ((List<GasStation>) gasStationRepository.findAll()).stream();
 	 if(hasDiesel)
-		 gasStationList= gasStationList.filter(gs ->gs.getHasDiesel()==hasDiesel);
+		 gasStationList= gasStationList.filter(gs ->gs.getHasDiesel()==hasDiesel).sorted(Comparator.comparingDouble(gs->gs.getDieselPrice()));
 	 else if(hasSuper)
-	 gasStationList= gasStationList.filter(gs ->gs.getHasSuper()==hasSuper);
+	 gasStationList= gasStationList.filter(gs ->gs.getHasSuper()==hasSuper).sorted(Comparator.comparingDouble(gs->gs.getSuperPrice()));
 	else if(hasSuperPlus)
-		gasStationList= gasStationList.filter(gs ->gs.getHasSuperPlus()==hasSuperPlus);
+		gasStationList= gasStationList.filter(gs ->gs.getHasSuperPlus()==hasSuperPlus).sorted(Comparator.comparingDouble(gs->gs.getSuperPlusPrice()));
 	else if(hasGas)
-		gasStationList= gasStationList.filter(gs ->gs.getHasGas()==hasGas);
+		gasStationList= gasStationList.filter(gs ->gs.getHasGas()==hasGas).sorted(Comparator.comparingDouble(gs->gs.getGasPrice()));
 	else if(hasMethane)
-		gasStationList= gasStationList.filter(gs ->gs.getHasMethane()==hasMethane);
-	 
+		gasStationList= gasStationList.filter(gs ->gs.getHasMethane()==hasMethane).sorted(Comparator.comparingDouble(gs->gs.getMethanePrice()));
+	  
 	 // convert gasGtationDto list to gasStation list
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
 	    gasStationList.collect(Collectors.toList()).forEach((gs)->{
