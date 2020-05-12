@@ -2,9 +2,9 @@ package it.polito.ezgas.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
- 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
- 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ import exception.PriceException;
 import it.polito.ezgas.converter.GasStationConverter;
 import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.entity.GasStation;
+import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.GasStationService;
@@ -75,33 +76,53 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public Boolean deleteGasStation(Integer gasStationId) throws InvalidGasStationException {
-		System.out.println("deleteGasStation");
-		if(  gasStationRepository.exists(gasStationId)) {
-			gasStationRepository.delete(gasStationId);			
-			  return true;
+		 // In the case of negative id throw exception
+		if(gasStationId<0)
+		{
+			throw new InvalidGasStationException("Invalid userId!"); 
 		}
-		else
-	 
-		return false;
-		
+		 // Check if exists in db
+		if(!userRepository.exists(gasStationId))
+		{
+			return null; 
+		}
+		gasStationRepository.delete(gasStationId);			
+		return true;
 	}
 
 	@Override
 	public List<GasStationDto> getGasStationsByGasolineType(String gasolinetype) throws InvalidGasTypeException {
-		System.out.println("getGasStationsByGasolineType\ninput: " + gasolinetype);
-		boolean hasDiesel =(gasolinetype.contains("Diesel"))?true:false;
-		boolean hasSuper=(gasolinetype.contains("Super"))?true:false; 
-        boolean hasSuperPlus=(gasolinetype.contains("SuperPlus"))?true:false;
-        boolean hasGas=(gasolinetype.contains("Gas"))?true:false; 
-        boolean hasMethane=(gasolinetype.contains("Methane"))?true:false;
+		
+		//Findout the gastype and set the related boolean
+		boolean hasDiesel =(gasolinetype.toLowerCase().equals("diesel"))?true:false;
+		boolean hasSuper=(gasolinetype.toLowerCase().equals("super"))?true:false; 
+        boolean hasSuperPlus=(gasolinetype.toLowerCase().equals("superplus"))?true:false;
+        boolean hasGas=(gasolinetype.toLowerCase().equals("gas"))?true:false; 
+        boolean hasMethane=(gasolinetype.toLowerCase().equals("methane"))?true:false;
  
-	 List<GasStation> gasStationList = (List<GasStation>) gasStationRepository.findByHasDieselOrHasSuperOrHasSuperPlusOrHasGasOrHasMethane( hasDiesel,hasSuper,hasSuperPlus,hasGas,hasMethane);
+        // If it is not in gas types throw an exception
+        if(!(hasDiesel || hasSuper || hasSuperPlus || hasGas || hasMethane))
+         throw new InvalidGasTypeException("Invalid gasoline type!");
+       
+        //Get the stream of gasstations and then filter by the gas type
+	 Stream<GasStation> gasStationList =   ((List<GasStation>) gasStationRepository.findAll()).stream();
+	 if(hasDiesel)
+		 gasStationList= gasStationList.filter(gs ->gs.getHasDiesel()==hasDiesel);
+	 else if(hasSuper)
+	 gasStationList= gasStationList.filter(gs ->gs.getHasSuper()==hasSuper);
+	else if(hasSuperPlus)
+		gasStationList= gasStationList.filter(gs ->gs.getHasSuperPlus()==hasSuperPlus);
+	else if(hasGas)
+		gasStationList= gasStationList.filter(gs ->gs.getHasGas()==hasGas);
+	else if(hasMethane)
+		gasStationList= gasStationList.filter(gs ->gs.getHasMethane()==hasMethane);
+	 
+	 // convert gasGtationDto list to gasStation list
 	    List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
-	    gasStationList.forEach((gs)->{
+	    gasStationList.collect(Collectors.toList()).forEach((gs)->{
 		  gasStationDtoList.add(gasStationConverter.map(gs, GasStationDto.class)); 
 	  });
-		   
-        // List<GasStationDto> postDTOList = modelMapper.map(gslist, listType);
+
          return gasStationDtoList;
 		   
  
