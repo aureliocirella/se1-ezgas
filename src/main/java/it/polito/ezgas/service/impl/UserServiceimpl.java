@@ -2,7 +2,6 @@ package it.polito.ezgas.service.impl;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -16,7 +15,6 @@ import it.polito.ezgas.converter.UserConverter;
 import it.polito.ezgas.dto.IdPw;
 import it.polito.ezgas.dto.LoginDto;
 import it.polito.ezgas.dto.UserDto;
-import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.UserService;
@@ -58,6 +56,7 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public List<UserDto> getAllUsers() {
+		// get users list and convert it to userDTO list
 		return ((List<User>) userRepository.findAll())
 		        .stream()
 		        .map(source-> userConverter.map(source,UserDto.class))
@@ -66,11 +65,12 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public Boolean deleteUser(Integer userId) throws InvalidUserException {
-		 
+		 // In the case of negative id throw exception
 		if(userId<0)
 		{
 			throw new InvalidUserException("Invalid userId!"); 
 		}
+		 // Check if exists in db
 		if(!userRepository.exists(userId))
 		{
 			return null; 
