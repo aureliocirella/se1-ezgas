@@ -33,6 +33,14 @@ public class UserServiceimpl implements UserService {
 	@Override
 	public UserDto getUserById(Integer userId) throws InvalidUserException {
 		
+		if(userId<0)
+		{
+			throw new InvalidUserException("Invalid userId!"); 
+		}
+		if(userRepository.exists(userId))
+		{
+			return null; 
+		}
 		User us = userRepository.findOne(userId); 
 		return modelMapper.map(us, UserDto.class);
 		
