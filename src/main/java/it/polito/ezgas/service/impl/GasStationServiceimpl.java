@@ -46,6 +46,14 @@ public class GasStationServiceimpl implements GasStationService {
 	@Override
 	public GasStationDto saveGasStation(GasStationDto gasStationDto) throws PriceException, GPSDataException {
 		System.out.println("saveGasStation");
+		if(gasStationDto.getDieselPrice()<0||gasStationDto.getGasPrice()<0||gasStationDto.getMethanePrice()<0||
+				gasStationDto.getSuperPlusPrice()<0||gasStationDto.getSuperPrice()<0)
+		{
+			throw new PriceException("Prices must be positive!"); 
+		}
+		if (gasStationDto.getLat() > 90.0 || gasStationDto.getLat() < -90.0 || gasStationDto.getLon() > 180.0 || gasStationDto.getLon() < -180.0) {
+			throw new GPSDataException("Invalid coordinates!");
+		}
 		gasStationRepository.save(modelMapper.map(gasStationDto, GasStation.class)); 
 		return gasStationDto;
 	}
@@ -177,7 +185,19 @@ public class GasStationServiceimpl implements GasStationService {
 			double gasPrice, double methanePrice, Integer userId)
 			throws InvalidGasStationException, PriceException, InvalidUserException {
 		System.out.println("setReport\ninput: " + gasStationId + ", " + dieselPrice + ", " + superPrice + ", " + gasPrice + ", " + methanePrice + ", " + userId);
+		if(userId<0)
+		{
+			throw new InvalidUserException("Invalid userId!"); 
+		}
+		if(gasStationId<0)
+		{
+			throw new InvalidGasStationException("Invalid gasStationId!"); 
+		}
 		
+		if(dieselPrice<0||superPrice<0||superPlusPrice<0||gasPrice<0||methanePrice<0)
+		{
+			throw new PriceException("Prices must be positive!"); 
+		}
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		gasStationRepository.delete(gasStationId);
 		gasStation.setDieselPrice(dieselPrice);
