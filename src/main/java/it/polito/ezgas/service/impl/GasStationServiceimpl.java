@@ -132,6 +132,30 @@ public class GasStationServiceimpl implements GasStationService {
  
 		 
 	}
+	
+	private static List<GasStationDto> getGasStationByProximityFromList (double lat, double lon, List<GasStationDto> gasStationDtoList) {
+		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
+		gasStationDtoList.forEach((gs)->
+		{
+			if(distance(lat, lon, gs.getLat(), gs.getLon())<1.0e3)
+			{
+				gasStationDtoReturnList.add(gs);
+			}
+		});
+		return gasStationDtoReturnList;
+	}
+	
+	private static List<GasStationDto> getGasStationByCarsharingFromList (String carsharing, List<GasStationDto> gasStationDtoList) {
+		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
+		gasStationDtoList.forEach((gs)->
+		{
+			if(gs.getCarSharing()==carsharing)
+			{
+				gasStationDtoReturnList.add(gs);
+			}
+		});
+		return gasStationDtoReturnList;
+	}
 
 	@Override
 	public List<GasStationDto> getGasStationsByProximity(double lat, double lon) throws GPSDataException {
@@ -142,15 +166,12 @@ public class GasStationServiceimpl implements GasStationService {
 		List<GasStation> gasStationList= (List<GasStation>)gasStationRepository.findAll();
 		List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
 		
-		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
-		gasStationDtoList.forEach((gs)->
+		gasStationList.forEach((gs)->
 		{
-			if(distance(lat, lon, gs.getLat(), gs.getLon())<1.0e3)
-			{
-				gasStationDtoReturnList.add(gs);
-			}
+			gasStationDtoList.add(gasStationConverter.map(gs, GasStationDto.class));
 		});
-		return gasStationDtoReturnList;
+		
+		return getGasStationByProximityFromList(lat, lon, gasStationDtoList);
 	}
 
 	private static double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -178,19 +199,11 @@ public class GasStationServiceimpl implements GasStationService {
 		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
+		
 		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
-		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
-		gasStationDtoList.forEach((gs)->
-		{
-			if(gs.getCarSharing()==carsharing)
-			{
-				if(distance(lat, lon, gs.getLat(), gs.getLon())<1.0e3)
-				{
-					gasStationDtoReturnList.add(gs);
-				}
-			}
-		});
-		return gasStationDtoReturnList;
+		gasStationDtoList = getGasStationByCarsharingFromList(carsharing, gasStationDtoList);
+		
+		return getGasStationByProximityFromList(lat, lon, gasStationDtoList);
 	}
 
 	@Override
@@ -198,15 +211,7 @@ public class GasStationServiceimpl implements GasStationService {
 			throws InvalidGasTypeException {
 		System.out.println("getGasStationsWithoutCoordinates\ninput: " + gasolinetype + ", " + carsharing);
 		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
-		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
-		gasStationDtoList.forEach((gs)->
-		{
-			if(gs.getCarSharing()==carsharing)
-			{
-				gasStationDtoReturnList.add(gs);
-			}
-		});
-		return gasStationDtoReturnList;
+		return getGasStationByCarsharingFromList(carsharing, gasStationDtoList);
 	}
 
 	@Override
