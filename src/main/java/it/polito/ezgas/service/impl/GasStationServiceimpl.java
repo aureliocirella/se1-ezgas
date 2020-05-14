@@ -42,6 +42,9 @@ public class GasStationServiceimpl implements GasStationService {
 	@Override
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
 		System.out.println("getGasStationById\ninput: " + gasStationId);
+		if(gasStationId < 0)
+			throw new InvalidGasStationException("Invalid gasStationId!"); 
+		
 		GasStation gasStation = gasStationRepository.findOne(gasStationId);		
 		
 		if(gasStation != null)
