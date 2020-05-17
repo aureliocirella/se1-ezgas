@@ -26,7 +26,178 @@ Version:
     the set up of all Spring components
     >
 
- ### **Class *GasStationDto* - method *getReportDependability()***
+
+### **Class *GasStation* - method *setGasStationId(Integer gasStationId)***
+
+**Criteria for method *setGasStationId(Integer gasStationId)*:**
+	
+ - Range
+ - Sign
+  
+  
+**Predicates for method *setGasStationId(Integer gasStationId)*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+|  Range    |  gasStationId ≥ maxint    |
+|           |  gasStationId ≤ minint    |
+|           | minint ≤ gasStationId ≤ maxint    |
+|  Sign     |  gasStationId > 0         |
+|           |  gasStationId < 0         |
+
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | :---------: |
+|  Range    |  minint, maxint    |
+|  Sign     |  0        |
+
+
+
+**Combination of predicates**:
+
+
+| Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
+|:-------:|:-------:|:-------:|-------|-------|
+|gasStationId ≥ maxint|gasStationId > 0 |Valid|setGasStationId(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| |
+||gasStationId < 0 |Invalid|-| |
+|gasStationId ≤ maxint|gasStationId > 0 |Invalid|-| |
+||gasStationId < 0 |Valid|setGasStationId(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| |
+|minint ≤ gasStationId ≤ maxint|gasStationId > 0 |Valid|setGasStationId(4)-> 4| |
+||gasStationId < 0 |Valid|setGasStationId(-4)-> -4| |
+
+ 
+### **Class *GasStation* - method *getGasStationId()***
+
+**Criteria for method *getGasStationId()*:**
+	
+ - gasStationId is null
+  
+**Predicates for method *getGasStationId()*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+| gasStationId is null    |  True    |
+|                                |  False   |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+
+
+**Combination of predicates**:
+
+
+| gasStationId is null| Valid / Invalid | Description of the test case | JUnit test case 
+|:-------:|:-------:|-------|-------|
+|True|Valid|getGasStationId()-> NULL| |
+|False|Valid|getGasStationId()-> 3| |
+
+
+### **Class *GasStation* - method *setGasStationName(String gasStationName)***
+
+**Criteria for method *setGasStationName(String gasStationName)*:**
+	
+ - String length
+  
+  
+  
+  
+**Predicates for method *setGasStationName(String gasStationName)*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+|  String length    |  0 < s.length < s.maxlength   |
+|           | s.length > s.maxlength  |
+
+
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | :---------: |
+|  String length| 0, s.maxlenght|set
+
+
+
+**Combination of predicates**:
+
+
+| Length| Valid / Invalid | Description of the test case | JUnit test case |
+|:-------:|:-------:|:-------:|-------|-------|
+| 0 < s.length < s.maxlength  | Valid | setGasStationName("Agip") -> "Agip"||
+
+### **Class *GasStation* - method *getGasStationName()***
+
+**Criteria for method *getGasStationName()*:**
+	
+ - gasStationName is null
+  
+**Predicates for method *getGasStationName()*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+| gasStationName is null    |  True    |
+|                                |  False   |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+
+
+**Combination of predicates**:
+
+
+| gasStationName is null| Valid / Invalid | Description of the test case | JUnit test case 
+|:-------:|:-------:|-------|-------|
+|True|Valid|getGasStationName()-> NULL| |
+|False|Valid|getGasStationName()-> "Agip"| |
+
+
+### **Class *GasStation* - method *setReportDependability(double reportDependability)***
+
+**Criteria for method *setReportDependability(double reportDependability)*:**
+	
+ - Range
+ - Sign
+  
+  
+**Predicates for method *setReportDependability(double reportDependability)*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+|  Range    |  reportDependability ≥ maxint    |
+|           |  reportDependability ≤ minint    |
+|           | minint ≤ reportDependability ≤ maxint    |
+|  Sign     |  reportDependability > 0         |
+|           |  reportDependability < 0         |
+
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | :---------: |
+|  Range    |  minint, maxint    |
+|  Sign     |  0        |
+
+
+
+**Combination of predicates**:
+
+
+| Range|Sign| Valid / Invalid | Description of the test case | JUnit test case
+|:-------:|:-------:|:-------:|-------|-------|
+|reportDependability ≥ maxint|reportDependability > 0 |Valid|setReportDependability(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| |
+||reportDependability < 0 |Invalid|-| |
+|reportDependability ≤ maxint|reportDependability > 0 |Invalid|-| |
+||reportDependability < 0 |Valid|setReportDependability(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| |
+|minint ≤ reportDependability ≤ maxint|reportDependability > 0 |Valid|setReportDependability(4)-> 4| |
+||reportDependability < 0 |Valid|setReportDependability(-4)-> -4| |
+
+### **Class *GasStation* - method *getReportDependability()***
 
 **Criteria for method *getReportDependability()*:**
 	
@@ -48,82 +219,10 @@ Version:
 **Combination of predicates**:
 
 
-| ReportDependability is null| Valid / Invalid | Description of the test case | JUnit test case |
+| ReportDependability is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
 |True|Valid|getReportDependability()-> NULL| |
-|False|Valid|getReportDependability()-> "3"| |
-
-### **Class *GasStationDto* - method *setGasStationId(Integer gasStationId)***
-
-**Criteria for method *setGasStationId(Integer gasStationId)*:**
-	
- - Range
- - Sign
-  
-  
-**Predicates for method *setGasStationId(Integer gasStationId)*:**
-
-| Criteria | Predicate |
-| -------- | :---------: |
-|  Range    |  gasStationId ≥ maxint    |
-|           |  gasStationId ≤ minint    |
-|  Sign     |  gasStationId > 0         |
-|           |  gasStationId < 0         |
-
-
-**Boundaries**:
-
-| Criteria | Boundary values |
-| -------- | :---------: |
-|  Range    |  minint, maxint    |
-|  Sign     |  0        |
-
-
-
-**Combination of predicates**:
-
-
-| Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
-|:-------:|:-------:|:-------:|-------|-------|
-
-
-
-
-
-
-
-# White Box Unit Tests
-
-### Test cases definition
-    
-    <JUnit test classes must be in src/test/java/it/polito/ezgas>
-    <Report here all the created JUnit test cases, and the units/classes under test >
-    <For traceability write the class and method name that contains the test case>
-
-
-| Unit name | JUnit test case |
-|--|--|
-|||
-|||
-||||
-
-### Code coverage report
-
-    <Add here the screenshot report of the statement and branch coverage obtained using
-    the Eclemma tool. >
-
-
-### Loop coverage analysis
-
-    <Identify significant loops in the units and reports the test cases
-    developed to cover zero, one or multiple iterations >
-
-|Unit name | Loop rows | Number of iterations | JUnit test case |
-|---|---|---|---|
-|||||
-|||||
-||||||
-
+|False|Valid|getReportDependability()-> 3| |
 
 
 
@@ -241,7 +340,6 @@ Predicates are incompatible, no combination possible
 | Value of *admin* boolean | null |
 |          | false |
 |          | true |
-
 
 
 **Combination of predicates**:
