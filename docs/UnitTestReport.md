@@ -262,9 +262,9 @@ Version:
 
 | Length of *userName* string | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|>0|Valid|Object initialized with "Mario Rossi" | getUserName() -> "Mario Rossi"|
-|=0|Valid|Object initialized with "" | getUserName() -> ""|
-|null|Valid|Object initialized with null | getUserName() -> null|
+|>0|Valid|Object initialized with "Mario Rossi"; getUserName() -> "Mario Rossi"|testLoginDto1_1()|
+|=0|Valid|Object initialized with ""; getUserName() -> ""|testLoginDto1_2()|
+|null|Valid|Object initialized with null; getUserName() -> null|testLoginDto1_3()|
 |<0|Invalid|Object initialized with a string of negative length |Not feasible|
 |>max array size|Invalid|Object initialized with a string of length > max array size|Not feasible|
 
@@ -307,9 +307,9 @@ Version:
 
 | Length of *userName* string | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|>0|Valid|setUserName("Luigi Verdi") | getUserName() -> "Luigi Verdi"|
-|=0|Valid|setUserName("") | getUserName() -> ""|
-|null|Valid|setUserName(null) | getUserName() -> null|
+|>0|Valid|setUserName("Luigi Verdi"); getUserName() -> "Luigi Verdi"|testLoginDto1_4()|
+|=0|Valid|setUserName(""); getUserName() -> ""|testLoginDto1_5()|
+|null|Valid|setUserName(null); getUserName() -> null|testLoginDto1_6()|
 |<0|Invalid|Not feasible |Not feasible|
 |>max array size|Invalid|str = string of length > max array size|setUserName(str) -> java.lang.OutOfMemoryError: Requested array size exceeds VM limit|
 
@@ -353,7 +353,12 @@ Version:
 **Combination of predicates**:
 
 
-Predicates are incompatible, no combination possible
+| Value of *admin* boolean | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|Uninitialized|Valid| getAdmin() -> false|testLoginDto2_1()|
+|false|Valid| setAdmin(null); getAdmin() -> null | testLoginDto2_2()|
+|false|Valid| setAdmin(false); getAdmin() -> false | testLoginDto2_3()|
+|false|Valid| setAdmin(true); getAdmin() -> true | testLoginDto2_4()|
 
 
 
@@ -424,8 +429,10 @@ Predicates are incompatible, no combination possible
 
 | *lat1* | *lat2* | *lon1* | *lon2* | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|-------|-------|
-|*lat1*|*lat1*|*lon1*|*lon1*|Valid|Both sets of coordinates represent the same point|distance(0.0, 0.0, 0.0, 0.0) -> 0.0|
-|*lat1*|*lat1* + n * 360|*lon1*|*lon1* + n * 360|Valid|Both sets of coordinates represent the same point|distance(0.0, 0.0, 360.0, 360.0) -> 0.0|
+|*lat1*|*lat1*|*lon1*|*lon1*|Valid|distance(0.0, 0.0, 0.0, 0.0) -> 0.0|testGasStationServiceimpl1_1()|
+|*lat1*|*lat1* + n * 360|*lon1*|*lon1* + n * 360|Valid|distance(0.0, 180.0, 0.0, -180.0) -> 0.0|testGasStationServiceimpl1_2()|
+|*lat1*|!=*lat1* + n * 360|*lon1*|!=*lon1* + n * 360|Valid|distance(0.0, 1.0, 0.0, 0.0) -> !=0.0|testGasStationServiceimpl1_3()|
+
 
 
 
