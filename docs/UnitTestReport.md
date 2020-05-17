@@ -265,6 +265,35 @@ Version:
 |minint ≤ userId ≤ maxint|userId > 0 |Valid|setUserId(4)-> 4| testUser1_3|
 ||userId < 0 |Valid|setUserId(-4)-> -4| testUser1_4|
 
+
+### **Class *User* - method *getPassword()***
+
+**Criteria for method *getPassword()*:**
+	
+ - password is null
+  
+**Predicates for method *getPassword()*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+| password is null    |  True    |
+|                                |  False   |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+
+
+**Combination of predicates**:
+
+
+| password is null| Valid / Invalid | Description of the test case | JUnit test case 
+|:-------:|:-------:|-------|-------|
+|True|Valid|getPassword())-> NULL| testUser1_6|
+|False|Valid|getPassword()-> "testpass"| testUser1_7|
+
+
  ### **Class *GasStation* - method *getUserId()***
 
 **Criteria for method *getUserId()*:**
