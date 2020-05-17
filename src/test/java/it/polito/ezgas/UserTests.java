@@ -52,5 +52,21 @@ public class UserTests {
 		Integer id = gs.getUserId(); 
 		assertNull(id);
 	}
+	@Test
+	public void testUser1_6(){
+		User gs = new User(); 
+		
+		String pass = gs.getPassword(); 
+		assertNull(pass);
+	}
+	
+	@Test
+	public void testUser1_7(){
+		String inputpass = "testpass";
+		User gs = new User(); 
+		gs.setPassword(inputpass);
+		String outputpass = gs.getPassword(); 
+		assertTrue(outputpass == inputpass);
+	}
 
 }
