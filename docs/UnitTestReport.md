@@ -243,8 +243,6 @@ Version:
 | Criteria | Predicate |
 | -------- | --------- |
 | Length of *userName* string       | >0          |
-|          | =0          |
-|          | null          |
 
 
 
@@ -262,7 +260,13 @@ Version:
 **Combination of predicates**:
 
 
-Predicates are incompatible, no combination possible
+| Length of *userName* string | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|>0|Valid|Object initialized with "Mario Rossi" | getUserName() -> "Mario Rossi"|
+|=0|Valid|Object initialized with "" | getUserName() -> ""|
+|null|Valid|Object initialized with null | getUserName() -> null|
+|<0|Invalid|Object initialized with a string of negative length |Not feasible|
+|>max array size|Invalid|Object initialized with a string of length > max array size|Not feasible|
 
 
 
@@ -284,8 +288,6 @@ Predicates are incompatible, no combination possible
 | Criteria | Predicate |
 | -------- | --------- |
 | Length of *userName* string       | >0          |
-|          | =0          |
-|          | null          |
 
 
 
@@ -303,7 +305,13 @@ Predicates are incompatible, no combination possible
 **Combination of predicates**:
 
 
-Predicates are incompatible, no combination possible
+| Length of *userName* string | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|>0|Valid|setUserName("Luigi Verdi") | getUserName() -> "Luigi Verdi"|
+|=0|Valid|setUserName("") | getUserName() -> ""|
+|null|Valid|setUserName(null) | getUserName() -> null|
+|<0|Invalid|Not feasible |Not feasible|
+|>max array size|Invalid|str = string of length > max array size|setUserName(str) -> java.lang.OutOfMemoryError: Requested array size exceeds VM limit|
 
 
 
@@ -416,8 +424,8 @@ Predicates are incompatible, no combination possible
 
 | *lat1* | *lat2* | *lon1* | *lon2* | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|-------|-------|
-|*lat1*|*lat1*|*lon1*|*lon1*|Valid|Returns 0.0|Returns 0.0|
-|*lat1*|*lat1* + n * 360|*lon1*|*lon1* + n * 360|Valid|Returns 0.0|Returns 0.0|
+|*lat1*|*lat1*|*lon1*|*lon1*|Valid|Both sets of coordinates represent the same point|distance(0.0, 0.0, 0.0, 0.0) -> 0.0|
+|*lat1*|*lat1* + n * 360|*lon1*|*lon1* + n * 360|Valid|Both sets of coordinates represent the same point|distance(0.0, 0.0, 360.0, 360.0) -> 0.0|
 
 
 
