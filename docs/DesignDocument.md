@@ -465,24 +465,24 @@ GasStationRepository -- GasStationDto
 
 # Verification traceability matrix
 
-|  | UserController | GasSationController | UserService | GasStationService | UserRepository| GasStationRepository|User|GasStation|
-| :------- |:-------:| :-----:| :-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
-| FR1.1 | x |  | x |  | x| |||
-| FR1.2 | x |  | x |  | x| |||
-| FR1.3 | x |  | x |  | x| |||
-| FR1.4 | x |  | x |  | x| |||
-| FR2   | x |  |  |  | x | |x||
-| FR3.1 |  | x |  | x | | x|||
-| FR3.2 |  | x |  | x | | x|||
-| FR3.3 |  | x |  | x | | x|||
-| FR4.1 |  | x |  | x | | x|||
-| FR4.2 |  | x |  | x | | x|||
-| FR4.3 |  | x |  | x | | x|||
-| FR4.4 |  | x |  | x | | x|||
-| FR4.5 |  | x |  | x | | x|||
-| FR5.1 |  | x |  | x | | x|||
-| FR5.2 |  | x |  |  | | x||x|
-| FR5.3 |  | x |  |  | | x||x|
+|  | UserController | GasSationController | UserService | GasStationService | UserRepository| GasStationRepository|
+| :------- |:-------:| :-----:| :-----:|:-----:|:-----:|:-----:|
+| FR1.1 | x |  | x |  | x| 
+| FR1.2 | x |  | x |  | x| 
+| FR1.3 | x |  | x |  | x| 
+| FR1.4 | x |  | x |  | x|
+| FR2   | x |  | x |  | x|
+| FR3.1 |  | x |  | x | | x|
+| FR3.2 |  | x |  | x | | x|
+| FR3.3 |  | x |  | x | | x|
+| FR4.1 |  | x |  | x | | x|
+| FR4.2 |  | x |  | x | | x|
+| FR4.3 |  | x |  | x | | x|
+| FR4.4 |  | x |  | x | | x|
+| FR4.5 |  | x |  | x | | x|
+| FR5.1 |  | x |  | x | | x|
+| FR5.2 |  | x |  | x | | x|
+| FR5.3 |  | x |  | x | | x|
 
 
 
@@ -497,14 +497,14 @@ GasStationRepository -- GasStationDto
 GasStationController -> GasStationService: getGasStationById()
 GasStationService -> GasStationRepo.: getGasStationById()
 GasStationRepo. -> GasStationController: return GasStationDto
-GasStationController -> GasStation: evaluatePriceReport()
-GasStation -> GasStationRepo.: evaluatePriceReport()
+GasStationController -> GasStationRepo.: evaluatePriceReport()
+GasStation <- GasStationRepo.: evaluatePriceReport()
 GasStationService -> UserService: getUserById()
 UserService -> UserRepository : getUserById()
 UserRepository -> UserService: return UserDto
 UserService -> UserRepository: increase/decreaseUserReputation()
-GasStationService -> GasStation: updatePriceReportTrustLevel()
-GasStation -> GasStationRepo.: updatePriceReportTrustLevel()
+GasStationService -> GasStationRepo.: updatePriceReportTrustLevel()
+GasStation <- GasStationRepo.: updatePriceReportTrustLevel()
 
 @enduml
 ```
