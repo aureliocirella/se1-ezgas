@@ -63,6 +63,17 @@ public class IdPwTests {
 		assertTrue(outputpass == inputpass);
 	}
 	
+	@Test
+	public void testIdPw1_6(){
+		String inputpass = "testpass";
+		String inputuser = "testuser";
+		IdPw gs = new IdPw(inputuser,inputpass); 
+
+	 
+		assertTrue(gs.getUser() == inputuser);
+		assertTrue(gs.getPw() == inputpass);
+	}
+	
 	
 	
 }
