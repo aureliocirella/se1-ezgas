@@ -531,15 +531,41 @@ Version:
 ||testGasStationServiceimpl1_6|
 ||testGasStationServiceimpl1_7|
 ||testGasStationServiceimpl1_8|
+|GasStation.setGasStationId| testGasStation1_1|
+||testGasStation1_2|
+||testGasStation1_3|
+||testGasStation1_4|
+|GasStation.getGasStationId|testGasStation1_5|
+||testGasStation1_3|
+|GasStation.setGasStationName| testGasStation1_6|
+||testGasStation1_7|
+|GasStation.getGasStationName|testGasStation1_8|
+|| testGasStation1_6|
+|GasStation.setReportDependeability| testGasStation2_1|
+||testGasStation2_2|
+||testGasStation2_3|
+|GasStation.getReportDependeability|testGasStation2_4|
+||testGasStation2_2|
+|User.setUserId|testUser1_1|
+||testUser1_2|
+||testUser1_3|
+||testUser1_4|
+|User.getUserId|testUser1_5|
+||testUser1_3|
+
 
 ### Code coverage report
 
     <Add here the screenshot report of the statement and branch coverage obtained using
     the Eclemma tool. >
 LoginDto
-![Login Dto](LoginDto.png)
+![Login Dto](../coverage_img/LoginDto.png)
 GasStationServiceimpl.distance
-![Distance](Distance.png)
+![Distance](../coverage_img/Distance.png)
+GasStation 
+![GasStation](../coverage_img/GasStation.png)
+User 
+![User](../coverage_img/User.png)
 
 ### Loop coverage analysis
 
