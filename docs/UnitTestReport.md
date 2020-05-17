@@ -559,13 +559,13 @@ Version:
     <Add here the screenshot report of the statement and branch coverage obtained using
     the Eclemma tool. >
 LoginDto
-![Login Dto](../coverage_img/LoginDto.png)
+![Login Dto](coverage_img/LoginDto.png)
 GasStationServiceimpl.distance
-![Distance](../coverage_img/Distance.png)
+![Distance](coverage_img/Distance.png)
 GasStation 
-![GasStation](../coverage_img/GasStation.png)
+![GasStation](coverage_img/GasStation.png)
 User 
-![User](../coverage_img/User.png)
+![User](coverage_img/User.png)
 
 ### Loop coverage analysis
 
