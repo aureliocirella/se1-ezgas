@@ -26,51 +26,69 @@ Version:
     the set up of all Spring components
     >
 
- ### **Class *class_name* - method *name***
+ ### **Class *GasStationDto* - method *getReportDependability()***
 
-
-
-**Criteria for method *name*:**
+**Criteria for method *getReportDependability()*:**
 	
-
- - 
- - 
-
-
-
-
-**Predicates for method *name*:**
+ - ReportDependability is null
+  
+**Predicates for method *getReportDependability()*:**
 
 | Criteria | Predicate |
-| -------- | --------- |
-|          |           |
-|          |           |
-|          |           |
-|          |           |
-
-
-
-
+| -------- | :---------: |
+| ReportDependability is null    |  True    |
+|                                |  False   |
 
 **Boundaries**:
 
 | Criteria | Boundary values |
 | -------- | --------------- |
-|          |                 |
-|          |                 |
+
+
+**Combination of predicates**:
+
+
+| ReportDependability is null| Valid / Invalid | Description of the test case | JUnit test case |
+|:-------:|:-------:|-------|-------|
+|True|Valid|getReportDependability()-> NULL| |
+|False|Valid|getReportDependability()-> "3"| |
+
+### **Class *GasStationDto* - method *setGasStationId(Integer gasStationId)***
+
+**Criteria for method *setGasStationId(Integer gasStationId)*:**
+	
+ - Range
+ - Sign
+  
+  
+**Predicates for method *setGasStationId(Integer gasStationId)*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+|  Range    |  gasStationId ≥ maxint    |
+|           |  gasStationId ≤ minint    |
+|  Sign     |  gasStationId > 0         |
+|           |  gasStationId < 0         |
+
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | :---------: |
+|  Range    |  minint, maxint    |
+|  Sign     |  0        |
 
 
 
 **Combination of predicates**:
 
 
-| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
+| Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
+|:-------:|:-------:|:-------:|-------|-------|
+
+
+
+
 
 
 
