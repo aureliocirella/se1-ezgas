@@ -60,12 +60,12 @@ Version:
 
 | Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
 |:-------:|:-------:|:-------:|-------|-------|
-|gasStationId ≥ maxint|gasStationId > 0 |Valid|setGasStationId(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| |
+|gasStationId ≥ maxint|gasStationId > 0 |Valid|setGasStationId(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| testGasStation1_1 |
 ||gasStationId < 0 |Invalid|-| |
 |gasStationId ≤ maxint|gasStationId > 0 |Invalid|-| |
-||gasStationId < 0 |Valid|setGasStationId(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| |
-|minint ≤ gasStationId ≤ maxint|gasStationId > 0 |Valid|setGasStationId(4)-> 4| |
-||gasStationId < 0 |Valid|setGasStationId(-4)-> -4| |
+||gasStationId < 0 |Valid|setGasStationId(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| testGasStation1_2|
+|minint ≤ gasStationId ≤ maxint|gasStationId > 0 |Valid|setGasStationId(4)-> 4| testGasStation1_3|
+||gasStationId < 0 |Valid|setGasStationId(-4)-> -4| testGasStation1_4|
 
  
 ### **Class *GasStation* - method *getGasStationId()***
@@ -92,8 +92,8 @@ Version:
 
 | gasStationId is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getGasStationId()-> NULL| |
-|False|Valid|getGasStationId()-> 3| |
+|True|Valid|getGasStationId()-> NULL| testGasStation1_5 |
+|False|Valid|getGasStationId()-> 4| testGasStation1_3|
 
 
 ### **Class *GasStation* - method *setGasStationName(String gasStationName)***
@@ -118,7 +118,7 @@ Version:
 
 | Criteria | Boundary values |
 | -------- | :---------: |
-|  String length| 0, s.maxlenght|set
+|  String length| 0, s.maxlenght
 
 
 
@@ -127,7 +127,9 @@ Version:
 
 | Length| Valid / Invalid | Description of the test case | JUnit test case |
 |:-------:|:-------:|:-------:|-------|-------|
-| 0 < s.length < s.maxlength  | Valid | setGasStationName("Agip") -> "Agip"||
+| 0 < s.length < s.maxlength  | Valid | setGasStationName("Agip") -> "Agip"|testGasStation1_6|
+| s.length = 0  | Valid | setGasStationName("") -> ""|testGasStation1_7|
+
 
 ### **Class *GasStation* - method *getGasStationName()***
 
@@ -153,8 +155,8 @@ Version:
 
 | gasStationName is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getGasStationName()-> NULL| |
-|False|Valid|getGasStationName()-> "Agip"| |
+|True|Valid|getGasStationName()-> NULL|testGasStation1_8 |
+|False|Valid|getGasStationName()-> "Agip"| testGasStation1_6|
 
 
 ### **Class *GasStation* - method *setReportDependability(double reportDependability)***
@@ -190,12 +192,11 @@ Version:
 
 | Range|Sign| Valid / Invalid | Description of the test case | JUnit test case
 |:-------:|:-------:|:-------:|-------|-------|
-|reportDependability ≥ maxint|reportDependability > 0 |Valid|setReportDependability(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| |
+|reportDependability ≥ maxint|reportDependability > 0 |Valid|setReportDependability(Double.MAX_VALUE+1)-> Double.MAX_VALUE| testGasStation2_1|
 ||reportDependability < 0 |Invalid|-| |
 |reportDependability ≤ maxint|reportDependability > 0 |Invalid|-| |
-||reportDependability < 0 |Valid|setReportDependability(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| |
-|minint ≤ reportDependability ≤ maxint|reportDependability > 0 |Valid|setReportDependability(4)-> 4| |
-||reportDependability < 0 |Valid|setReportDependability(-4)-> -4| |
+|minint ≤ reportDependability ≤ maxint|reportDependability > 0 |Valid|setReportDependability(4.2)-> 4.2| testGasStation2_2|
+||reportDependability < 0 |Valid|setReportDependability(-4.2)-> -4.2|testGasStation2_3 |
 
 ### **Class *GasStation* - method *getReportDependability()***
 
@@ -221,8 +222,8 @@ Version:
 
 | ReportDependability is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getReportDependability()-> NULL| |
-|False|Valid|getReportDependability()-> 3| |
+|True|Valid|getReportDependability()-> NULL| testGasStation2_4 |
+|False|Valid|getReportDependability()-> 4.2| testGasStation2_2 |
 
 ### **Class *User* - method *setUserId(Integer userId)***
 
@@ -257,12 +258,12 @@ Version:
 
 | Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
 |:-------:|:-------:|:-------:|-------|-------|
-|userId ≥ maxint|userId > 0 |Valid|setUserId(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| |
+|userId ≥ maxint|userId > 0 |Valid|setUserId(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| testUser1_1|
 ||userId < 0 |Invalid|-| |
 |userId ≤ maxint|userId > 0 |Invalid|-| |
-||userId < 0 |Valid|setUserId(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| |
-|minint ≤ userId ≤ maxint|userId > 0 |Valid|setUserId(4)-> 4| |
-||userId < 0 |Valid|setUserId(-4)-> -4| |
+||userId < 0 |Valid|setUserId(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| testUser1_2|
+|minint ≤ userId ≤ maxint|userId > 0 |Valid|setUserId(4)-> 4| testUser1_3|
+||userId < 0 |Valid|setUserId(-4)-> -4| testUser1_4|
 
  ### **Class *GasStation* - method *getUserId()***
 
@@ -288,8 +289,8 @@ Version:
 
 | userId is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getUserId())-> NULL| |
-|False|Valid|getUserId()-> 3| |
+|True|Valid|getUserId())-> NULL| testUser1_5|
+|False|Valid|getUserId()-> 3| testUser1_3|
 
  ### **Class *LoginDto* - *getUserName***
 
