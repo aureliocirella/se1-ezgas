@@ -5,7 +5,8 @@ Authors: Aurelio Cirella, Behnam Lotfi, Federica Giorgione, Lorenzo Cardone
 
 Date: 01/05/2020
 
-Version: 1
+Version: 1.1
+
 
 
 # Contents
@@ -19,8 +20,8 @@ Version: 1
 - [Low level design](#low-level-design)
 - [Verification traceability matrix](#verification-traceability-matrix)
 - [Verification sequence diagrams](#verification-sequence-diagrams)
-  - [Scenario 10.1](#scenario-101)
-  - [Use case 6](#use-case-6)
+  - [Scenario 10.1 - Evaluate price as correct](#scenario-101---evaluate-price-as-correct)
+  - [Use case 6 - Delete Gas Station](#use-case-6---delete-gas-station)
 
 # Instructions
 
@@ -231,56 +232,14 @@ Contains Service classes that implement the Service Interfaces in the Service pa
 
 ```plantuml
 @startuml
+scale 0.6
+
+
 package "Backend" {
 
 
-
-note top of pkgserv: These classes methods\n are called by Controller\n classes methods. In a cascade fashion \nService class methods \ncall Repository class methods.
 package "it.polito.ezgas.service" as pkgserv{
-} 
-
-
-note top of pkgcontr: These classes methods call\nService class methods.
-
-package "it.polito.ezgas.controller" as pkgcontr {
-
-}
-
-
-package "it.polito.ezgas.converter" as pkgconv{
-}
-
-package "it.polito.ezgas.dto" as pkgdto {
-}
-
-note top of pkgent: Here are implemented\n all those methods needed\n but not implemented in Service
-package "it.polito.ezgas.entity" as pkgent {
-}
-
-note top of pkgrep: These classes methods\n are called by Service\n and Enity classes\n methods in order to access\n database 
-
-package "it.polito.ezgas.repository" as pkgrep {
-}
-
-
-pkgcontr ---> pkgserv 
-pkgserv ---> pkgrep
-pkgent ---> pkgrep
-pkgent ---> pkgconv
-pkgconv ---> pkgdto
-pkgcontr ---> pkgent
-
-    
-}
-@enduml
-```
-
-```plantuml
-@startuml
-package "it.polito.ezgas.service" as pkgserv{
-  
-   class GasStationService {
-       
+class GasStationService {
     +GasStationDto getGasStationById(Integer gasStationId)
     +GasStationDto saveGasStation(GasStationDto gasStationDto)
     +List<GasStationDto> getAllGasStations()
@@ -288,13 +247,9 @@ package "it.polito.ezgas.service" as pkgserv{
     +List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
     +List<GasStationDto> getGasStationsByProximity(double lat, double lon)
     +List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-    +List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
     +void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-    +List<GasStationDto> getGasStationByCarSharing(String carSharing)
-
-    
     }
-   class "UserService"{
+    class "UserService"{
        +UserDto getUserById(Integer userId)
        +UserDto saveUser(UserDto userDto)
        +List<UserDto> getAllUsers()
@@ -305,14 +260,21 @@ package "it.polito.ezgas.service" as pkgserv{
 
 
    }
-}
-@enduml
-```
+} 
 
-```plantuml
-@startuml
+package "it.polito.ezgas.serviceImpl" as pkgservimpl{
+class GasStationServiceImpl {
++List<GasStationDto> getGasStationByProximityFromList (double lat, double lon, List<GasStationDto> gasStationDtoList)
++List<GasStationDto> getGasStationByCarsharingFromList (String carsharing, List<GasStationDto> gasStationDtoList)
++distance(double lat1, double lon1, double lat2, double lon2) 
+    }
+    class "UserServiceImpl"{
+       
+   }
+} 
+
 package "it.polito.ezgas.controller" as pkgcontr {
- class GasStatioController {
+class GasStationController {
        
     +GasStationDto getGasStationById(Integer gasStationId)
     +GasStationDto saveGasStation(GasStationDto gasStationDto)
@@ -321,15 +283,13 @@ package "it.polito.ezgas.controller" as pkgcontr {
     +List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
     +List<GasStationDto> getGasStationsByProximity(double lat, double lon)
     +List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-    +List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
     +void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-    +List<GasStationDto> getGasStationByCarSharing(String carSharing)
-+ showGasStationOnMap(GasStationDto gsdto)
-+ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity)
-+ updatePriceReportTrustLevel(GasStationDto gsdto)
+
+
     
     }
    class "UserController"{
+
        +UserDto getUserById(Integer userId)
        +UserDto saveUser(UserDto userDto)
        +List<UserDto> getAllUsers()
@@ -337,139 +297,83 @@ package "it.polito.ezgas.controller" as pkgcontr {
        +LoginDto login(IdPw credentials)
        +Integer increaseUserReputation(Integer userId)
        +Integer decreaseUserReputation(Integer userId)
-       +manageRights(Integer userId, String newRole)
+      
    }
-
-
+ 
 }
-@enduml
-```
 
-
-```plantuml
-@startuml
-package "it.polito.ezgas.converter" {
- class UserConverter{
-+UserDto convert(User source)
-+User convert(UserDto source)
+package "it.polito.ezgas.converter" as pkgconv{
+class UserConverter{
++UserDto map(User source,UserDto target)
++User map(UserDto source, User target)
     }
-    class GasStationConverter{
-+GasStationDto convert(GasStation source)
-+GasStation convert(GasStationDto source)
+class GasStationConverter{
++GasStationDto map(GasStation source, GasStationDto target)
++GasStation map(GasStationDto source, GasStation target)
         
     }
-    class PriceReportConverter{
-+ PriceReportDto convert(PriceReport source)
-+ PriceReportDto convert(PriceReportDto source)
-       
+}
+
+package "it.polito.ezgas.dto" as pkgdto {
+class IdPw{
+        + String user
+        +String pw
     }
-class CarSharingCompanyConverter {
-+ CarSharingCompanyDto convert(CarSharingCompany source)
-+ CarSharingCompany convert(CarSharingCompanyDto source)
-
-}
-class GeoPointConverter {
-+ GeoPointDto convert(GeoPoint source)
-+ GeoPoint convert(GeoPointDto source)
-}
-
-}
-
-UserConverter --"*" PriceReportConverter
-UserConverter "*"-- GeoPointConverter
-GasStationConverter -- GeoPointConverter
-GasStationConverter "*"--"0..1" CarSharingCompanyConverter
-PriceReportConverter "0..1"--GasStationConverter
-@enduml
-```
-
-```plantuml
-@startuml
-package "it.polito.ezgas.dto" {
-
-    note top of IdPw : Class used to allow \nthe user to perform \nthe login, it's sent from \nthe front end
-    class IdPw{
-        +Integer userId
-        +String userPassword
-    }
-    note top of LoginDto : Class used to allow \nthe system to get user \ndetails using its userId
+    
     class LoginDto{
-        +Integer userId
+    +Integer userId
+    +String userName
+    +String password
+    +String email
+    +Integer reputation
+    +Boolean admin
+
+        
 
     }
     class UserDto{
-        +Integer userId
-+ manageRights(Integer userId, String newRole)
+    +Integer userId
+    +String userName
+    +String token
+    +String email
+    +Integer reputation
+    +Boolean admin
          
         
     }
     class GasStationDto{
         +Integer gasStationId
-        +String gasolineType
-        +double lat
-        +double lon
-        +String carSharing
-        +PriceReport priceReportDto
-+ showGasStationOnMap(GasStationDto gsdto)
-+ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity)
-+ updatePriceReportTrustLevel(GasStationDto gsdto)
+	+String gasStationName
+	+String gasStationAddress
+	+boolean hasDiesel
+    +boolean hasSuper
+    +boolean hasSuperPlus
+    +boolean hasGas
+    +boolean hasMethane
+    +private String carSharing
+    +double lat
+    +double lon
+    +double dieselPrice
+    +double superPrice
+    +double superPlusPrice
+    +double gasPrice
+    +double methanePrice
+    +Integer reportUser
+    +UserDto userDto
+    +String reportTimestamp
+    +double reportDependability
     }
-    class PriceReportDto{
-        +double dieselPrice
-        +double superPrice
-        +double superPlusPrice
-        +double gasPrice
-        +double methanePrice
-        +Integer userId
-    }
-class CarSharingCompanyDto {
-+ String name
 }
-class GeoPointDto {
-+ double latitude
-+ double longitude
-}
-}
-UserDto --"*" PriceReportDto
-UserDto "*"-- GeoPointDto
-GasStationDto -- GeoPointDto
-GasStationDto "*"--"0..1" CarSharingCompanyDto
-PriceReportDto "0..1"--GasStationDto
-UserDto -- LoginDto
-UserDto -- IdPw
-@enduml
-```
 
-```plantuml
-@startuml
 package "it.polito.ezgas.entity" as pkgent {
-
-
-class PriceReport {
-+Integer priceReportID
-+double dieselPrice
-+double superPrice
-+double superPlusPrice
-+double gasPrice
-+double methanePrice
-+Integer userId
-
-}
-
-
-
-note top of User:Spring SetRole method will be\nused to differentiate \ndifferent kind of users.
-
-
-
-
 class User {
-+ String role
-+ Integer userId
-+ String userPassword
-+ String email
-+ Integer trustLevel
-+ manageRights(Integer userId, String newRole)
+
++Integer userId
+    +String userName
+    +String password
+    +String email
+    +Integer reputation
+    +Boolean admin
 
 
 
@@ -479,93 +383,72 @@ class User {
 
 class GasStation {
 +Integer gasStationId
-+String gasolineType
-+double lat
-+double lon
-+String carSharing
-+PriceReport priceReportDto
-+ showGasStationOnMap(GasStationDto gsdto)
-+ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity)
-+ updatePriceReportTrustLevel(GasStationDto gsdto)
+	+String gasStationName
+	+String gasStationAddress
+	+boolean hasDiesel
+    +boolean hasSuper
+    +boolean hasSuperPlus
+    +boolean hasGas
+    +boolean hasMethane
+    +private String carSharing
+    +double lat
+    +double lon
+    +double dieselPrice
+    +double superPrice
+    +double superPlusPrice
+    +double gasPrice
+    +double methanePrice
+    +Integer reportUser
+    +UserDto userDto
+    +String reportTimestamp
+    +double reportDependability
+}
 }
 
-class CarSharingCompany {
-+ String name
-}
-class GeoPoint {
-+ double latitude
-+ double longitude
-}
-
-}
-
-
-User --"*" PriceReport
-User "*"-- GeoPoint
-GasStation -- GeoPoint
-GasStation "*"--"0..1" CarSharingCompany
-PriceReport "0..1"--GasStation
-@enduml
-```
-
-```plantuml
-@startuml
 package "it.polito.ezgas.repository" as pkgrep {
-
-class PriceReportRepository{
-
-}
-
-
 class UserRepository {
 
 
- +UserDto getUserById(Integer userId)
-       +UserDto saveUser(UserDto userDto)
-       +List<UserDto> getAllUsers()
-       +Boolean deleteUser(Integer userId)
-       +LoginDto login(IdPw credentials)
-       +Integer increaseUserReputation(Integer userId)
-       +Integer decreaseUserReputation(Integer userId)
-       +manageRights(Integer userId, String newRole)
  
 }
 
 
 
 class GasStationRepository {
- +GasStationDto getGasStationById(Integer gasStationId)
-    +GasStationDto saveGasStation(GasStationDto gasStationDto)
-    +List<GasStationDto> getAllGasStations()
-    +Boolean deleteGasStation(Integer gasStationId)
-    +List<GasStationDto> getGasStationsByGasolineType(String gasolinetype)
-    +List<GasStationDto> getGasStationsByProximity(double lat, double lon)
-    +List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype, String carsharing)
-    +List<GasStationDto> getGasStationsWithoutCoordinates(String gasolinetype, String carsharing)
-    +void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer userId)
-    +List<GasStationDto> getGasStationByCarSharing(String carSharing)
-+ showGasStationOnMap(GasStationDto gsdto) 
-+ evaluatePriceReport(GasStationDto gsdto, Boolean veridicity) 
-+ updatePriceReportTrustLevel(GasStationDto gsdto) 
-
++List<GasStation> findByCarSharing(String carSharing)
 
 }
-
-class CarSharingCompanyRepository {
-
-}
-class GeoPointRepository {
-
-}
-
+    
 }
 
 
-UserRepository --"*" PriceReportRepository
-UserRepository "*"-- GeoPointRepository
-GasStationRepository -- GeoPointRepository
-GasStationRepository "*"--"0..1" CarSharingCompanyRepository
-PriceReportRepository "0..1"--GasStationRepository
+GasStationController -- GasStationService
+GasStationService o-- GasStationServiceImpl
+GasStationServiceImpl -- GasStationRepository
+GasStationServiceImpl -- GasStationConverter
+GasStationServiceImpl -- GasStation
+GasStationServiceImpl -- GasStationDto
+
+UserController -- UserService
+UserService o-- UserServiceImpl
+UserServiceImpl -- UserRepository
+UserServiceImpl -- UserConverter
+UserServiceImpl -- User
+UserServiceImpl -- UserDto
+UserServiceImpl -- LoginDto
+UserServiceImpl -- IdPw
+
+User -- UserConverter
+UserConverter -- UserDto 
+UserConverter -- LoginDto 
+UserConverter -- IdPw 
+User -- UserRepository
+UserRepository -- UserDto
+
+GasStation -- GasStationConverter
+GasStationConverter -- GasStationDto 
+GasStation -- GasStationRepository
+GasStationRepository -- GasStationDto
 @enduml
 ```
 
