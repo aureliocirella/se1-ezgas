@@ -224,7 +224,72 @@ Version:
 |True|Valid|getReportDependability()-> NULL| |
 |False|Valid|getReportDependability()-> 3| |
 
+### **Class *User* - method *setUserId(Integer userId)***
 
+**Criteria for method *setUserId(Integer userId)*:**
+	
+ - Range
+ - Sign
+  
+  
+**Predicates for method *setUserId(Integer userId)*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+|  Range    |  userId ≥ maxint    |
+|           |  userId ≤ minint    |
+|           | minint ≤ userId ≤ maxint    |
+|  Sign     |  userId > 0         |
+|           |  userId < 0         |
+
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | :---------: |
+|  Range    |  minint, maxint    |
+|  Sign     |  0        |
+
+
+
+**Combination of predicates**:
+
+
+| Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
+|:-------:|:-------:|:-------:|-------|-------|
+|userId ≥ maxint|userId > 0 |Valid|setUserId(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| |
+||userId < 0 |Invalid|-| |
+|userId ≤ maxint|userId > 0 |Invalid|-| |
+||userId < 0 |Valid|setUserId(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| |
+|minint ≤ userId ≤ maxint|userId > 0 |Valid|setUserId(4)-> 4| |
+||userId < 0 |Valid|setUserId(-4)-> -4| |
+
+ ### **Class *GasStation* - method *getUserId()***
+
+**Criteria for method *getUserId()*:**
+	
+ - userId is null
+  
+**Predicates for method *getUserId()*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+| userId is null    |  True    |
+|                                |  False   |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+
+
+**Combination of predicates**:
+
+
+| userId is null| Valid / Invalid | Description of the test case | JUnit test case 
+|:-------:|:-------:|-------|-------|
+|True|Valid|getUserId())-> NULL| |
+|False|Valid|getUserId()-> 3| |
 
  ### **Class *LoginDto* - *getUserName***
 
