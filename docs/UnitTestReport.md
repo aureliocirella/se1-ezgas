@@ -325,6 +325,129 @@ Version:
 |False|Valid|getPassword()-> "testpass"| testUser1_7|
 
 
+### **Class *User* - *getEmail()***
+
+**Criteria for *getEmail()*:**
+
+ - Length of *email* string
+
+**Predicates for method *getEmail()*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+| Length of *email* string       | >0          |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+| Length of *email* string         | ""                |
+|          | null                |
+
+**Combination of predicates**:
+
+| Length of *email* string | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|>0|Valid|Object initialized with "mario.rossi@polito.it"; getEmail() -> "mario.rossi@polito.it"|testUser1_8()|
+|=0|Valid|Object initialized with ""; getEmail() -> ""|testUser1_9()|
+|null|Valid|Object initialized with null; getEmail() -> null|testUser1_10()|
+|<0|Invalid|Object initialized with a string of negative length |Not feasible|
+|>max array size|Invalid|Object initialized with a string of length > max array size|Not feasible|
+
+
+ ### **Class *User* - *setEmail(String email)***
+
+**Criteria for *setEmail(String email)*:**
+
+ - Length of *email* string
+
+**Predicates for method *setEmail(String email)*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+| Length of *email* string       | >0          |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+| Length of *email* string | "" |
+|          | null |
+
+**Combination of predicates**:
+
+| Length of *email* string | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|>0|Valid|setEmail("luigi.verdi@polito.it"); getEmail() -> "luigi.verdi@polito.it"|testUser1_11()|
+|=0|Valid|setEmail(""); getEmail() -> ""|testUser1_12()|
+|null|Valid|setEmail(null); getEmail() -> null|testUser1_13()|
+|<0|Invalid|Not feasible |Not feasible|
+|>max array size|Invalid|str = string of length > max array size|setEmail(str) -> java.lang.OutOfMemoryError: Requested array size exceeds VM limit|
+
+ 
+ ### **Class *User* - method *getReputation()***
+
+**Criteria for method *getReputation()*:**
+
+ - reputation is null
+  
+**Predicates for method *getReputation()*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+| reputation is null    |  True    |
+|                       |  False   |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+
+
+**Combination of predicates**:
+
+| reputation is null| Valid / Invalid | Description of the test case | JUnit test case 
+|:-------:|:-------:|-------|-------|
+|True|Valid|getReputation()-> NULL| testGasStation2_1 |
+|False|Valid|getReputation()-> 1| testGasStation2_2|
+
+
+
+### **Class *User* - method *setReputation(Integer reputation)***
+
+**Criteria for method *setReputation(Integer reputation)*:**
+
+   - Range
+   - Sign
+  
+**Predicates for method *setReputation(Integer reputation)*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+| Range    |  reputation < -5    |
+|                                |  -5 <= reputation <= 5   |
+|                                |  reputation > 5   |
+| Sign    |  reputation > 0    |
+|                                |  reputation < 0   |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | :---------: |
+|  Range    |  -5, 5    |
+|  Sign     |  0        |
+
+**Combination of predicates**:
+
+| Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
+|:-------:|:-------:|:-------:|-------|-------|
+|reputation ≥ 5|reputation > 0 |Valid|setReputation(5+1)| testUser2_3 |
+||reputation < 0 |Invalid|-| |
+|reputation ≤ -5|reputation > 0 |Invalid|-| |
+||reputation < 0 |Valid|setReputation(-5-1)| testUser2_4|
+|-5 ≤ reputation ≤ 5|reputation > 0 |Valid|setReputation(1) -> 1| testUser2_2|
+||reputation < 0 |Valid|setReputation(-1)-> -1| testUser2_5|
+
  ### **Class *LoginDto* - *getUserName***
 
 
