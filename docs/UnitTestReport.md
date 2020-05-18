@@ -1,10 +1,10 @@
 # Unit Testing Documentation
 
-Authors:
+Authors: Aurelio Cirella, Behnam Lotfi, Federica Giorgione, Lorenzo Cardone
 
-Date:
+Date: 18/05/2020
 
-Version:
+Version: 1.0
 
 # Contents
 
@@ -18,13 +18,6 @@ Version:
 
 # Black Box Unit Tests
 
-    <Define here criteria, predicates and the combination of predicates for each function of each class.
-    Define test cases to cover all equivalence classes and boundary conditions.
-    In the table, report the description of the black box test case and (traceability) the correspondence with the JUnit test case writing the 
-    class and method name that contains the test case>
-    <JUnit test classes must be in src/test/java/it/polito/ezgas   You find here, and you can use,  class EZGasApplicationTests.java that is executed before 
-    the set up of all Spring components
-    >
 
 
 ### **Class *GasStation* - method *setGasStationId(Integer gasStationId)***
@@ -897,10 +890,6 @@ Version:
 
 ### Test cases definition
     
-    <JUnit test classes must be in src/test/java/it/polito/ezgas>
-    <Report here all the created JUnit test cases, and the units/classes under test >
-    <For traceability write the class and method name that contains the test case>
-
 
 | Unit name | JUnit test case |
 |--|--|
@@ -979,9 +968,6 @@ Version:
 
 ### Code coverage report
 
-    <Add here the screenshot report of the statement and branch coverage obtained using
-    the Eclemma tool. >
-UserDto
 ![User Dto](coverage_img/UserDto.png)
 LoginDto
 ![Login Dto](coverage_img/LoginDto.png)
