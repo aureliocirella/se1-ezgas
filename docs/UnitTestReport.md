@@ -956,6 +956,17 @@ Version:
 ||testUser1_3|
 |User.getPassword|testUser1_6|
 ||testUser1_7|
+|User.getReputation|testGasStation2_1|
+||testGasStation2_2|
+|User.setReputation|testGasStation2_3|
+||testGasStation2_4|
+||testGasStation2_5|
+|User.getEmail|testUser1_8|
+||testUser1_9|
+||testUser1_10|
+|User.setEmail|testUser1_11|
+||testUser1_12|
+||testUser1_13|
 |IdPw.getUser|testUser1_1|
 ||testUser1_4|
 ||testUser1_5
