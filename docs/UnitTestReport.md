@@ -536,20 +536,24 @@ Version:
 ### **Class *UserDto* - *getEmail()***
 
 **Criteria for *getEmail()*:**
+
  - Length of *email* string
 
 **Predicates for method *getEmail()*:**
+
 | Criteria | Predicate |
 | -------- | --------- |
 | Length of *email* string       | >0          |
 
 **Boundaries**:
+
 | Criteria | Boundary values |
 | -------- | --------------- |
 | Length of *email* string         | ""                |
 |          | null                |
 
 **Combination of predicates**:
+
 | Length of *email* string | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |>0|Valid|Object initialized with "mario.rossi@polito.it"; getEmail() -> "mario.rossi@polito.it"|testUserDto1_1()|
@@ -560,21 +564,26 @@ Version:
 
 
  ### **Class *UserDto* - *setEmail(String email)***
+
 **Criteria for *setEmail(String email)*:**
+
  - Length of *email* string
 
 **Predicates for method *setEmail(String email)*:**
+
 | Criteria | Predicate |
 | -------- | --------- |
 | Length of *email* string       | >0          |
 
 **Boundaries**:
+
 | Criteria | Boundary values |
 | -------- | --------------- |
 | Length of *email* string | "" |
 |          | null |
 
 **Combination of predicates**:
+
 | Length of *email* string | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |>0|Valid|setEmail("luigi.verdi@polito.it"); getEmail() -> "luigi.verdi@polito.it"|testUserDto1_4()|
@@ -585,21 +594,26 @@ Version:
 
  
  ### **Class *UserDto* - method *getReputation()***
+
 **Criteria for method *getReputation()*:**
+
  - reputation is null
   
 **Predicates for method *getReputation()*:**
+
 | Criteria | Predicate |
 | -------- | :---------: |
 | reputation is null    |  True    |
-|                                |  False   |
+|                       |  False   |
 
 **Boundaries**:
+
 | Criteria | Boundary values |
 | -------- | --------------- |
 
 
 **Combination of predicates**:
+
 | reputation is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
 |True|Valid|getReputation()-> NULL| testGasStation2_1 |
@@ -608,11 +622,14 @@ Version:
 
 
 ### **Class *UserDto* - method *setReputation(Integer reputation)***
+
 **Criteria for method *setReputation(Integer reputation)*:**
+
    - Range
    - Sign
   
 **Predicates for method *setReputation(Integer reputation)*:**
+
 | Criteria | Predicate |
 | -------- | :---------: |
 | Range    |  reputation < -5    |
@@ -622,12 +639,14 @@ Version:
 |                                |  reputation < 0   |
 
 **Boundaries**:
+
 | Criteria | Boundary values |
 | -------- | :---------: |
 |  Range    |  -5, 5    |
 |  Sign     |  0        |
 
 **Combination of predicates**:
+
 | Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
 |:-------:|:-------:|:-------:|-------|-------|
 |reputation ≥ 5|reputation > 0 |Valid|setReputation(5+1)| testUserDto2_3 |
@@ -639,6 +658,7 @@ Version:
 
 
  ### **Class *IdPw* - method *getUser()***
+
 **Criteria for method *getUser()*:**
 	
  - User is null
@@ -658,7 +678,6 @@ Version:
 
 **Combination of predicates**:
 
-
 | User is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
 |True|Valid|getUser())-> NULL| testIdPw1_1|
@@ -672,17 +691,20 @@ Version:
  - Length of *user* string
 
 **Predicates for method *setUser(String user)*:**
+
 | Criteria | Predicate |
 | -------- | --------- |
 | Length of *user* string       | >0          |
 
 **Boundaries**:
+
 | Criteria | Boundary values |
 | -------- | --------------- |
 | Length of *user* string | "" |
 |          | null |
 
 **Combination of predicates**:
+
 | Length of *user* string | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |>0|Valid|setUser("testuser"); getUser() -> "testuser"|testIdPw1_4()|
@@ -712,7 +734,6 @@ Version:
 
 **Combination of predicates**:
 
-
 | password is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
 |True|Valid|getPw())-> NULL| testIdPw1_2|
@@ -726,17 +747,20 @@ Version:
  - Length of *pw* string
 
 **Predicates for method *setPw(String pw)*:**
+
 | Criteria | Predicate |
 | -------- | --------- |
 | Length of *pw* string       | >0          |
 
 **Boundaries**:
+
 | Criteria | Boundary values |
 | -------- | --------------- |
 | Length of *pw* string | "" |
 |          | null |
 
 **Combination of predicates**:
+
 | Length of *pw* string | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
 |>0|Valid|setPw("testpass"); getPw() -> "testpass"|testIdPw1_3()|
@@ -744,8 +768,6 @@ Version:
 |null|Valid|setPw(null); getPw() -> null|testIdPw1_8()|
 |<0|Invalid|Not feasible |Not feasible|
 |>max array size|Invalid|str = string of length > max array size|setPw(str) -> java.lang.OutOfMemoryError: Requested array size exceeds VM limit|
-
-
 
 
 # White Box Unit Tests
