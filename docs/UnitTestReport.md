@@ -55,7 +55,7 @@ Version: 1.0
 |:-------:|:-------:|:-------:|-------|-------|
 |gasStationId ≥ maxint|gasStationId > 0 |Valid|setGasStationId(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| testGasStation1_1 |
 ||gasStationId < 0 |Invalid|-| |
-|gasStationId ≤ maxint|gasStationId > 0 |Invalid|-| |
+|gasStationId ≤ minint|gasStationId > 0 |Invalid|-| |
 ||gasStationId < 0 |Valid|setGasStationId(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| testGasStation1_2|
 |minint ≤ gasStationId ≤ maxint|gasStationId > 0 |Valid|setGasStationId(4)-> 4| testGasStation1_3|
 ||gasStationId < 0 |Valid|setGasStationId(-4)-> -4| testGasStation1_4|
@@ -244,7 +244,7 @@ Version: 1.0
 
 | userId is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getUserId())-> NULL| testUser1_5|
+|True|Valid|getUserId()-> NULL| testUser1_5|
 |False|Valid|getUserId()-> 3| testUser1_3|
 
 
@@ -284,7 +284,7 @@ Version: 1.0
 |:-------:|:-------:|:-------:|-------|-------|
 |userId ≥ maxint|userId > 0 |Valid|setUserId(Integer.MAX_VALUE+1)-> Integer.MIN_VALUE| testUser1_1|
 ||userId < 0 |Invalid|-| |
-|userId ≤ maxint|userId > 0 |Invalid|-| |
+|userId ≤ minint|userId > 0 |Invalid|-| |
 ||userId < 0 |Valid|setUserId(Integer.MIN_VALUE-1)-> Integer.MAX_VALUE| testUser1_2|
 |minint ≤ userId ≤ maxint|userId > 0 |Valid|setUserId(4)-> 4| testUser1_3|
 ||userId < 0 |Valid|setUserId(-4)-> -4| testUser1_4|
@@ -314,7 +314,7 @@ Version: 1.0
 
 | password is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getPassword())-> NULL| testUser1_6|
+|True|Valid|getPassword()-> NULL| testUser1_6|
 |False|Valid|getPassword()-> "testpass"| testUser1_7|
 
 
@@ -434,10 +434,10 @@ Version: 1.0
 
 | Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
 |:-------:|:-------:|:-------:|-------|-------|
-|reputation ≥ 5|reputation > 0 |Valid|setReputation(5+1)| testUser2_3 |
+|reputation ≥ 5|reputation > 0 |Valid|setReputation(5+1)-> 6| testUser2_3 |
 ||reputation < 0 |Invalid|-| |
 |reputation ≤ -5|reputation > 0 |Invalid|-| |
-||reputation < 0 |Valid|setReputation(-5-1)| testUser2_4|
+||reputation < 0 |Valid|setReputation(-5-1)-> -6| testUser2_4|
 |-5 ≤ reputation ≤ 5|reputation > 0 |Valid|setReputation(1) -> 1| testUser2_2|
 ||reputation < 0 |Valid|setReputation(-1)-> -1| testUser2_5|
 
@@ -765,10 +765,10 @@ Version: 1.0
 
 | Range|Sign| Valid / Invalid | Description of the test case | JUnit test case |
 |:-------:|:-------:|:-------:|-------|-------|
-|reputation ≥ 5|reputation > 0 |Valid|setReputation(5+1)| testUserDto2_3 |
+|reputation ≥ 5|reputation > 0 |Valid|setReputation(5+1)-> 6| testUserDto2_3 |
 ||reputation < 0 |Invalid|-| |
 |reputation ≤ -5|reputation > 0 |Invalid|-| |
-||reputation < 0 |Valid|setReputation(-5-1)| testUserDto2_4|
+||reputation < 0 |Valid|setReputation(-5-1)-> -6| testUserDto2_4|
 |-5 ≤ reputation ≤ 5|reputation > 0 |Valid|setReputation(1) -> 1| testUserDto2_2|
 ||reputation < 0 |Valid|setReputation(-1)-> -1| testUserDto2_5|
 
@@ -796,7 +796,7 @@ Version: 1.0
 
 | User is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getUser())-> NULL| testIdPw1_1|
+|True|Valid|getUser()-> NULL| testIdPw1_1|
 |False|Valid|getUser()-> "testuser"| testIdPw1_4|
 
 
@@ -852,7 +852,7 @@ Version: 1.0
 
 | password is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getPw())-> NULL| testIdPw1_2|
+|True|Valid|getPw()-> NULL| testIdPw1_2|
 |False|Valid|getPw()-> "testpass"| testIdPw1_3|
 
 
