@@ -10,7 +10,19 @@ Version:
 
 - [Dependency graph](#dependency graph)
 
-- [Integration approach](#integration)
+- [Integration and API Test Documentation](#integration-and-api-test-documentation)
+- [Contents](#contents)
+- [Dependency graph](#dependency-graph)
+- [Integration approach](#integration-approach)
+- [Tests](#tests)
+  - [Step 1](#step-1)
+  - [Step 2](#step-2)
+  - [Step n API Tests](#step-n-api-tests)
+- [Scenarios](#scenarios)
+  - [Scenario UCx.y](#scenario-ucxy)
+- [Coverage of Scenarios and FR](#coverage-of-scenarios-and-fr)
+- [Coverage of Non Functional Requirements](#coverage-of-non-functional-requirements)
+    - [](#)
 
 - [Tests](#tests)
 
@@ -23,7 +35,109 @@ Version:
 
 # Dependency graph 
 
-     <report the here the dependency graph of the classes in it/polito/Ezgas, using plantuml>
+```plantuml
+@startuml
+class GasStationServiceImpl{
++getGasStationById()
++getAllGasStations()
++saveGasStation()
++deleteGasStation()
++getGasStationsByGasolineType()
++getGasStationsByProximity()
++getGasStationsWithCoordinates()
+
+}
+
+class UserServiceImpl{
++getUserById()
++getAllUsers()
++saveUser()
++deleteUser()
++increaseUserReputation()
++decreaseUserReputation()
++login()
+}
+
+class User{
++getPassword()
++getEmail()
+}
+
+class UserRepository{
++delete()
++exists()
++findAll()
++save()
++findOne()
+}
+
+
+
+GasStationController --> GasStationServiceImpl
+
+
+UserController --> UserServiceImpl
+
+
+
+
+class UserRepository{
++exists()
++findOne()
+}
+
+class GasStationConverter{
++map()
+}
+
+class GasStationDto{
++getDieselPrice()
++getSuperPrice()
++getSuperPlusPrice()
++getMethanePrice()
++getGasPrice()
++getLon()
++getLat()
+}
+
+class GasStation{
++setUser()
++setMethanePrice()
++setGasPrice()
++setSuperPlusPrice()
++setSuperPrice()
++setDieselPrice()
+}
+
+class GasStationRepository{
++findOne()
++save()
++findAll()
++delete()
++findByCarSharing()
+}
+GasStationServiceImpl --> UserRepository
+GasStationServiceImpl --> GasStationRepository
+GasStationServiceImpl --> GasStation
+GasStationServiceImpl --> GasStationDto
+GasStationServiceImpl --> GasStationConverter
+
+class UserConverter{
++map()
+}
+
+class UserDto{
++getReputation()
++setReputation()
+}
+UserServiceImpl --> UserConverter
+
+
+UserServiceImpl --> UserDto
+UserServiceImpl --> User
+UserServiceImpl --> UserRepository
+@enduml
+```
      
 # Integration approach
 
@@ -42,7 +156,29 @@ Version:
 ## Step 1
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|UserRepository|testUserRepository1_1()|
+||testUserRepository1_2()|
+||testUserRepository1_3()|
+||testUserRepository1_4()|
+|UserRepository|testUserRepository1_1()|
+||testUserRepository1_2()|
+||testUserRepository1_3()|
+||testUserRepository1_4()|
+|UserDto| See Unit Test cases for UserDto|
+|User| See Unit Test cases for User|
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Step 2
