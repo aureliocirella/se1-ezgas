@@ -26,10 +26,18 @@ import it.polito.ezgas.service.UserService;
 public class UserServiceimpl implements UserService {
 
 	@Autowired 
-	UserRepository userRepository;
+	 UserRepository userRepository;
 	
+
 	@Autowired
 	UserConverter userConverter; 
+	
+	  public UserServiceimpl(UserRepository userRepositoryinput, UserConverter userConverterinput) {
+		  userRepository=userRepositoryinput;
+		  userConverter=userConverterinput;
+	    }
+	
+	
 	@Override
 	public UserDto getUserById(Integer userId) throws InvalidUserException {
 		
@@ -49,9 +57,9 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public UserDto saveUser(UserDto userDto) {
-		
-		User user = userRepository.save(userConverter.map(userDto, User.class)); 
-		return userConverter.map(user, UserDto.class);
+		 User usernew =userConverter.map(userDto, User.class);
+		 User user = userRepository.save(usernew); 
+		return   userConverter.map(user, UserDto.class);
 	}
 
 	@Override
