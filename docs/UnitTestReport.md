@@ -893,11 +893,11 @@ Version: 1.0
 
 | Unit name | JUnit test case |
 |--|--|
-|UserDto.getReputation|testGasStation2_1|
-||testGasStation2_2|
-|UserDto.setReputation|testGasStation2_3|
-||testGasStation2_4|
-||testGasStation2_5|
+|UserDto.getReputation|testUserDto2_1|
+||testUserDto2_2|
+||testUserDto2_3|
+||testUserDto2_4|
+||testUserDto2_5|
 |UserDto.getEmail|testUserDto1_1|
 ||testUserDto1_2|
 ||testUserDto1_3|
@@ -945,11 +945,11 @@ Version: 1.0
 ||testUser1_3|
 |User.getPassword|testUser1_6|
 ||testUser1_7|
-|User.getReputation|testGasStation2_1|
-||testGasStation2_2|
-|User.setReputation|testGasStation2_3|
-||testGasStation2_4|
-||testGasStation2_5|
+|User.getReputation|testUser2_1|
+||testUser2_2|
+|User.setReputation|testUser2_3|
+||testUser2_4|
+||testUser2_5|
 |User.getEmail|testUser1_8|
 ||testUser1_9|
 ||testUser1_10|
