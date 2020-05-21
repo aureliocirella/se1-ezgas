@@ -141,6 +141,10 @@ UserServiceImpl --> UserRepository
      
 # Integration approach
 
+Integration test are performed using bottom up approach. <br>
+Step1: User, UserDto, UserRepository, UserConverter<br>
+Step2: UserServiceImpl + UserConverter, UserServiceImpl + User
+
     <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
     (ex: step1: class A, step 2: class A+B, step 3: class A+B+C, etc)> 
     <The last integration step corresponds to API testing at level of Service package>
@@ -160,10 +164,6 @@ UserServiceImpl --> UserRepository
 ||testUserRepository1_2()|
 ||testUserRepository1_3()|
 ||testUserRepository1_4()|
-|UserRepository|testUserRepository1_1()|
-||testUserRepository1_2()|
-||testUserRepository1_3()|
-||testUserRepository1_4()|
 |UserDto| See Unit Test cases for UserDto|
 |User| See Unit Test cases for User|
 UserConverter|testUserConverter1_1()|
@@ -173,8 +173,15 @@ UserConverter|testUserConverter1_1()|
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|UserServiceImpl + User||
-|UserServiceImpl + UserConverter||
+|UserServiceImpl + User |testIntegration1_1()|
+||testIntegration1_2()|
+||testIntegration1_3()|
+||testIntegration1_4()|
+|UserServiceImpl + UserConverter |testIntegration1_1()|
+||testIntegration1_2()|
+||testIntegration1_3()|
+||testIntegration1_4()|
+
 
 
 ## Step n API Tests
