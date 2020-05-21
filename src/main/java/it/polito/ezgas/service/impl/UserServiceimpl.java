@@ -50,8 +50,8 @@ public class UserServiceimpl implements UserService {
 	@Override
 	public UserDto saveUser(UserDto userDto) {
 		
-		userRepository.save(userConverter.map(userDto, User.class)); 
-		return null;
+		User user = userRepository.save(userConverter.map(userDto, User.class)); 
+		return userConverter.map(user, UserDto.class);
 	}
 
 	@Override

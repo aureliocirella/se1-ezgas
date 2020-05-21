@@ -2,7 +2,6 @@ package it.polito.ezgas;
 
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
@@ -22,7 +21,7 @@ import it.polito.ezgas.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserRepositoryTest {
+public class UserRepositoryTests {
 	
 	@Autowired 
 	UserRepository userRepository;

@@ -15,7 +15,7 @@ Version:
 - [Dependency graph](#dependency-graph)
 - [Integration approach](#integration-approach)
 - [Tests](#tests)
-  - [Step 1](#step-1)
+  - [Step 1 - Unit test of leaf classes](#step-1---unit-test-of-leaf-classes)
   - [Step 2](#step-2)
   - [Step n API Tests](#step-n-api-tests)
 - [Scenarios](#scenarios)
@@ -153,7 +153,7 @@ UserServiceImpl --> UserRepository
    <define below a table for each integration step. For each integration step report the group of classes under test, and the names of
      JUnit test cases applied to them>
 
-## Step 1
+## Step 1 - Unit test of leaf classes
 | Classes  | JUnit test cases |
 |--|--|
 |UserRepository|testUserRepository1_1()|
@@ -166,25 +166,15 @@ UserServiceImpl --> UserRepository
 ||testUserRepository1_4()|
 |UserDto| See Unit Test cases for UserDto|
 |User| See Unit Test cases for User|
-
-
-
-
-
-
-
-
-
-
-
-
-
+UserConverter|testUserConverter1_1()|
+||testUserConverter1_2()|
 
 
 ## Step 2
 | Classes  | JUnit test cases |
 |--|--|
-|||
+|UserServiceImpl + User||
+|UserServiceImpl + UserConverter||
 
 
 ## Step n API Tests
