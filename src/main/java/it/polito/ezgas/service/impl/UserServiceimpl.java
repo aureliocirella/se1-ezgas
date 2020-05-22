@@ -91,14 +91,10 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public LoginDto login(IdPw credentials) throws InvalidLoginDataException {
-		//System.out.println(credentials.getUser() + ", " + credentials.getPw());
 		for (Iterator<User> userIt = userRepository.findAll().iterator(); userIt.hasNext(); ) {
 			User user =  userIt.next();
-			//System.out.println("* " + user.getEmail() + ", " + user.getPassword());
-			if(user.getEmail().equals(credentials.getUser()) && user.getPassword().equals(credentials.getPw()) ) {
-				  //System.out.println("Found");
+			if(user.getEmail().equals(credentials.getUser()) && user.getPassword().equals(credentials.getPw()) ) 
 				  return userConverter.map(user, LoginDto.class);		 
-			 }
 		 }
 		throw new InvalidLoginDataException("Login failed for " + credentials.getUser());
 	}

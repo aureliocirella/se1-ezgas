@@ -3,8 +3,10 @@ package it.polito.ezgas;
 
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,9 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import exception.InvalidLoginDataException;
 import exception.InvalidUserException;
 import it.polito.ezgas.converter.UserConverter;
+import it.polito.ezgas.dto.IdPw;
+import it.polito.ezgas.dto.LoginDto;
 import it.polito.ezgas.dto.UserDto;
+import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.impl.UserServiceimpl;
 
@@ -81,6 +87,60 @@ public class IntegrationTests {
     	ArrayList<UserDto> usDto = (ArrayList<UserDto>) userImpl.getAllUsers(); 
 		assertTrue(!usDto.isEmpty());
 	 
+		conn.close(); 
+		
+		
+	}
+	public void testIntegration1_5() throws SQLException, InvalidUserException {
+		 
+		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+		Integer PreviousReputation=1;
+		UserDto us = new UserDto(1, "Mario Rossi", "MR", "mario.rossi@polito.it",PreviousReputation);
+		Integer currentReputation=  userImpl.increaseUserReputation( us.getUserId()); 
+		PreviousReputation++;
+		assertEquals(currentReputation,PreviousReputation);
+	 
+		conn.close(); 
+		
+		
+	}
+	public void testIntegration1_6() throws SQLException, InvalidUserException {
+		 
+		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+		Integer PreviousReputation=1;
+		UserDto us = new UserDto(1, "Mario Rossi", "MR", "mario.rossi@polito.it",PreviousReputation);
+		Integer currentReputation=  userImpl.decreaseUserReputation( us.getUserId()); 
+		PreviousReputation--;
+		assertEquals(currentReputation,PreviousReputation);
+	 
+		conn.close(); 
+		
+		
+	}
+	public void testIntegration1_7() throws SQLException, InvalidUserException {
+		 
+		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+		
+		if(userRepository.findByAdmin(true).isEmpty())
+		{
+			User user= new User("admin", "admin", "admin@ezgas.com", 5);
+			user.setAdmin(true);
+			user.setUserId(1); 
+			userRepository.save(user); 
+		}
+		IdPw credentials=new IdPw("admin@ezgas.com","admin");
+		LoginDto usDto;
+		try {
+			usDto = userImpl.login(credentials);
+			assertNotNull(usDto);
+		} catch (InvalidLoginDataException e) {
+			fail("Login failed for " +credentials.getUser());
+			 
+		} 
+    		
 		conn.close(); 
 		
 		
