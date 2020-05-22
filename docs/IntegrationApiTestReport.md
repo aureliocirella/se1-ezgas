@@ -142,8 +142,8 @@ UserServiceImpl --> UserRepository
 # Integration approach
 
 Integration test are performed using bottom up approach. <br>
-Step1: User, UserDto, UserRepository, UserConverter<br>
-Step2: UserServiceImpl + UserConverter, UserServiceImpl + User,UserServiceImpl + User+ UserRepository,UserServiceImpl + User+ IdPw 
+Step1: User, UserDto, UserRepository, UserConverter, GasStation, GasStationDto, GasStationRepository, GasStationConverter<br>
+Step2: UserServiceImpl + UserConverter, UserServiceImpl + User,UserServiceImpl + User+ UserRepository,UserServiceImpl + User+ IdPw, GasStationServiceImpl + GasStationConverter, GasStationServiceImpl + GasStation, GasStationServiceImpl + GasStation + GasStationRepository  
 
     <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
     (ex: step1: class A, step 2: class A+B, step 3: class A+B+C, etc)> 
@@ -169,6 +169,11 @@ Step2: UserServiceImpl + UserConverter, UserServiceImpl + User,UserServiceImpl +
 |IdPw| See Unit Test cases for IdPw|
 UserConverter|testUserConverter1_1()|
 ||testUserConverter1_2()|
+|GasStation| See Unit Test cases for GasStation|
+|GasStationDto| See Unit Test cases for GasStationDto|
+|GasStationRepository|
+|GasStationConverter| testGasStationConverter1_1()|
+||testGasStationConverter1_2()|
 
 
 ## Step 2
