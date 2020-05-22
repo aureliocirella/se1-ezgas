@@ -143,7 +143,7 @@ UserServiceImpl --> UserRepository
 
 Integration test are performed using bottom up approach. <br>
 Step1: User, UserDto, UserRepository, UserConverter<br>
-Step2: UserServiceImpl + UserConverter, UserServiceImpl + User
+Step2: UserServiceImpl + UserConverter, UserServiceImpl + User,UserServiceImpl + User+ UserRepository,UserServiceImpl + User+ IdPw 
 
     <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
     (ex: step1: class A, step 2: class A+B, step 3: class A+B+C, etc)> 
