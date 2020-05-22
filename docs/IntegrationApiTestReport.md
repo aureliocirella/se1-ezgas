@@ -166,6 +166,7 @@ Step2: UserServiceImpl + UserConverter, UserServiceImpl + User
 ||testUserRepository1_4()|
 |UserDto| See Unit Test cases for UserDto|
 |User| See Unit Test cases for User|
+|IdPw| See Unit Test cases for IdPw|
 UserConverter|testUserConverter1_1()|
 ||testUserConverter1_2()|
 
@@ -181,8 +182,9 @@ UserConverter|testUserConverter1_1()|
 ||testIntegration1_2()|
 ||testIntegration1_3()|
 ||testIntegration1_4()|
-
-
+|UserServiceImpl + User+ UserRepository |testIntegration1_5()|
+||testIntegration1_6()|
+|UserServiceImpl + User+ IdPw |testIntegration1_7()|
 
 ## Step n API Tests
 
