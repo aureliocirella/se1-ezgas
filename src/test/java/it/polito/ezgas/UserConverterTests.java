@@ -24,6 +24,7 @@ public class UserConverterTests {
 		User user = new User(); 
 		assertTrue(userConverter.map(user, UserDto.class) instanceof UserDto); 
 	}
+	@Test
 	public void testUserConverter1_2() {
 		UserDto userDto = new UserDto(); 
 		assertTrue(userConverter.map(userDto, User.class) instanceof User); 
