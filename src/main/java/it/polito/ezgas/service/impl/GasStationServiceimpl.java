@@ -15,6 +15,7 @@ import exception.InvalidGasTypeException;
 import exception.InvalidUserException;
 import exception.PriceException;
 import it.polito.ezgas.converter.GasStationConverter;
+import it.polito.ezgas.converter.UserConverter;
 import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
@@ -38,6 +39,11 @@ public class GasStationServiceimpl implements GasStationService {
 	@Autowired 
 	GasStationConverter gasStationConverter; 
 	
+	public GasStationServiceimpl(GasStationRepository gasStationRepositoryInput, UserRepository userRepositoryInput, GasStationConverter gasStationConverterInput) {
+		gasStationRepository= gasStationRepositoryInput;
+		gasStationConverter= gasStationConverterInput;
+		userRepository = userRepositoryInput;
+	}
 	
 	@Override
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
@@ -66,8 +72,9 @@ public class GasStationServiceimpl implements GasStationService {
 		if (gasStationDto.getLat() > 90.0 || gasStationDto.getLat() < -90.0 || gasStationDto.getLon() > 180.0 || gasStationDto.getLon() < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
-		gasStationRepository.save(gasStationConverter.map(gasStationDto, GasStation.class)); 
-		return gasStationDto;
+		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
+		GasStation gasStation = gasStationRepository.save(gasStationConverted); 
+		return gasStationConverter.map(gasStation, GasStationDto.class);
 	}
 
 	@Override
@@ -86,10 +93,10 @@ public class GasStationServiceimpl implements GasStationService {
 		 // In the case of negative id throw exception
 		if(gasStationId<0)
 		{
-			throw new InvalidGasStationException("Invalid userId!"); 
+			throw new InvalidGasStationException("Invalid gasStationId!"); 
 		}
 		 // Check if exists in db
-		if(!userRepository.exists(gasStationId))
+		if(!gasStationRepository.exists(gasStationId))
 		{
 			return null; 
 		}

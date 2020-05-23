@@ -193,6 +193,7 @@ UserConverter|testUserConverter1_1()|
 |UserServiceImpl + User+ UserRepository |testIntegration1_5()|
 ||testIntegration1_6()|
 |UserServiceImpl + User+ IdPw |testIntegration1_7()|
+|GasStationServiceImpl + GasStation + GasStationRepository + GasStationConverter |testIntegration1_8()|
 
 ## Step n API Tests
 

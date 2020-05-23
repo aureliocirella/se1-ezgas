@@ -19,14 +19,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import exception.GPSDataException;
+import exception.InvalidGasStationException;
 import exception.InvalidLoginDataException;
 import exception.InvalidUserException;
+import exception.PriceException;
+import it.polito.ezgas.converter.GasStationConverter;
 import it.polito.ezgas.converter.UserConverter;
+import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.dto.IdPw;
 import it.polito.ezgas.dto.LoginDto;
 import it.polito.ezgas.dto.UserDto;
 import it.polito.ezgas.entity.User;
+import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
+import it.polito.ezgas.service.impl.GasStationServiceimpl;
 import it.polito.ezgas.service.impl.UserServiceimpl;
 
 @RunWith(SpringRunner.class)
@@ -52,6 +59,8 @@ public class IntegrationTests {
 		
 		
 	}
+	
+	@Test
 	public void testIntegration1_2() throws SQLException, InvalidUserException {
 		 
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
@@ -65,7 +74,8 @@ public class IntegrationTests {
 		
 		
 	}
-	
+
+	@Test
 	public void testIntegration1_3() throws SQLException, InvalidUserException {
 		 
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
@@ -79,7 +89,8 @@ public class IntegrationTests {
 		
 		
 	}
-	
+
+	@Test
 	public void testIntegration1_4() throws SQLException, InvalidUserException {
 		 
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
@@ -91,6 +102,8 @@ public class IntegrationTests {
 		
 		
 	}
+
+	@Test
 	public void testIntegration1_5() throws SQLException, InvalidUserException {
 		 
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
@@ -105,6 +118,8 @@ public class IntegrationTests {
 		
 		
 	}
+
+	@Test
 	public void testIntegration1_6() throws SQLException, InvalidUserException {
 		 
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
@@ -119,6 +134,8 @@ public class IntegrationTests {
 		
 		
 	}
+
+	@Test
 	public void testIntegration1_7() throws SQLException, InvalidUserException {
 		 
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
@@ -145,5 +162,33 @@ public class IntegrationTests {
 		
 		
 	}
+
+	@Autowired 
+	GasStationRepository gasStationRepository;
+	@Autowired
+	GasStationConverter gasStationConverter; 
+	
+	@Test
+	public void testIntegration1_8() throws SQLException, PriceException, GPSDataException, InvalidGasStationException {
+
+		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+		GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository, gasStationConverter);
+		GasStationDto gs = new GasStationDto(1, "GSName", "Address", true, false, false, false, false, "SharingCompany", 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, null, null, 0.0);
+		GasStationDto gsw = gasStationImpl.saveGasStation(gs); 
+		assertNotNull(gsw);
+
+    	GasStationDto gsDto = gasStationImpl.getGasStationById(gsw.getGasStationId()); 
+		assertNotNull(gsDto);
+		
+    	ArrayList<GasStationDto> gsDtoList = (ArrayList<GasStationDto>) gasStationImpl.getAllGasStations(); 
+		assertTrue(!gsDtoList.isEmpty());
+
+    	Boolean deleted = gasStationImpl.deleteGasStation(gsw.getGasStationId()); 
+		assertTrue(deleted);
+		
+
+		conn.close(); 
+	}
+	
 
 }
