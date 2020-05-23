@@ -103,7 +103,7 @@ public class UserServiceimpl implements UserService {
 		if(userRepository.exists(userId)) {
 			User user = userRepository.findOne(userId);
 			UserDto userDto = userConverter.map(user, UserDto.class);
-			int reputation = userDto.getReputation() + 1;
+			int reputation = userDto.getReputation() + var;
 			userDto.setReputation(reputation);
 			userRepository.delete(userId);
 			userRepository.save(userConverter.map(userDto, User.class));

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +46,52 @@ public class IntegrationTests {
 	UserRepository userRepository;
 	@Autowired
 	UserConverter userConverter; 
+ 
+	 public void setUp() {
+		try {
+			 
+			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+			if(userRepository!=null)
+			{
+			 
+			if(userRepository.findByEmail( "Winters@ezgaz.it" ).isEmpty())
+			{   
+				UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+				UserDto user = new UserDto(1, "Raquel", "Winters", "Winters@ezgaz.it", 1);
+				  userImpl.saveUser(user); 
+			}
+			}
+			conn.close(); 
+	
+		}catch (Exception e) 
+		{ 
+			fail ("SetUp Error");
+			}
+	}
+	 
+	 public void EndTest() {
+		try {
+			 
+			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+			if(userRepository!=null)
+			{
+				ArrayList<User> foundusers=	userRepository.findByEmail( "Winters@ezgaz.it" );
+				if(foundusers.size()>0)
+				 userRepository.delete(foundusers);
+			
+			
+			  foundusers=	userRepository.findByEmail( "mario.rossi@polito.it" );
+			if(foundusers.size()>0)
+			 userRepository.delete(foundusers);
+			
+			}
+			conn.close(); 
+	
+		}catch (Exception e) 
+		{ 
+			fail ("SetUp Error");
+			}
+	}
 	
 	@Test
 	public void testIntegration1_1() throws SQLException {
@@ -105,33 +152,41 @@ public class IntegrationTests {
 
 	@Test
 	public void testIntegration1_5() throws SQLException, InvalidUserException {
-		 
+		setUp() ;
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
 		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-		Integer PreviousReputation=1;
-		UserDto us = new UserDto(1, "Mario Rossi", "MR", "mario.rossi@polito.it",PreviousReputation);
-		Integer currentReputation=  userImpl.increaseUserReputation( us.getUserId()); 
+
+		User userfound=userRepository.findByEmail( "Winters@ezgaz.it" ).get(0);
+		Integer id=	userfound.getUserId();
+		Integer PreviousReputation=userfound.getReputation();
+		System.out.println(id);
+		Integer currentReputation=  userImpl.increaseUserReputation(id ); 
 		PreviousReputation++;
 		assertEquals(currentReputation,PreviousReputation);
 	 
 		conn.close(); 
-		
+		EndTest();
 		
 	}
 
 	@Test
 	public void testIntegration1_6() throws SQLException, InvalidUserException {
-		 
+		setUp() ;
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
 		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-		Integer PreviousReputation=1;
-		UserDto us = new UserDto(1, "Mario Rossi", "MR", "mario.rossi@polito.it",PreviousReputation);
-		Integer currentReputation=  userImpl.decreaseUserReputation( us.getUserId()); 
+
+		User userfound=userRepository.findByEmail( "Winters@ezgaz.it" ).get(0);
+		Integer id=	userfound.getUserId();
+		Integer PreviousReputation=userfound.getReputation();
+		System.out.println(id);
+	    System.out.println("reputationis : "+PreviousReputation);
+		Integer currentReputation=  userImpl.decreaseUserReputation(id ); 
+		System.out.println("reputation after is : "+PreviousReputation);
 		PreviousReputation--;
 		assertEquals(currentReputation,PreviousReputation);
 	 
 		conn.close(); 
-		
+		EndTest();
 		
 	}
 
@@ -159,7 +214,7 @@ public class IntegrationTests {
 		} 
     		
 		conn.close(); 
-		
+		EndTest(); 
 		
 	}
 
