@@ -171,7 +171,10 @@ UserConverter|testUserConverter1_1()|
 ||testUserConverter1_2()|
 |GasStation| See Unit Test cases for GasStation|
 |GasStationDto| See Unit Test cases for GasStationDto|
-|GasStationRepository|
+|GasStationRepository|testGasStationRepository1_1()|
+||testGasStationRepository1_2()|
+||testGasStationRepository1_3()|
+||testGasStationRepository1_4()|
 |GasStationConverter| testGasStationConverter1_1()|
 ||testGasStationConverter1_2()|
 
