@@ -13,8 +13,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+ 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,7 +48,7 @@ public class IntegrationTests {
 	UserRepository userRepository;
 	@Autowired
 	UserConverter userConverter; 
- 
+     @Before
 	 public void setUp() {
 		try {
 			 
@@ -68,7 +70,7 @@ public class IntegrationTests {
 			fail ("SetUp Error");
 			}
 	}
-	 
+	 @After
 	 public void EndTest() {
 		try {
 			 
@@ -152,7 +154,7 @@ public class IntegrationTests {
 
 	@Test
 	public void testIntegration1_5() throws SQLException, InvalidUserException {
-		setUp() ;
+	//	setUp() ;
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
 		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
 
@@ -165,13 +167,13 @@ public class IntegrationTests {
 		assertEquals(currentReputation,PreviousReputation);
 	 
 		conn.close(); 
-		EndTest();
+	//	EndTest();
 		
 	}
 
 	@Test
 	public void testIntegration1_6() throws SQLException, InvalidUserException {
-		setUp() ;
+	//	setUp() ;
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
 		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
 
@@ -186,7 +188,7 @@ public class IntegrationTests {
 		assertEquals(currentReputation,PreviousReputation);
 	 
 		conn.close(); 
-		EndTest();
+	//	EndTest();
 		
 	}
 
@@ -214,7 +216,7 @@ public class IntegrationTests {
 		} 
     		
 		conn.close(); 
-		EndTest(); 
+		//EndTest(); 
 		
 	}
 
