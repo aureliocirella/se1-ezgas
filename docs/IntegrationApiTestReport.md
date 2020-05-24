@@ -226,17 +226,6 @@ UserConverter|testUserConverter1_1()|
 | 4 | Account U added in the system|
 | 5 | Account U login in the system|
 
-## Scenario UC1.2
-
-| Scenario |  Increase a user reputation  |
-| ------------- |:-------------:| 
-|  Precondition     |User U exists with reputation N|
-|  Post condition     | Reputation of User U is increased  N=N+1|
-| Step#        | Description  |
-|  1     |  U logins |  
-|  2     |  U signals for right price |
-| 3 | Reputation of User U is increase by 1 |
-
 
 ## Scenario UC1.3
 
@@ -252,6 +241,88 @@ UserConverter|testUserConverter1_1()|
 |  3     |  A deletes U using by pressing delete button |
 
 
+## Scenario UC4.1
+
+| Scenario |  Create Gas Station |
+| ------------- |:-------------:| 
+|  Precondition     | Gas Station G does not exist  |
+|  Post condition     |  Gas Station G is created by Admin A |
+| Step#        | Description  |
+|  1     |  A logins in application |  
+|  2     |  A loads admin page |
+|  3     |  A enters all fields for a new G |  
+|  4     |  A submits data inserted |
+|  5     |  G added in the system|
+
+
+## Scenario UC5.1
+
+| Scenario |  Modify Gas Station information |
+| ------------- |:-------------:| 
+|  Precondition     | Gas Station G exists  |
+|  Post condition     | - |
+| Step#        | Description  |
+|  1     |  Admin A logins in application |  
+|  2     |  A loads admin page |
+|  3     |  A selects edit from the row of G |  
+|  4     |  A modifies fields of G |  
+|  5     |  A submits data inserted |
+|  6     |  G updated|
+
+
+## Scenario UC6.1
+
+| Scenario |  Delete Gas Station |
+| ------------- |:-------------:| 
+|  Precondition     |Gas Station G exists  |
+|  Post condition     |  Gas Station G is deleted from system by Admin A |
+| Step#        | Description  |
+|  1     |  A logins in application |  
+|  2     |  A loads admin page |
+|  3     |  A selects remove from the row of G |  
+|  4     |  G deleted |
+
+
+## Scenario UC7.1
+
+| Scenario |  Report fuel price for a gas station |
+| ------------- |:-------------:| 
+|  Precondition     | Gas Station G exists  |
+| | User U is registered in the system |
+| | G has no attached price list |
+|  Post condition     | Price list P is created |
+| | P.time_tag is set to the current timestamp of the system |
+| | P is attached to G |
+| | U is attached to P (needed later to update trust level of U) |
+| Step#        | Description  |
+|  1     |  U logins in application |  
+|  2     |  U selects G for which he/she wants to insert a price report |
+|  3     | The system prompts U with the list of possible fuels provided by G |  
+|  4     |  U inserts the prices for the fuels |
+|  5     |  U submits data |
+
+## Scenario UC8.1
+
+| Scenario |  Obtain price of fuel for Gas Stations in a certain geographic area |
+| ------------- |:-------------:| 
+|  Precondition     | - |
+|  Post condition     | - |
+| Step#        | Description  |
+|  1     |  Anonymous User AU selects a geo point GP and a radius r |  
+|  2     |  The system prompts all gas stations within r from GP, with their prices for all available fuels. If a price for a fuel is missing "NA" is reported. The system shows also, for each gas station, the trust level of the prices |
+
+
+## Scenario UC10.1
+
+| Scenario | Price is correct |
+| ------------- |:-------------:| 
+|  Precondition     | User U exists and has valid account |
+| | Gas Station G exists and has price list inserted by U2 |
+|  Post condition     | U2.trust_level++  |
+| Step#        | Description  |
+|  1     |  U selects gas station G|  
+|  2     |  U signals price for G is correct|
+
 
 # Coverage of Scenarios and FR
 
@@ -264,11 +335,20 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
-|  UC1.1        | FR1.1                           |testScenario1|             
+| UC1.1       | FR1.1                           |testScenario1|             
 |             | FR1.2                           |testScenario1|             
 |             | FR1.3                           |testScenario1|             
-| UC1.2         | FR1                             |testScenario2|             
-| UC1.3         | FR5.1                           |testScenario3|             
+| UC1.2       | FR1                             |testScenario2|             
+| UC1.3       | FR5.1                           |testScenario3|             
+| UC4.1       | FR3.1                           ||             
+| UC5.1       | FR3.1                           ||           
+|             | FR3.3                           ||               
+| UC6.1       | FR3.2                           ||            
+|             | FR3.3                           ||              
+| UC7.1       | FR5.1                           ||   
+| UC8.1       | FR4.1                           ||     
+| UC10.1      | FR5.2                           ||            
+|             | FR5.3                           ||  
 | ...         |                                 |             |             
 
 
