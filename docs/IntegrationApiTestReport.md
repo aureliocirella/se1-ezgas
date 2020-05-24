@@ -212,15 +212,44 @@ UserConverter|testUserConverter1_1()|
 <If needed, define here additional scenarios for the application. Scenarios should be named
  referring the UC they detail>
 
-## Scenario UCx.y
 
-| Scenario |  name |
+## Scenario UC1
+
+| Scenario |  Create a user account |
 | ------------- |:-------------:| 
-|  Precondition     |  |
-|  Post condition     |   |
+|  Precondition     |User U does not exist and needs credentials|
+|  Post condition     |  User U added in the system  and successfully login|
 | Step#        | Description  |
-|  1     |  ... |  
-|  2     |  ... |
+|  1     |  U selects Signup |  
+|  2     |  U fills al the form fields for a new account U |
+| 3 | U submits data inserted |
+| 4 | Account U added in the system|
+| 5 | Account U login in the system|
+
+## Scenario UC2
+
+| Scenario |  Create a user account |
+| ------------- |:-------------:| 
+|  Precondition     |User U exists with reputation N|
+|  Post condition     | Reputation of User U is increased  N=N+1|
+| Step#        | Description  |
+|  1     |  U logins |  
+|  2     |  U signals for right price |
+| 3 | Reputation of User U is increase by 1 |
+
+
+## Scenario UC3
+
+<!-- Is it possible in the application now?? -->
+
+| Scenario |  Delete user account |
+| ------------- |:-------------:| 
+|  Precondition     |Account U exists  |
+|  Post condition     |  Account U deleted from the system by Admin A |
+| Step#        | Description  |
+|  1     |  A logins in application |  
+|  2     |  A loads admin page |
+|  3     |  A deletes U using by pressing delete button |
 
 
 
