@@ -213,7 +213,7 @@ UserConverter|testUserConverter1_1()|
  referring the UC they detail>
 
 
-## Scenario UC1
+## Scenario UC1.1
 
 | Scenario |  Create a user account |
 | ------------- |:-------------:| 
@@ -226,9 +226,9 @@ UserConverter|testUserConverter1_1()|
 | 4 | Account U added in the system|
 | 5 | Account U login in the system|
 
-## Scenario UC2
+## Scenario UC1.2
 
-| Scenario |  Create a user account |
+| Scenario |  Increase a user reputation  |
 | ------------- |:-------------:| 
 |  Precondition     |User U exists with reputation N|
 |  Post condition     | Reputation of User U is increased  N=N+1|
@@ -238,7 +238,7 @@ UserConverter|testUserConverter1_1()|
 | 3 | Reputation of User U is increase by 1 |
 
 
-## Scenario UC3
+## Scenario UC1.3
 
 <!-- Is it possible in the application now?? -->
 
@@ -264,11 +264,11 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
-|  ..         | FRx                             |             |             
-|  ..         | FRy                             |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
+|  UC1.1        | FR1.1                           |testScenario1|             
+|             | FR1.2                           |testScenario1|             
+|             | FR1.3                           |testScenario1|             
+| UC1.2         | FR1                             |testScenario2|             
+| UC1.3         | FR5.1                           |testScenario3|             
 | ...         |                                 |             |             
 
 
