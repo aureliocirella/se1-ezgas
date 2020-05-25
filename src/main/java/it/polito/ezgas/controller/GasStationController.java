@@ -21,7 +21,7 @@ import it.polito.ezgas.service.GasStationService;
 import it.polito.ezgas.utils.Constants;
 
 
-@RequestMapping("/gasstation")
+@RequestMapping("/gasstation")		//This class is instantiated when /gasstation URL is called
 @RestController
 
 public class GasStationController {
@@ -29,6 +29,8 @@ public class GasStationController {
 	@Autowired
 	GasStationService gasStationService;
 	
+	//@RequestMapping annotation is capable of handling HTTP request methods, such as GET, PUT, POST, DELETE, and PATCH.
+	//using "method" parameter. "value" defines a for which URL the method should be called.  
 	@RequestMapping(Constants.GET_GASSTATION_BY_ID)
 	public GasStationDto getGasStationById(@PathVariable Integer gasStationId) {
 		try {
@@ -39,7 +41,7 @@ public class GasStationController {
 		}
 	}
 	
-	@RequestMapping(value = Constants.GET_ALL_GASSTATIONS, method = RequestMethod.GET)
+	@RequestMapping(value = Constants.GET_ALL_GASSTATIONS, method = RequestMethod.GET) 
 	public List<GasStationDto> getAllGasStations() {
 		return gasStationService.getAllGasStations();
 	}
@@ -55,7 +57,7 @@ public class GasStationController {
 	}
 	
 	@RequestMapping(value = Constants.DELETE_GASSTATION, method = RequestMethod.DELETE)
-	public void deleteUser(@PathVariable Integer gasStationId) {
+	public void deleteUser(@PathVariable Integer gasStationId) { //@PathVariable allow to access parameters from the URL
 		try {
 			gasStationService.deleteGasStation(gasStationId);
 		} catch (InvalidGasStationException e) {

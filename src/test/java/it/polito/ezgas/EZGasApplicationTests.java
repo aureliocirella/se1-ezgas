@@ -12,5 +12,5 @@ public class EZGasApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
-
+	
 }

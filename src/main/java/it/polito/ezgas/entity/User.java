@@ -11,11 +11,10 @@ import javax.persistence.Id;
 /**
  * Created by softeng on 27/4/2020.
  */
+
 @Entity
 public class User implements Serializable{
-
     private static final long serialVersionUID = 0x62A6DA99AABDA8A8L;
-	
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
@@ -66,7 +65,6 @@ public class User implements Serializable{
 
     public User() {
     }
-
     public User(String userName, String password, String email, Integer reputation) {
         this.userName = userName;
         this.password = password;

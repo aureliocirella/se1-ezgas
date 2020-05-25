@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity
+@Entity  //this annotation make this class a table in the database, each properties have its own annotation to define columns
 public class GasStation implements Serializable {
 	
 	
@@ -95,6 +95,14 @@ public class GasStation implements Serializable {
     	
     }
     
+    public double getReportDependability() {
+		return reportDependability;
+	}
+
+	public void setReportDependability(double reportDependability) {
+		this.reportDependability = reportDependability;
+	}
+    
     public GasStation(String gasStationName, String gasStationAddress, boolean hasDiesel, boolean hasSuper, boolean hasSuperPlus, boolean hasGas, boolean hasMethane, String carSharing, double lat, double lon, double dieselPrice, double superPrice, double superPlusPrice, double gasPrice, double methanePrice, Integer reportUser, String reportTimestamp, double reportDependability) {
         this.gasStationName = gasStationName;
         this.gasStationAddress = gasStationAddress;
@@ -120,13 +128,7 @@ public class GasStation implements Serializable {
     
     
     
-	public double getReportDependability() {
-		return reportDependability;
-	}
-
-	public void setReportDependability(double reportDependability) {
-		this.reportDependability = reportDependability;
-	}
+	
 
 	public Integer getReportUser() {
 		return reportUser;
