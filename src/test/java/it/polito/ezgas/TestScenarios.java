@@ -43,7 +43,7 @@ public class TestScenarios {
 	GasStationRepository gasStationRepository;
 	@Autowired
 	GasStationConverter gasStationConverter; 
-
+	Integer GasStationId=0;
 	@Before public void initialize() {
 			try {
 			 
@@ -81,12 +81,15 @@ public class TestScenarios {
 				
 				
 				ArrayList<GasStation> gslist = new ArrayList<GasStation>();
-				GasStation gasStation00 = new GasStation("Q8", "Corso Galileo Ferraris 36/A Turin Piemont Italy", false, false, false, false, false, "", 45.0627865, 7.6686337, -1.0, -1.0, -1.0, -1.0, -1.0, -1, "", -1.0);
+				GasStation gasStation00 = new GasStation("Q8", "Corso Galileo Ferraris 36/A Turin Piemont Italy", true, false, false, false, false, "", 45.0627865, 7.6686337, -1.0, -1.0, -1.0, -1.0, -1.0, -1, "", -1.0);
 				GasStation gasStation01 = new GasStation("Tamoil", "Marche Turin Piemont Italy ", true, true, false, false, false, "Enjoy", 45.0677551, 7.6824892, 1.5, 1.2, -1.0, -1.0, -1.0, user00.getUserId(), "2020.05.10.13.05.01", 1.2);
-				GasStation gasStation02 = new GasStation("Eni Station", "Corso Giacomo Matteotti 12/Q Turin Piemont Italy", false, false, false, true, true, "Enjoy", 45.0303838, 7.6690677, -1.0, -1.0, -1.0, 1.5, 2.1, user00.getUserId(), "2020.05.15.12.45.45", 2.4);
-				GasStation gasStation03 = new GasStation("Esso", "Via Francesco Cigna 40/B Turin Piemont Italy", false, false, true, false, false, "Car2Go", 45.0829594, 7.6792507, -1, -1, 1.78, -1, -1, user01.getUserId(), "2020.05.08.23.33.28", 1.0);
-				GasStation gasStation04 = new GasStation("GPL Torino", "Corso Enrico Tazzoli 183/A Turin Piemont Italy", false, false, false, false, false, "Car2Go", 45.0355852, 7.6236845, -1, -1, -1, -1, -1, -1, "", -1.0);
-				
+				GasStation gasStation02 = new GasStation("Eni Station", "Corso Giacomo Matteotti 12/Q Turin Piemont Italy", true, false, false, true, true, "Enjoy", 45.0303838, 7.6690677, -1.0, -1.0, -1.0, 1.5, 2.1, user00.getUserId(), "2020.05.15.12.45.45", 2.4);
+				GasStation gasStation03 = new GasStation("Esso", "Via Francesco Cigna 40/B Turin Piemont Italy", true, false, true, false, false, "Car2Go", 45.0829594, 7.6792507, -1, -1, 1.78, -1, -1, user01.getUserId(), "2020.05.08.23.33.28", 1.0);
+				GasStation gasStation04 = new GasStation("GPL Torino", "Corso Enrico Tazzoli 183/A Turin Piemont Italy", true, false, false, false, false, "Car2Go", 45.0355852, 7.6236845, -1, -1, -1, -1, -1, -1, "", -1.0);
+			    GasStation gasStation= new GasStation("GasstationCenter",  "Via roma", true, true, false, true,true, "Enjoy", 45.0705111, 7.6845806, 2.1, 1.2, 1.2,0.3,  0.2, 1, "8:26 PM 5/25/2020", 1.0);
+			    gasStation= gasStationRepository.save(gasStation);  
+			    GasStationId=gasStation.getGasStationId();
+			    
 				gslist.add(gasStation00);
 				gslist.add(gasStation01);
 				gslist.add(gasStation02);
@@ -126,14 +129,19 @@ public class TestScenarios {
 			
 			GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository,gasStationConverter);
 			List<GasStationDto> gsd = gasStationImpl.getGasStationsByProximity(45.0627865, 7.6686337);
+			if(gsd.size()>0)
 			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
 			gsd = gasStationImpl.getGasStationsByProximity(45.0627865, 7.6686337);
+			if(gsd.size()>0)
 			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
 			gsd = gasStationImpl.getGasStationsByProximity(45.0303838, 7.6690677);
+			if(gsd.size()>0)
 			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
 			gsd = gasStationImpl.getGasStationsByProximity(45.0829594, 7.6792507);
+			if(gsd.size()>0)
 			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
 			gsd = gasStationImpl.getGasStationsByProximity(45.0355852, 7.6236845);
+			if(gsd.size()>0)
 			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
 			
 			
@@ -145,8 +153,7 @@ public class TestScenarios {
 	@Test
 	public void testScenario1() {
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+			 UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
 			UserDto user = new UserDto(1, "Gardner", "Kelvin", "Gardner@ezgaz.it", 1);
 			userImpl.saveUser(user); 
 			
@@ -169,7 +176,7 @@ public class TestScenarios {
 				{ 
 				 fail("No user found with this email");		
 				}
-			conn.close(); 
+			 
 		} catch (Exception e) {
 			fail("Exception throwed");
 			}
@@ -178,8 +185,7 @@ public class TestScenarios {
 	@Test
 	public void testScenario2() {
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+			 UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
 		LoginDto userdto=	userImpl.login(new IdPw("Shepherd@ezgaz.com","Shepherd"));
 		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
 		 
@@ -208,7 +214,7 @@ public class TestScenarios {
 				 
 				 fail("No user found with this email");		
 				}
-			conn.close(); 
+			 
 		} catch (Exception e) {
 			fail("Exception throwed");
 			}
@@ -217,7 +223,7 @@ public class TestScenarios {
 	@Test
 	public void testScenario3() {
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+			 
 			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
 		    LoginDto userdto=	userImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));
 		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
@@ -247,7 +253,7 @@ public class TestScenarios {
 				 
 				 fail("No user found with this email");		
 				}
-			conn.close(); 
+			 
 		} catch (Exception e) {
 			fail("Exception throwed");
 			}
@@ -257,34 +263,77 @@ public class TestScenarios {
 	@Test
 	public void testScenario4() {
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+			 
 			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+			 
 			GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository,gasStationConverter);
-			LoginDto userdto=	userImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));
-		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
-			List<GasStationDto> gsd=	gasStationImpl.getGasStationsWithCoordinates(45.0627865, 7.6686337, null, null);
 		 
+			LoginDto userdto=	userImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));
+			 
+			ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
+			 System.out.println("//////////////////////////////////////////////////////////////");
+			List<GasStationDto> gsd=	gasStationImpl.getGasStationsWithCoordinates(45.0627865, 7.6686337, "Diesel", "enjoy");
+			 System.out.println("////////////////after///////////////////"+gsd.size());
 			if(log.size()==1)
 				{
 				
 				 User foundUser= log.get(0);
-
+				 if(gsd==null)
+					 fail("gas station list is null");
 				 if(gsd.size() == 0)
 					 fail("No gas station found");
 				 else if (gsd.size() > 1)
 					fail("More than one gas station found");
-				 
+				 System.out.println("P7");
 				gasStationImpl.setReport(gsd.get(0).getGasStationId(), 1.0, -1, -1, 2.1, -1, foundUser.getUserId());
-				
+				 System.out.println("P8");
 				}
 				 
-			conn.close(); 
+			 
 		} catch (Exception e) {
 			fail("Exception throwed");
 			}
 		
 	}
 	
-	
+	@Test                                                                                                                                                                                                    
+	public void testScenario5() {                                                                                                                                                                            
+		try {                                                                                                                                                                                                
+			GasStationServiceimpl gasImpl = new GasStationServiceimpl(gasStationRepository,userRepository,gasStationConverter);                                                                              
+			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);                                                                                                                    
+			LoginDto userdto=	userImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));                                                                                                                          
+		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());                                                                                                                            
+		                                                                                                                                                                                                     
+			if(log.size()==1)                                                                                                                                                                                
+				{                                                                                                                                                                                            
+				                                                                                                                                                                                             
+				 User foundUser= log.get(0);                                                                                                                                                                 
+				 if(foundUser.getAdmin())                                                                                                                                                                    
+				 {                                                                                                                                                                                           
+					 if( gasStationRepository.findOne(GasStationId )!=null)                                                                                                                  
+					  gasImpl.deleteGasStation( GasStationId);                                                                                                                               
+				 }                                                                                                                                                                                           
+				 else                                                                                                                                                                                        
+					                                                                                                                                                                                         
+					 fail("User is not admin to delete the user");                                                                                                                                           
+				                                                                                                                                                                                             
+				                                                                                                                                                                                             
+				}                                                                                                                                                                                            
+			    else if(log.size()>0)                                                                                                                                                                        
+				{                                                                                                                                                                                            
+				                                                                                                                                                                                             
+				 fail("More than one user found with this email");			                                                                                                                                 
+				}                                                                                                                                                                                            
+			     else if(log.size()==0)                                                                                                                                                                      
+				{                                                                                                                                                                                            
+				                                                                                                                                                                                             
+				 fail("No user found with this email");		                                                                                                                                                 
+				}                                                                                                                                                                                            
+			                                                                                                                                                                                   
+		} catch (Exception e) {                                                                                                                                                                              
+			fail("Exception throwed");                                                                                                                                                                       
+			}                                                                                                                                                                                                
+		                                                                                                                                                                                                     
+	}
 	
 }
