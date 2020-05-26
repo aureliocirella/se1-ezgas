@@ -162,7 +162,7 @@ public class IntegrationTests {
 		Integer id=	userfound.getUserId();
 		Integer PreviousReputation=userfound.getReputation();
 		System.out.println(id);
-		Integer currentReputation=  userImpl.increaseUserReputation(id ); 
+		Integer currentReputation=  userImpl.increaseUserReputation(id); 
 		PreviousReputation++;
 		assertEquals(currentReputation,PreviousReputation);
 	 

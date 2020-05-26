@@ -337,8 +337,9 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 |             | FR3.3                           ||              
 | UC7.1       | FR5.1                           ||   
 | UC8.1       | FR4.1                           ||     
-| UC10.1      | FR5.2                           ||            
-|             | FR5.3                           ||  
+| UC10.1      | FR5.2                           |testIntegration1_5()|  
+|             |                                 |testIntegration1_6()|            
+|             |                                 ||  
 | ...         |                                 |             |             
 
 
