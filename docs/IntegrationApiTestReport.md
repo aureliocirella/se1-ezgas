@@ -17,9 +17,16 @@ Version:
 - [Tests](#tests)
   - [Step 1 - Unit test of leaf classes](#step-1---unit-test-of-leaf-classes)
   - [Step 2](#step-2)
-  - [Step n API Tests](#step-n-api-tests)
 - [Scenarios](#scenarios)
-  - [Scenario UCx.y](#scenario-ucxy)
+  - [Scenario UC1.1](#scenario-uc11)
+  - [Scenario UC3.1](#scenario-uc31)
+  - [Scenario UC4.1](#scenario-uc41)
+  - [Scenario UC4.1](#scenario-uc41-1)
+  - [Scenario UC5.1](#scenario-uc51)
+  - [Scenario UC6.1](#scenario-uc61)
+  - [Scenario UC7.1](#scenario-uc71)
+  - [Scenario UC8.1](#scenario-uc81)
+  - [Scenario UC10.1](#scenario-uc101)
 - [Coverage of Scenarios and FR](#coverage-of-scenarios-and-fr)
 - [Coverage of Non Functional Requirements](#coverage-of-non-functional-requirements)
     - [](#)
@@ -145,17 +152,13 @@ Integration test are performed using bottom up approach. <br>
 Step1: User, UserDto, UserRepository, UserConverter, GasStation, GasStationDto, GasStationRepository, GasStationConverter<br>
 Step2: UserServiceImpl + UserConverter, UserServiceImpl + User,UserServiceImpl + User+ UserRepository,UserServiceImpl + User+ IdPw, GasStationServiceImpl + GasStationConverter, GasStationServiceImpl + GasStation, GasStationServiceImpl + GasStation + GasStationRepository  
 
-    <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
-    (ex: step1: class A, step 2: class A+B, step 3: class A+B+C, etc)> 
-    <The last integration step corresponds to API testing at level of Service package>
-    <Tests at level of Controller package will be done later>
+  
 
 
 
 #  Tests
 
-   <define below a table for each integration step. For each integration step report the group of classes under test, and the names of
-     JUnit test cases applied to them>
+   
 
 ## Step 1 - Unit test of leaf classes
 | Classes  | JUnit test cases |
@@ -195,13 +198,6 @@ UserConverter|testUserConverter1_1()|
 |UserServiceImpl + User+ IdPw |testIntegration1_7()|
 |GasStationServiceImpl + GasStation + GasStationRepository + GasStationConverter |testIntegration1_8()|
 
-## Step n API Tests
-
-   <The last integration step  should correspond to API testing, or tests applied to all classes implementing the APIs defined in the Service package>
-
-| Classes  | JUnit test cases |
-|--|--|
-|||
 
 
 
@@ -209,8 +205,7 @@ UserConverter|testUserConverter1_1()|
 # Scenarios
 
 
-<If needed, define here additional scenarios for the application. Scenarios should be named
- referring the UC they detail>
+
 
 
 ## Scenario UC1.1
@@ -226,19 +221,32 @@ UserConverter|testUserConverter1_1()|
 | 4 | Account U added in the system|
 | 5 | Account U login in the system|
 
-
-## Scenario UC1.3
-
-<!-- Is it possible in the application now?? -->
+## Scenario UC3.1
 
 | Scenario |  Delete user account |
 | ------------- |:-------------:| 
-|  Precondition     |Account U exists  |
-|  Post condition     |  Account U deleted from the system by Admin A |
+|  Precondition     |Account U exists|
+|  Post condition     |  Account U deleted from the system|
 | Step#        | Description  |
-|  1     |  A logins in application |  
-|  2     |  A loads admin page |
-|  3     |  A deletes U using by pressing delete button |
+|  1     |  U selects Login |  
+|  2     |  U fills al the form fields and access the User management page |
+| 3 | U requires to delete his account |
+| 4 | Account U is deleted from the system|
+
+## Scenario UC4.1
+
+| Scenario |  Create Gas Station |
+| ------------- |:-------------:| 
+|  Precondition     |Gas Station  G does not exist|
+|  Post condition     |  Gas Station G is created|
+| Step#        | Description  |
+|  1     |  Administrator A selects Login |  
+|  2     |  A fills al the form fields and access the Admin management page |
+| 3 | A access the Add Gas Station page |
+| 4 | A provides G details|
+| 5 | G is recorded in the system|
+
+
 
 
 ## Scenario UC4.1
@@ -335,12 +343,10 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
-| UC1.1       | FR1.1                           |testScenario1|             
-|             | FR1.2                           |testScenario1|             
-|             | FR1.3                           |testScenario1|             
-| UC1.2       | FR1                             |testScenario2|             
-| UC1.3       | FR5.1                           |testScenario3|             
-| UC4.1       | FR3.1                           ||             
+| UC1.1       | FR1.1                           |testIntegration1_1()|             
+|             |                                 |testIntegration1_7()|       
+| UC3.1       | FR1.2                           |testIntegration1_2()|                                 
+| UC4.1       | FR3.1                           |testIntegration1_8()|             
 | UC5.1       | FR3.1                           ||           
 |             | FR3.3                           ||               
 | UC6.1       | FR3.2                           ||            
