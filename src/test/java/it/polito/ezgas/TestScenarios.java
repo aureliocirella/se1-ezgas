@@ -6,8 +6,10 @@ import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,12 +19,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import it.polito.ezgas.converter.GasStationConverter;
 import it.polito.ezgas.converter.UserConverter;
+import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.dto.IdPw;
 import it.polito.ezgas.dto.LoginDto;
 import it.polito.ezgas.dto.UserDto;
+import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
+import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
+import it.polito.ezgas.service.impl.GasStationServiceimpl;
 import it.polito.ezgas.service.impl.UserServiceimpl;
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,7 +39,10 @@ public class TestScenarios {
 	UserRepository userRepository;
 	@Autowired
 	UserConverter userConverter; 
-	
+	@Autowired 
+	GasStationRepository gasStationRepository;
+	@Autowired
+	GasStationConverter gasStationConverter; 
 
 	@Before public void initialize() {
 			try {
@@ -69,6 +79,22 @@ public class TestScenarios {
 				
 				userRepository.save(userslist);
 				
+				
+				ArrayList<GasStation> gslist = new ArrayList<GasStation>();
+				GasStation gasStation00 = new GasStation("Q8", "Corso Galileo Ferraris 36/A Turin Piemont Italy", false, false, false, false, false, "", 45.0627865, 7.6686337, -1.0, -1.0, -1.0, -1.0, -1.0, -1, "", -1.0);
+				GasStation gasStation01 = new GasStation("Tamoil", "Marche Turin Piemont Italy ", true, true, false, false, false, "Enjoy", 45.0677551, 7.6824892, 1.5, 1.2, -1.0, -1.0, -1.0, user00.getUserId(), "2020.05.10.13.05.01", 1.2);
+				GasStation gasStation02 = new GasStation("Eni Station", "Corso Giacomo Matteotti 12/Q Turin Piemont Italy", false, false, false, true, true, "Enjoy", 45.0303838, 7.6690677, -1.0, -1.0, -1.0, 1.5, 2.1, user00.getUserId(), "2020.05.15.12.45.45", 2.4);
+				GasStation gasStation03 = new GasStation("Esso", "Via Francesco Cigna 40/B Turin Piemont Italy", false, false, true, false, false, "Car2Go", 45.0829594, 7.6792507, -1, -1, 1.78, -1, -1, user01.getUserId(), "2020.05.08.23.33.28", 1.0);
+				GasStation gasStation04 = new GasStation("GPL Torino", "Corso Enrico Tazzoli 183/A Turin Piemont Italy", false, false, false, false, false, "Car2Go", 45.0355852, 7.6236845, -1, -1, -1, -1, -1, -1, "", -1.0);
+				
+				gslist.add(gasStation00);
+				gslist.add(gasStation01);
+				gslist.add(gasStation02);
+				gslist.add(gasStation03);
+				gslist.add(gasStation04);
+				
+				gasStationRepository.save(gslist);
+				
 		 
 			}catch (Exception e) 
 			{ 
@@ -97,6 +123,19 @@ public class TestScenarios {
 			if(!userRepository.findByEmail("Pierre@ezgaz.com").isEmpty())
 				userRepository.delete( userRepository.findByEmail("Pierre@ezgaz.com"));
 		
+			
+			GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository,gasStationConverter);
+			List<GasStationDto> gsd = gasStationImpl.getGasStationsByProximity(45.0627865, 7.6686337);
+			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
+			gsd = gasStationImpl.getGasStationsByProximity(45.0627865, 7.6686337);
+			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
+			gsd = gasStationImpl.getGasStationsByProximity(45.0303838, 7.6690677);
+			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
+			gsd = gasStationImpl.getGasStationsByProximity(45.0829594, 7.6792507);
+			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
+			gsd = gasStationImpl.getGasStationsByProximity(45.0355852, 7.6236845);
+			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
+			
 			
 		}catch (Exception e) 
 		{ 
@@ -208,6 +247,37 @@ public class TestScenarios {
 				 
 				 fail("No user found with this email");		
 				}
+			conn.close(); 
+		} catch (Exception e) {
+			fail("Exception throwed");
+			}
+		
+	}
+
+	@Test
+	public void testScenario4() {
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+			GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository,gasStationConverter);
+			LoginDto userdto=	userImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));
+		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
+			List<GasStationDto> gsd=	gasStationImpl.getGasStationsWithCoordinates(45.0627865, 7.6686337, null, null);
+		 
+			if(log.size()==1)
+				{
+				
+				 User foundUser= log.get(0);
+
+				 if(gsd.size() == 0)
+					 fail("No gas station found");
+				 else if (gsd.size() > 1)
+					fail("More than one gas station found");
+				 
+				gasStationImpl.setReport(gsd.get(0).getGasStationId(), 1.0, -1, -1, 2.1, -1, foundUser.getUserId());
+				
+				}
+				 
 			conn.close(); 
 		} catch (Exception e) {
 			fail("Exception throwed");

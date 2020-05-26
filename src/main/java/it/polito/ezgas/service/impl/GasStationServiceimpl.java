@@ -1,8 +1,14 @@
 package it.polito.ezgas.service.impl;
 
+import java.util.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,6 +23,7 @@ import exception.PriceException;
 import it.polito.ezgas.converter.GasStationConverter;
 import it.polito.ezgas.converter.UserConverter;
 import it.polito.ezgas.dto.GasStationDto;
+import it.polito.ezgas.dto.UserDto;
 import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.GasStationRepository;
@@ -35,7 +42,7 @@ public class GasStationServiceimpl implements GasStationService {
 	
 	@Autowired
 	UserRepository userRepository; 
-
+	
 	@Autowired 
 	GasStationConverter gasStationConverter; 
 	
@@ -245,10 +252,37 @@ public class GasStationServiceimpl implements GasStationService {
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		gasStationRepository.delete(gasStationId);
 		gasStation.setDieselPrice(dieselPrice);
+		gasStation.setHasDiesel( (dieselPrice == -1) ? false:true);
 		gasStation.setSuperPrice(superPrice);
+		gasStation.setHasSuper( (superPrice == -1) ? false:true);
 		gasStation.setSuperPlusPrice(superPlusPrice);
+		gasStation.setHasSuperPlus( (superPlusPrice == -1) ? false:true);
 		gasStation.setGasPrice(gasPrice);
+		gasStation.setHasGas( (gasPrice == -1) ? false:true);
 		gasStation.setMethanePrice(methanePrice);
+		gasStation.setHasMethane( (methanePrice == -1) ? false:true);
+		if(gasStation.getReportUser()>0) {
+			User us = userRepository.findOne(gasStation.getReportUser());
+			
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);
+			Date timestamp;
+			try {
+				timestamp = sdf.parse(gasStation.getReportTimestamp());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			}
+			
+			long diffInMillies = Math.abs(timestamp.getTime() - today.getTime());
+			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			
+			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
+			us.setReputation(50 * (us.getReputation()+5) / 10 + 50*obs);
+		} else {
+			gasStation.setReportTimestamp(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+		}
 		gasStation.setUser(userRepository.findOne(userId));
 		gasStationRepository.save(gasStation); 
 		
