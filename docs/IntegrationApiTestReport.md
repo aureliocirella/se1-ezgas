@@ -21,7 +21,6 @@ Version:
   - [Scenario UC1.1](#scenario-uc11)
   - [Scenario UC3.1](#scenario-uc31)
   - [Scenario UC4.1](#scenario-uc41)
-  - [Scenario UC4.1](#scenario-uc41-1)
   - [Scenario UC5.1](#scenario-uc51)
   - [Scenario UC6.1](#scenario-uc61)
   - [Scenario UC7.1](#scenario-uc71)
@@ -232,21 +231,6 @@ UserConverter|testUserConverter1_1()|
 |  2     |  U fills al the form fields and access the User management page |
 | 3 | U requires to delete his account |
 | 4 | Account U is deleted from the system|
-
-## Scenario UC4.1
-
-| Scenario |  Create Gas Station |
-| ------------- |:-------------:| 
-|  Precondition     |Gas Station  G does not exist|
-|  Post condition     |  Gas Station G is created|
-| Step#        | Description  |
-|  1     |  Administrator A selects Login |  
-|  2     |  A fills al the form fields and access the Admin management page |
-| 3 | A access the Add Gas Station page |
-| 4 | A provides G details|
-| 5 | G is recorded in the system|
-
-
 
 
 ## Scenario UC4.1
