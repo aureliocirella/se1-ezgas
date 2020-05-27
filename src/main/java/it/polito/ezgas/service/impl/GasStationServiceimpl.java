@@ -261,29 +261,12 @@ public class GasStationServiceimpl implements GasStationService {
 		gasStation.setHasGas( (gasPrice == -1) ? false:true);
 		gasStation.setMethanePrice(methanePrice);
 		gasStation.setHasMethane( (methanePrice == -1) ? false:true);
-		if(gasStation.getReportUser()>0) {
-			User us = userRepository.findOne(gasStation.getReportUser());
-			
-			Date today = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);
-			Date timestamp;
-			try {
-				timestamp = sdf.parse(gasStation.getReportTimestamp());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return;
-			}
-			
-			long diffInMillies = Math.abs(timestamp.getTime() - today.getTime());
-			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-			
-			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
-			us.setReputation(50 * (us.getReputation()+5) / 10 + 50*obs);
-		} else {
-			gasStation.setReportTimestamp(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
-		}
-		gasStation.setUser(userRepository.findOne(userId));
+		
+		User us = userRepository.findOne(userId);
+		Integer obs = 0;
+		gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
+		gasStation.setReportTimestamp(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+		gasStation.setReportUser(userId);
 		gasStationRepository.save(gasStation); 
 		
 	}

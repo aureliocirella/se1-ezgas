@@ -1,7 +1,12 @@
 package it.polito.ezgas.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -15,7 +20,9 @@ import it.polito.ezgas.converter.UserConverter;
 import it.polito.ezgas.dto.IdPw;
 import it.polito.ezgas.dto.LoginDto;
 import it.polito.ezgas.dto.UserDto;
+import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
+import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
 import it.polito.ezgas.service.UserService;
 
@@ -27,6 +34,8 @@ public class UserServiceimpl implements UserService {
 
 	@Autowired 
 	 UserRepository userRepository;
+	@Autowired 
+	GasStationRepository gasStationRepository; 
 	
 
 	@Autowired
@@ -116,12 +125,53 @@ public class UserServiceimpl implements UserService {
 	
 	@Override
 	public Integer increaseUserReputation(Integer userId) throws InvalidUserException {
-		return changeUserReputation(userId, 1);
+		
+		Integer newReputation = changeUserReputation(userId, 1);
+		List<GasStation> gsList = gasStationRepository.findByreportUser(userId);
+		gsList.forEach((gs)-> { 
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);
+			Date timestamp;
+			try {
+				timestamp = sdf.parse(gs.getReportTimestamp());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			}
+			
+			long diffInMillies = Math.abs(timestamp.getTime() - today.getTime());
+			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			
+			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
+			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
+		});
+		return newReputation;
 	}
 
 	@Override
 	public Integer decreaseUserReputation(Integer userId) throws InvalidUserException {
-		return changeUserReputation(userId, -1);
+		Integer newReputation = changeUserReputation(userId, -1);
+		List<GasStation> gsList = gasStationRepository.findByreportUser(userId);
+		gsList.forEach((gs)-> { 
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);
+			Date timestamp;
+			try {
+				timestamp = sdf.parse(gs.getReportTimestamp());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			}
+			
+			long diffInMillies = Math.abs(timestamp.getTime() - today.getTime());
+			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			
+			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
+			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
+		});
+		return newReputation;
 	}
 	
 }
