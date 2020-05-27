@@ -134,7 +134,7 @@ public class TestScenarios {
 			gsd = gasStationImpl.getGasStationsByProximity(45.0627865, 7.6686337);
 			if(gsd.size()>0)
 			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
-			gsd = gasStationImpl.getGasStationsByProximity(45.0303838, 7.6690677);
+			gsd = gasStationImpl.getGasStationsByProximity(45.0677551, 7.6824892);
 			if(gsd.size()>0)
 			gasStationImpl.deleteGasStation(gsd.get(0).getGasStationId());
 			gsd = gasStationImpl.getGasStationsByProximity(45.0829594, 7.6792507);
@@ -152,116 +152,6 @@ public class TestScenarios {
     }
 	@Test
 	public void testScenario1() {
-		try {
-			 UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-			UserDto user = new UserDto(1, "Gardner", "Kelvin", "Gardner@ezgaz.it", 1);
-			userImpl.saveUser(user); 
-			
-			
-		   LoginDto userdto= userImpl.login(new IdPw("Gardner@ezgaz.it","Kelvin"));
-		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
-		    
-			if(log.size()==1)
-				{
-				
-				 User foundUser= log.get(0);	 
-				 assertEquals("Gardner",foundUser.getUserName());
-				}
-			    else if(log.size()>0)
-				{
-				 
-				 fail("More than one user found with this email");			
-				}
-			     else if(log.size()==0)
-				{ 
-				 fail("No user found with this email");		
-				}
-			 
-		} catch (Exception e) {
-			fail("Exception throwed");
-			}
-		
-	}
-	@Test
-	public void testScenario2() {
-		try {
-			 UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-		LoginDto userdto=	userImpl.login(new IdPw("Shepherd@ezgaz.com","Shepherd"));
-		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
-		 
-			if(log.size()==1)
-				{
-				
-				 User foundUser= log.get(0);
-		 
-				 Integer expectedReputation=3;
-				 assertEquals(expectedReputation,foundUser.getReputation());
-				 assertEquals("Sonny",foundUser.getUserName());
-				 Integer userRep= foundUser.getReputation();
-				 userRep++;
-				 Integer NewRep=userImpl.increaseUserReputation(foundUser.getUserId());
-				assertEquals(userRep,NewRep ); 
-				
-				 
-				}
-			    else if(log.size()>0)
-				{
-				 
-				 fail("More than one user found with this email");			
-				}
-			     else if(log.size()==0)
-				{
-				 
-				 fail("No user found with this email");		
-				}
-			 
-		} catch (Exception e) {
-			fail("Exception throwed");
-			}
-		
-	}
-	@Test
-	public void testScenario3() {
-		try {
-			 
-			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-		    LoginDto userdto=	userImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));
-		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
-		 
-			if(log.size()==1)
-				{
-				
-				 User foundUser= log.get(0);
-				 if(foundUser.getAdmin())
-				 {
-					    ArrayList<User> userclient = userRepository.findByEmail("Buckley@ezgaz.com");
-					    userImpl.deleteUser(userclient.get(0).getUserId());
-				 }
-				 else
-					 
-					 fail("User is not admin to delete the user");
-				 
-				 
-				}
-			    else if(log.size()>0)
-				{
-				 
-				 fail("More than one user found with this email");			
-				}
-			     else if(log.size()==0)
-				{
-				 
-				 fail("No user found with this email");		
-				}
-			 
-		} catch (Exception e) {
-			fail("Exception throwed");
-			}
-		
-	}
-
-	@Test
-	public void testScenario4() {
 		try {
 			 
 			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
@@ -294,46 +184,6 @@ public class TestScenarios {
 			fail("Exception throwed");
 			}
 		
-	}
-	
-	@Test                                                                                                                                                                                                    
-	public void testScenario5() {                                                                                                                                                                            
-		try {                                                                                                                                                                                                
-			GasStationServiceimpl gasImpl = new GasStationServiceimpl(gasStationRepository,userRepository,gasStationConverter);                                                                              
-			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);                                                                                                                    
-			LoginDto userdto=	userImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));                                                                                                                          
-		    ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());                                                                                                                            
-		                                                                                                                                                                                                     
-			if(log.size()==1)                                                                                                                                                                                
-				{                                                                                                                                                                                            
-				                                                                                                                                                                                             
-				 User foundUser= log.get(0);                                                                                                                                                                 
-				 if(foundUser.getAdmin())                                                                                                                                                                    
-				 {                                                                                                                                                                                           
-					 if( gasStationRepository.findOne(GasStationId )!=null)                                                                                                                  
-					  gasImpl.deleteGasStation( GasStationId);                                                                                                                               
-				 }                                                                                                                                                                                           
-				 else                                                                                                                                                                                        
-					                                                                                                                                                                                         
-					 fail("User is not admin to delete the user");                                                                                                                                           
-				                                                                                                                                                                                             
-				                                                                                                                                                                                             
-				}                                                                                                                                                                                            
-			    else if(log.size()>0)                                                                                                                                                                        
-				{                                                                                                                                                                                            
-				                                                                                                                                                                                             
-				 fail("More than one user found with this email");			                                                                                                                                 
-				}                                                                                                                                                                                            
-			     else if(log.size()==0)                                                                                                                                                                      
-				{                                                                                                                                                                                            
-				                                                                                                                                                                                             
-				 fail("No user found with this email");		                                                                                                                                                 
-				}                                                                                                                                                                                            
-			                                                                                                                                                                                   
-		} catch (Exception e) {                                                                                                                                                                              
-			fail("Exception throwed");                                                                                                                                                                       
-			}                                                                                                                                                                                                
-		                                                                                                                                                                                                     
 	}
 	
 }
