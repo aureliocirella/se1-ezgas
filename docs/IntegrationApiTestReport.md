@@ -220,6 +220,17 @@ UserConverter|testUserConverter1_1()|
 | 4 | Account U added in the system|
 | 5 | Account U login in the system|
 
+## Scenario UC2.1
+
+| Scenario |  Modify a user account |
+| ------------- |:-------------:| 
+|  Precondition     |User U exists and it's informations must be updated|
+|  Post condition     |  User U informations are modified and saved in the system|
+| Step#        | Description  |
+|  1     |  U wants to modify it's account |  
+|  2     |  U submits new email and username |
+| 3 | The changes are saved in the system |
+
 ## Scenario UC3.1
 
 | Scenario |  Delete user account |
@@ -328,7 +339,9 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
 | UC1.1       | FR1.1                           |testIntegration1_1()|             
-|             |                                 |testIntegration1_7()|       
+|             |                                 |testIntegration1_7()|     
+| UC2.1       | FR1.1                           |testUserDto1_4()|             
+|             |                                 |testLoginDto1_4()|         
 | UC3.1       | FR1.2                           |testIntegration1_2()|                                 
 | UC4.1       | FR3.1                           |testIntegration1_8()|             
 | UC5.1       | FR3.1                           ||           
