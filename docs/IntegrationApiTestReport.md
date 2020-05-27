@@ -344,16 +344,12 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 |             |                                 |testLoginDto1_4()|         
 | UC3.1       | FR1.2                           |testIntegration1_2()|                                 
 | UC4.1       | FR3.1                           |testIntegration1_8()|             
-| UC5.1       | FR3.1                           ||           
-|             | FR3.3                           ||               
-| UC6.1       | FR3.2                           ||            
-|             | FR3.3                           ||              
-| UC7.1       | FR5.1                           ||   
-| UC8.1       | FR4.1                           ||     
+| UC5.1       | FR3.1                           |testGasStation1_6|  
+| UC6.1       | FR3.2                           |testIntegration1_8|    
+| UC7.1       | FR5.1                           |testScenario1()|   
+| UC8.1       | FR4.1                           |testScenario1()|     
 | UC10.1      | FR5.2                           |testIntegration1_5()|  
-|             |                                 |testIntegration1_6()|            
-|             |                                 ||  
-| ...         |                                 |             |             
+|             |                                 |testIntegration1_6()|           
 
 
 
@@ -367,6 +363,6 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Non Functional Requirement | Test name |
 | -------------------------- | --------- |
-|                            |           |
+| NFR5                       |testScenario1()|
 
 
