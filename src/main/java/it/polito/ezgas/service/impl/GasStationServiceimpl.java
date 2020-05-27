@@ -166,9 +166,10 @@ public class GasStationServiceimpl implements GasStationService {
 		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
 		gasStationDtoList.forEach((gs)->
 		{
-			if(gs.getCarSharing()==carsharing)
+			if(gs.getCarSharing().contentEquals(carsharing))
 			{
 				gasStationDtoReturnList.add(gs);
+				//System.out.println(carsharing + " " + gs.getGasStationName() + " " + gs.getGasStationAddress());
 			}
 		});
 		return gasStationDtoReturnList;
@@ -176,7 +177,7 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public List<GasStationDto> getGasStationsByProximity(double lat, double lon) throws GPSDataException {
-		System.out.println("getGasStationsByProximity\ninput: lat=" + lat + ", lon=" + lon);
+		//System.out.println("getGasStationsByProximity\ninput: lat=" + lat + ", lon=" + lon);
 		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
@@ -186,6 +187,7 @@ public class GasStationServiceimpl implements GasStationService {
 		gasStationList.forEach((gs)->
 		{
 			gasStationDtoList.add(gasStationConverter.map(gs, GasStationDto.class));
+			//System.out.println(gs.getGasStationName() + " " + gs.getGasStationAddress());
 		});
 		
 		return getGasStationByProximityFromList(lat, lon, gasStationDtoList);
@@ -212,13 +214,15 @@ public class GasStationServiceimpl implements GasStationService {
 	@Override
 	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype,
 			String carsharing) throws InvalidGasTypeException, GPSDataException {
-		System.out.println("getGasStationsWithCoordinates\ninput: " + lat + ", " + lon + ", " + gasolinetype + ", " + carsharing);
+		//System.out.println("getGasStationsWithCoordinates\ninput: " + lat + ", " + lon + ", " + gasolinetype + ", " + carsharing);
 		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
 		
-		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
+		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType(gasolinetype);
+		//System.out.println(gasolinetype + ", size: " + gasStationDtoList.size());
 		gasStationDtoList = getGasStationByCarsharingFromList(carsharing, gasStationDtoList);
+		//System.out.println(carsharing + ", size: " + gasStationDtoList.size());
 		
 		return getGasStationByProximityFromList(lat, lon, gasStationDtoList);
 	}
@@ -235,7 +239,7 @@ public class GasStationServiceimpl implements GasStationService {
 	public void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice,
 			double gasPrice, double methanePrice, Integer userId)
 			throws InvalidGasStationException, PriceException, InvalidUserException {
-		System.out.println("setReport\ninput: " + gasStationId + ", " + dieselPrice + ", " + superPrice + ", " + gasPrice + ", " + methanePrice + ", " + userId);
+		//System.out.println("setReport\ninput: " + gasStationId + ", " + dieselPrice + ", " + superPrice + ", " + gasPrice + ", " + methanePrice + ", " + userId);
 		if(userId<0)
 		{
 			throw new InvalidUserException("Invalid userId!"); 
@@ -245,10 +249,13 @@ public class GasStationServiceimpl implements GasStationService {
 			throw new InvalidGasStationException("Invalid gasStationId!"); 
 		}
 		
+		/*
 		if(dieselPrice<0||superPrice<0||superPlusPrice<0||gasPrice<0||methanePrice<0)
 		{
 			throw new PriceException("Prices must be positive!"); 
 		}
+		*/
+		
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		gasStationRepository.delete(gasStationId);
 		gasStation.setDieselPrice(dieselPrice);

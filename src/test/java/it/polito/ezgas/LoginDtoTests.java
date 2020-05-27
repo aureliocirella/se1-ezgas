@@ -59,7 +59,7 @@ public class LoginDtoTests {
 	public void testLoginDto2_1() {
 		LoginDto log = new LoginDto(1, "Mario Rossi", "MR", "mario.rossi@polito.it", 1);
 		Boolean admin = log.getAdmin();
-		org.junit.Assert.assertFalse(admin);
+		org.junit.Assert.assertNull(admin);
 	}
 
 	@Test
