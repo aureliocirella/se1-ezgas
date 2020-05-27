@@ -3,6 +3,8 @@ package it.polito.ezgas;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -54,10 +56,12 @@ public class GasStationServiceimplTests {
 
 	@Test
 	public void testGasStationServiceimpl1_8() {
-		assertThrows ( java.lang.NullPointerException.class,
-				() -> {
-					it.polito.ezgas.service.impl.GasStationServiceimpl.distance((Double) null, 0.0, 0.0, 0.0);
-				}); 
+		try {
+			it.polito.ezgas.service.impl.GasStationServiceimpl.distance((Double) null, 0.0, 0.0, 0.0);
+			Assert.fail("Expected NullPointerException");
+		} catch (Exception NullPointerException) {
+			Assert.assertTrue(true);
+		}
 	}
 	
 	

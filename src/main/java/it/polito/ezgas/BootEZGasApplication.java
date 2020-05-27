@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,16 @@ public class BootEZGasApplication {
 		 
 		//list all the users stored in the database and, if there is no an admin user create it
 		 	
-			User user= new User("admin", "admin", "admin@ezgas.com", 5);
-			user.setAdmin(true);
-			user.setUserId(1); 
-			userRepo.save(user); 
+//			ArrayList<User> userlist = userRepo.findByAdmin(true); 
+//			userlist
+			if(userRepo.findByAdmin(true).isEmpty())
+			{
+				User user= new User("admin", "admin", "admin@ezgas.com", 5);
+				user.setAdmin(true);
+				user.setUserId(1); 
+				userRepo.save(user); 
+			}
+			
 			
 //			User firsttry = userRepo.findOne(1); 
 //			for(int i = 0; i<20; i++)

@@ -1,8 +1,14 @@
 package it.polito.ezgas.service.impl;
 
+import java.util.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,7 +21,9 @@ import exception.InvalidGasTypeException;
 import exception.InvalidUserException;
 import exception.PriceException;
 import it.polito.ezgas.converter.GasStationConverter;
+import it.polito.ezgas.converter.UserConverter;
 import it.polito.ezgas.dto.GasStationDto;
+import it.polito.ezgas.dto.UserDto;
 import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.GasStationRepository;
@@ -34,10 +42,15 @@ public class GasStationServiceimpl implements GasStationService {
 	
 	@Autowired
 	UserRepository userRepository; 
-
+	
 	@Autowired 
 	GasStationConverter gasStationConverter; 
 	
+	public GasStationServiceimpl(GasStationRepository gasStationRepositoryInput, UserRepository userRepositoryInput, GasStationConverter gasStationConverterInput) {
+		gasStationRepository= gasStationRepositoryInput;
+		gasStationConverter= gasStationConverterInput;
+		userRepository = userRepositoryInput;
+	}
 	
 	@Override
 	public GasStationDto getGasStationById(Integer gasStationId) throws InvalidGasStationException {
@@ -66,8 +79,9 @@ public class GasStationServiceimpl implements GasStationService {
 		if (gasStationDto.getLat() > 90.0 || gasStationDto.getLat() < -90.0 || gasStationDto.getLon() > 180.0 || gasStationDto.getLon() < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
-		gasStationRepository.save(gasStationConverter.map(gasStationDto, GasStation.class)); 
-		return gasStationDto;
+		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
+		GasStation gasStation = gasStationRepository.save(gasStationConverted); 
+		return gasStationConverter.map(gasStation, GasStationDto.class);
 	}
 
 	@Override
@@ -86,10 +100,10 @@ public class GasStationServiceimpl implements GasStationService {
 		 // In the case of negative id throw exception
 		if(gasStationId<0)
 		{
-			throw new InvalidGasStationException("Invalid userId!"); 
+			throw new InvalidGasStationException("Invalid gasStationId!"); 
 		}
 		 // Check if exists in db
-		if(!userRepository.exists(gasStationId))
+		if(!gasStationRepository.exists(gasStationId))
 		{
 			return null; 
 		}
@@ -152,9 +166,10 @@ public class GasStationServiceimpl implements GasStationService {
 		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
 		gasStationDtoList.forEach((gs)->
 		{
-			if(gs.getCarSharing()==carsharing)
+			if(gs.getCarSharing().contentEquals(carsharing))
 			{
 				gasStationDtoReturnList.add(gs);
+				//System.out.println(carsharing + " " + gs.getGasStationName() + " " + gs.getGasStationAddress());
 			}
 		});
 		return gasStationDtoReturnList;
@@ -162,7 +177,7 @@ public class GasStationServiceimpl implements GasStationService {
 
 	@Override
 	public List<GasStationDto> getGasStationsByProximity(double lat, double lon) throws GPSDataException {
-		System.out.println("getGasStationsByProximity\ninput: lat=" + lat + ", lon=" + lon);
+		//System.out.println("getGasStationsByProximity\ninput: lat=" + lat + ", lon=" + lon);
 		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
@@ -172,6 +187,7 @@ public class GasStationServiceimpl implements GasStationService {
 		gasStationList.forEach((gs)->
 		{
 			gasStationDtoList.add(gasStationConverter.map(gs, GasStationDto.class));
+			//System.out.println(gs.getGasStationName() + " " + gs.getGasStationAddress());
 		});
 		
 		return getGasStationByProximityFromList(lat, lon, gasStationDtoList);
@@ -198,13 +214,15 @@ public class GasStationServiceimpl implements GasStationService {
 	@Override
 	public List<GasStationDto> getGasStationsWithCoordinates(double lat, double lon, String gasolinetype,
 			String carsharing) throws InvalidGasTypeException, GPSDataException {
-		System.out.println("getGasStationsWithCoordinates\ninput: " + lat + ", " + lon + ", " + gasolinetype + ", " + carsharing);
+		//System.out.println("getGasStationsWithCoordinates\ninput: " + lat + ", " + lon + ", " + gasolinetype + ", " + carsharing);
 		if (lat > 90.0 || lat < -90.0 || lon > 180.0 || lon < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
 		
-		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType (gasolinetype);
+		List<GasStationDto> gasStationDtoList = getGasStationsByGasolineType(gasolinetype);
+		//System.out.println(gasolinetype + ", size: " + gasStationDtoList.size());
 		gasStationDtoList = getGasStationByCarsharingFromList(carsharing, gasStationDtoList);
+		//System.out.println(carsharing + ", size: " + gasStationDtoList.size());
 		
 		return getGasStationByProximityFromList(lat, lon, gasStationDtoList);
 	}
@@ -221,7 +239,7 @@ public class GasStationServiceimpl implements GasStationService {
 	public void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice,
 			double gasPrice, double methanePrice, Integer userId)
 			throws InvalidGasStationException, PriceException, InvalidUserException {
-		System.out.println("setReport\ninput: " + gasStationId + ", " + dieselPrice + ", " + superPrice + ", " + gasPrice + ", " + methanePrice + ", " + userId);
+		//System.out.println("setReport\ninput: " + gasStationId + ", " + dieselPrice + ", " + superPrice + ", " + gasPrice + ", " + methanePrice + ", " + userId);
 		if(userId<0)
 		{
 			throw new InvalidUserException("Invalid userId!"); 
@@ -231,18 +249,31 @@ public class GasStationServiceimpl implements GasStationService {
 			throw new InvalidGasStationException("Invalid gasStationId!"); 
 		}
 		
+		/*
 		if(dieselPrice<0||superPrice<0||superPlusPrice<0||gasPrice<0||methanePrice<0)
 		{
 			throw new PriceException("Prices must be positive!"); 
 		}
+		*/
+		
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		gasStationRepository.delete(gasStationId);
 		gasStation.setDieselPrice(dieselPrice);
+		gasStation.setHasDiesel( (dieselPrice == -1) ? false:true);
 		gasStation.setSuperPrice(superPrice);
+		gasStation.setHasSuper( (superPrice == -1) ? false:true);
 		gasStation.setSuperPlusPrice(superPlusPrice);
+		gasStation.setHasSuperPlus( (superPlusPrice == -1) ? false:true);
 		gasStation.setGasPrice(gasPrice);
+		gasStation.setHasGas( (gasPrice == -1) ? false:true);
 		gasStation.setMethanePrice(methanePrice);
-		gasStation.setUser(userRepository.findOne(userId));
+		gasStation.setHasMethane( (methanePrice == -1) ? false:true);
+		
+		User us = userRepository.findOne(userId);
+		Integer obs = 0;
+		gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
+		gasStation.setReportTimestamp(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+		gasStation.setReportUser(userId);
 		gasStationRepository.save(gasStation); 
 		
 	}
