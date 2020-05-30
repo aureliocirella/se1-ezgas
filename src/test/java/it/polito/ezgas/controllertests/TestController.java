@@ -16,17 +16,17 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
-
+import org.junit.jupiter.api.AfterAll;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.dto.UserDto;
 
 public class TestController {
 
-	UserDto userDto;
+	public static UserDto userDto;
 	@Test
 	public void testAllUser() throws ClientProtocolException, IOException{
 		
@@ -45,7 +45,9 @@ public class TestController {
 		
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
 		 
+		String jsonFromResponse = EntityUtils.toString(response.getEntity());
 		assert(response.getStatusLine().getStatusCode() == 200);
+		assert(jsonFromResponse.contains("284"));
 		
 	}
 	
@@ -70,22 +72,39 @@ public class TestController {
 	    userDto = mapper.readValue(jsonFromResponse, UserDto.class); 
  
 	    assert(response.getStatusLine().getStatusCode() == 200);
+	    assert(userDto.getEmail().equals("claudio@me.it"));
 	    client.close();
 	}
 	
 	@Test
+	@AfterAll
 	public void testDeleteUser() 
 	  throws ClientProtocolException, IOException {
 		 
-		
-		
 		CloseableHttpClient client = HttpClients.createDefault();
-		HttpDelete httpDelete = new HttpDelete("http://localhost:8080/user/deleteUser/1430");
+		
+		HttpDelete httpDelete = new HttpDelete("http://localhost:8080/user/deleteUser/"+userDto.getUserId());
 		HttpResponse response = client.execute(httpDelete);
 		assert(response.getStatusLine().getStatusCode() == 200);
 	    client.close();
 	}
 	
+	@Test
+	public void testGasStationWithCoordinate() throws ClientProtocolException, IOException{
+		
+		
+		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/45.060735/7.923549/superplus/Enjoy");
+		
+		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
+	    
+		String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
+	    
+	    
+		assert(response.getStatusLine().getStatusCode() == 200);
+	    assert(jsonFromResponse.contains("Garibaldi"));
+		
+		
+	}
 	
 	
 	
