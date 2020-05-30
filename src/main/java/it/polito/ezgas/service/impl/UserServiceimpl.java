@@ -111,17 +111,16 @@ public class UserServiceimpl implements UserService {
 	private Integer changeUserReputation(Integer userId, Integer var) throws InvalidUserException {
 		if(userRepository.exists(userId)) {
 			User user = userRepository.findOne(userId);
-			UserDto userDto = userConverter.map(user, UserDto.class);
-			int reputation = userDto.getReputation() + var;
-			userDto.setReputation(reputation);
-			userRepository.delete(userId);
-			userRepository.save(userConverter.map(userDto, User.class));
+		    int reputation = user.getReputation() + var;
+			user.setReputation(reputation);
+			userRepository.save(user);
 			return reputation;
 		}
 		else {
 			throw new InvalidUserException("Selected user does not exist!");
 		}
 	}
+	
 	
 	@Override
 	public Integer increaseUserReputation(Integer userId) throws InvalidUserException {
