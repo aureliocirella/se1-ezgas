@@ -21,7 +21,6 @@ import org.junit.jupiter.api.AfterAll;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.dto.UserDto;
 
 public class TestController {
