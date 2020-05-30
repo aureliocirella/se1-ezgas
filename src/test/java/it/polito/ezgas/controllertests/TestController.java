@@ -200,4 +200,42 @@ public class TestController {
 	}
 	
 	
+	@Test 
+	public void testSaveGasStation() 
+	  throws ClientProtocolException, IOException {
+	    CloseableHttpClient client = HttpClients.createDefault();
+	    HttpPost httpPost = new HttpPost("http://localhost:8080/gasstation/saveGasStation");
+	    
+	    String json = "{\"gasStationId\":null,\"gasStationName\":\"Q8\",\"gasStationAddress\":\"Via Federico Spera Foggia Apulia Italy\",\"hasDiesel\":true,\"hasSuper\":true,\"hasSuperPlus\":true,\"hasGas\":false,\"hasMethane\":false,\"carSharing\":\"Enjoy\",\"dieselPrice\":-1,\"superPrice\":-1,\"superPlusPrice\":-1,\"gasPrice\":-1,\"methanePrice\":-1,\"reportUser\":-1,\"reportTimestamp\":null,\"lat\":\"41.4632681\",\"lon\":\"15.5227678\"}";
+	    StringEntity entity = new StringEntity(json);
+	    httpPost.setEntity(entity);
+	    httpPost.setHeader("Accept", "application/json");
+	    httpPost.setHeader("Content-type", "application/json");
+	 
+	    HttpResponse response = client.execute(httpPost);
+	    
+	    //String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
+	    
+	    //ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
+	    
+	    //gasStationDto = mapper.readValue(jsonFromResponse, GasStationDto.class); 
+ 
+	    assert(response.getStatusLine().getStatusCode() == 200);
+	    //assert(gasStationDto.getLat()==41.4632681 && gasStationDto.getLon()==15.5227678);
+	    client.close();
+	}
+	
+	@Test
+	public void testAllGasStations() throws ClientProtocolException, IOException{
+		
+		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/gasstation/getAllGasStations");
+		
+		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
+		 
+		assert(response.getStatusLine().getStatusCode() == 200);
+		
+	}
+	
+	
+	
 }
