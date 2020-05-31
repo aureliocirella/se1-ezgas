@@ -33,7 +33,7 @@ import it.polito.ezgas.service.UserService;
 public class UserServiceimpl implements UserService {
 
 	@Autowired 
-	 UserRepository userRepository;
+	UserRepository userRepository;
 	@Autowired 
 	GasStationRepository gasStationRepository; 
 	
@@ -113,6 +113,14 @@ public class UserServiceimpl implements UserService {
 		if(userRepository.exists(userId)) {
 			User user = userRepository.findOne(userId);
 		    int reputation = user.getReputation() + var;
+		    if(reputation > 5)
+		    {
+		    	reputation = 5; 
+		    }else if(reputation < -5)
+		    {
+		    	reputation = -5;
+		    }
+		   
 			user.setReputation(reputation);
 			userRepository.save(user);
 			return reputation;
@@ -140,11 +148,16 @@ public class UserServiceimpl implements UserService {
 				return;
 			}
 			
+			
 			long diffInMillies = Math.abs(timestamp.getTime() - today.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			
 			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
+			System.out.println(50 * (newReputation+5) / 10 + 50*obs);
+			
 			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
+			gasStationRepository.delete(gs.getGasStationId());
+			gasStationRepository.save(gs);
 		});
 		return newReputation;
 	}
@@ -165,11 +178,16 @@ public class UserServiceimpl implements UserService {
 				return;
 			}
 			
+			System.out.println(gs.getGasStationId());
 			long diffInMillies = Math.abs(timestamp.getTime() - today.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			
 			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
+
 			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
+			
+			gasStationRepository.delete(gs.getGasStationId());
+			gasStationRepository.save(gs); 
 		});
 		return newReputation;
 	}
