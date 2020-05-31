@@ -20,9 +20,9 @@ This part of the document reports about testing at the GUI level. Tests are end 
 
 | Scenario ID | Functional Requirements covered | GUI Test(s) |
 | ----------- | ------------------------------- | ----------- | 
-| 1           | FRx                             |             |             
-| 2           | FRy                             |             |             
-| ...         |                                 |             |         
+| 1           | FRx                       
+| 2           | FRy                                  
+| UC3.1       | FR1.2          |    testUC3.1.sikuli
 | ...         |                                 |             |             
 | ...         |                                 |             |             
 | ...         |                                 |             |             
