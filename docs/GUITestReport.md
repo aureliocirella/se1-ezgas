@@ -1,10 +1,10 @@
 # GUI  Testing Documentation 
 
-Authors:
+Authors: Aurelio Cirella, Behnam Lotfi, Federica Giorgione, Lorenzo Cardone
 
-Date:
+Date: 31/05/2020
 
-Version:
+Version: 1.0
 
 # GUI testing
 
@@ -40,9 +40,10 @@ Tests should cover each function of classes in the Controller package
 
 | class.method name | Functional Requirements covered |REST  API Test(s) | 
 | ----------- | :--------------------: | ----------- | 
-|  saveUser()   | FR1.1                |testSaveUser()|   
-|  deleteUser() | FR1.2                |testDeleteUser()|  
-|  getUserById()| FR1.3                |testUserById()|  
-|  getAllUsers()| FR1.4                |testAllUser() |   
-| ...         |                                 |             |             
-| getGasStationsWithCoordinates()| FR4.1|testGasStationWithCoordinate()|
+|  UserServiceimpl.saveUser()   | FR1.1                |testSaveUser()|   
+|  UserServiceimpl.deleteUser() | FR1.2                |testDeleteUser()|  
+|  UserServiceimpl.getUserById()| FR1.3                |testUserById()|  
+|  UserServiceimpl.getAllUsers()| FR1.4                |testAllUser() |   
+|  GasStationServiceimpl.saveGasStation()   | FR3.1                |testSaveGasStation()|  
+|  GasStationServiceimpl.getAllGasStations()| FR3.3                |testAllGasStations() |          
+| GasStationServiceimpl.getGasStationsWithCoordinates()| FR4.1|testGasStationWithCoordinate()|
