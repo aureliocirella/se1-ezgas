@@ -30,6 +30,8 @@ import it.polito.ezgas.dto.UserDto;
 public class TestController {
 
 	public static UserDto userDto;
+	public static GasStationDto gasStationDto;
+	
 	@Test
 	public void testAllUser() throws ClientProtocolException, IOException{
 		
@@ -214,14 +216,18 @@ public class TestController {
 	 
 	    HttpResponse response = client.execute(httpPost);
 	    
-	    //String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
+	    String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
 	    
-	    //ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
+	    ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
 	    
-	    //gasStationDto = mapper.readValue(jsonFromResponse, GasStationDto.class); 
+	    gasStationDto = mapper.readValue(jsonFromResponse, GasStationDto.class); 
+	     
+	    assert(response.getStatusLine().getStatusCode() == 200);
+	    assert(userDto.getEmail().equals("claudio@me.it"));
+	    client.close();
  
 	    assert(response.getStatusLine().getStatusCode() == 200);
-	    //assert(gasStationDto.getLat()==41.4632681 && gasStationDto.getLon()==15.5227678);
+	    assert(gasStationDto.getLat()==41.4632681 && gasStationDto.getLon()==15.5227678);
 	    client.close();
 	}
 	
@@ -235,7 +241,18 @@ public class TestController {
 		assert(response.getStatusLine().getStatusCode() == 200);
 		
 	}
-	
-	
+		
+	@Test
+	@AfterAll
+	public void testDeleteGasStation() 
+	  throws ClientProtocolException, IOException {
+		 
+		CloseableHttpClient client = HttpClients.createDefault();
+		
+		HttpDelete httpDelete = new HttpDelete("http://localhost:8080/user/deleteUser/"+gasStationDto.getGasStationId());
+		HttpResponse response = client.execute(httpDelete);
+		assert(response.getStatusLine().getStatusCode() == 200);
+	    client.close();
+	}
 	
 }

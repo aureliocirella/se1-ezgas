@@ -45,5 +45,6 @@ Tests should cover each function of classes in the Controller package
 |  UserServiceimpl.getUserById()| FR1.3                |testUserById()|  
 |  UserServiceimpl.getAllUsers()| FR1.4                |testAllUser() |   
 |  GasStationServiceimpl.saveGasStation()   | FR3.1                |testSaveGasStation()|  
-|  GasStationServiceimpl.getAllGasStations()| FR3.3                |testAllGasStations() |          
+|  GasStationServiceimpl.deleteGasStation()| FR3.2                |testDeleteGasStation() |   
+|  GasStationServiceimpl.getAllGasStations()| FR3.3                |testAllGasStations() |       
 | GasStationServiceimpl.getGasStationsWithCoordinates()| FR4.1|testGasStationWithCoordinate()|

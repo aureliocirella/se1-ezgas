@@ -243,12 +243,12 @@ public class GasStationServiceimpl implements GasStationService {
 			throw new InvalidGasStationException("Invalid gasStationId!"); 
 		}
 		
-		/*
-		if(dieselPrice<0||superPrice<0||superPlusPrice<0||gasPrice<0||methanePrice<0)
+		
+		if(dieselPrice==0||superPrice==0||superPlusPrice==0||gasPrice==0||methanePrice==0)
 		{
-			throw new PriceException("Prices must be positive!"); 
+			throw new PriceException("Prices cannot be zero!"); 
 		}
-		*/
+		
 		
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		gasStationRepository.delete(gasStationId);
