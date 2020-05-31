@@ -67,6 +67,7 @@ public class UserServiceimpl implements UserService {
 	@Override
 	public UserDto saveUser(UserDto userDto) {
 		 User usernew =userConverter.map(userDto, User.class);
+		 usernew.setReputation(0);
 		 User user = userRepository.save(usernew); 
 		return   userConverter.map(user, UserDto.class);
 	}
