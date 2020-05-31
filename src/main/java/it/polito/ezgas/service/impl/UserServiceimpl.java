@@ -153,7 +153,7 @@ public class UserServiceimpl implements UserService {
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			
 			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
-			System.out.println(50 * (newReputation+5) / 10 + 50*obs);
+			//System.out.println(50 * (newReputation+5) / 10 + 50*obs);
 			
 			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
 			gasStationRepository.delete(gs.getGasStationId());
@@ -178,7 +178,7 @@ public class UserServiceimpl implements UserService {
 				return;
 			}
 			
-			System.out.println(gs.getGasStationId());
+			//System.out.println(gs.getGasStationId());
 			long diffInMillies = Math.abs(timestamp.getTime() - today.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			
