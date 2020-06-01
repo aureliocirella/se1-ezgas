@@ -116,6 +116,27 @@ public class GasStationController {
 		}
 		
 		return tmp;
+	}	
+	
+	
+	@RequestMapping(value = Constants.GET_GASSTATIONS_WITHOUT_COORDINATES, method = RequestMethod.GET)
+	public List<GasStationDto> getGasStationsWithoutCoordinates(@PathVariable String gasolineType, @PathVariable String carSharing) {
+		
+		ArrayList<GasStationDto> tmp = null;
+
+		try {
+			
+			tmp = (ArrayList<GasStationDto>) gasStationService.getGasStationsWithoutCoordinates(gasolineType, carSharing);
+			
+		} catch (InvalidGasTypeException e) {
+
+			System.out.println(e.getMessage());
+			
+			tmp = new ArrayList<GasStationDto>();
+
+		}
+		
+		return tmp;
 	}
 	
 	

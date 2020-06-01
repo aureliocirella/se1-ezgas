@@ -157,6 +157,9 @@ public class GasStationServiceimpl implements GasStationService {
 	}
 	
 	private static List<GasStationDto> getGasStationByCarsharingFromList (String carsharing, List<GasStationDto> gasStationDtoList) {
+		if (carsharing == null || carsharing.equals("null")) {
+			return gasStationDtoList;
+		}
 		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
 		gasStationDtoList.forEach((gs)->
 		{
