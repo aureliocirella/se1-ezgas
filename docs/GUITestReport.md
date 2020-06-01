@@ -22,6 +22,8 @@ This part of the document reports about testing at the GUI level. Tests are end 
 | ----------- | :-------------------------------: | ----------- | 
 | UC3.1       | FR1.2          |    GUItestUC3.1.sikuli
 | UC4.1       | FR1.2          |    testUC4.1.sikuli
+| UC5.1       | FR3.1          |    testUC5.1.sikuli
+| UC6.1       | FR3.2          |    testUC6.1.sikuli
 | UC10.1      | FR1.2          |    testUC10.1.sikuli
 | ...         |                                 |             |             
 | ...         |                                 |             |             
@@ -43,8 +45,12 @@ Tests should cover each function of classes in the Controller package
 |  UserServiceimpl.saveUser()   | FR1.1                |testSaveUser()|   
 |  UserServiceimpl.deleteUser() | FR1.2                |testDeleteUser()|  
 |  UserServiceimpl.getUserById()| FR1.3                |testUserById()|  
-|  UserServiceimpl.getAllUsers()| FR1.4                |testAllUser() |   
+|  UserServiceimpl.getAllUsers()| FR1.4                |testAllUser() |  
+|  UserServiceimpl.testincreaseUserReputation()   | FR1.1                |testincreaseUserReputation()| 
+|  UserServiceimpl.testdecreaseUserReputation()   | FR1.1                |testdecreaseUserReputation()|
+|  UserServiceimpl.testlogin()   | FR1                 |testlogin()|  
 |  GasStationServiceimpl.saveGasStation()   | FR3.1                |testSaveGasStation()|  
 |  GasStationServiceimpl.deleteGasStation()| FR3.2                |testDeleteGasStation() |   
 |  GasStationServiceimpl.getAllGasStations()| FR3.3                |testAllGasStations() |       
 | GasStationServiceimpl.getGasStationsWithCoordinates()| FR4.1|testGasStationWithCoordinate()|
+|  GasStationServiceimpl.testgetGasStation()   | FR4               |testgetGasStation()| 
