@@ -21,12 +21,11 @@ This part of the document reports about testing at the GUI level. Tests are end 
 | Scenario ID | Functional Requirements covered | GUI Test(s) |
 | ----------- | :-------------------------------: | ----------- | 
 | UC3.1       | FR1.2          |    GUItestUC3.1.sikuli
-| UC4.1       | FR1.2          |    testUC4.1.sikuli
-| UC5.1       | FR3.1          |    testUC5.1.sikuli
-| UC6.1       | FR3.2          |    testUC6.1.sikuli
-| UC10.1      | FR1.2          |    testUC10.1.sikuli
-| ...         |                                 |             |             
-| ...         |                                 |             |             
+| UC4.1       | FR1.2          |    GUItestUC4.1.sikuli
+| UC5.1       | FR3.1          |    GUItestUC5.1.sikuli
+| UC6.1       | FR3.2          |    GUItestUC6.1.sikuli
+| UC7.1       | FR5.1          |    GUItestUC7.1.sikuli
+| UC10.1      | FR1.2          |    GUItestUC10.1.sikuli           
 | ...         |                                 |             |             
 
 
