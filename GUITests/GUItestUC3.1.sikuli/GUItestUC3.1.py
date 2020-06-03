@@ -1,0 +1,7 @@
+click("1590859302006.png")
+paste("1590859335884.png", "admin@ezgas.com")
+type("1590859815093.png", "admin")
+click("1590859853847.png")
+click("1590859879732.png")
+wheel("1590939251350.png",WHEEL_DOWN,2)
+click(Pattern("1590860311367.png").targetOffset(368,-10))

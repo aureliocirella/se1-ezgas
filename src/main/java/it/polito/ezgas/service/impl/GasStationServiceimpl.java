@@ -1,14 +1,10 @@
 package it.polito.ezgas.service.impl;
 
 import java.util.Date;
-import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,9 +17,7 @@ import exception.InvalidGasTypeException;
 import exception.InvalidUserException;
 import exception.PriceException;
 import it.polito.ezgas.converter.GasStationConverter;
-import it.polito.ezgas.converter.UserConverter;
 import it.polito.ezgas.dto.GasStationDto;
-import it.polito.ezgas.dto.UserDto;
 import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.GasStationRepository;
@@ -163,6 +157,9 @@ public class GasStationServiceimpl implements GasStationService {
 	}
 	
 	private static List<GasStationDto> getGasStationByCarsharingFromList (String carsharing, List<GasStationDto> gasStationDtoList) {
+		if (carsharing == null || carsharing.equals("null")) {
+			return gasStationDtoList;
+		}
 		List<GasStationDto> gasStationDtoReturnList =  new ArrayList<GasStationDto>();
 		gasStationDtoList.forEach((gs)->
 		{
@@ -249,12 +246,12 @@ public class GasStationServiceimpl implements GasStationService {
 			throw new InvalidGasStationException("Invalid gasStationId!"); 
 		}
 		
-		/*
-		if(dieselPrice<0||superPrice<0||superPlusPrice<0||gasPrice<0||methanePrice<0)
+		
+		if(dieselPrice==0||superPrice==0||superPlusPrice==0||gasPrice==0||methanePrice==0)
 		{
-			throw new PriceException("Prices must be positive!"); 
+			throw new PriceException("Prices cannot be zero!"); 
 		}
-		*/
+		
 		
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		gasStationRepository.delete(gasStationId);

@@ -47,12 +47,13 @@ public class GasStationController {
 	}
 	
 	@RequestMapping(value = Constants.SAVE_GASSTATION, method = RequestMethod.POST)
-	public void saveGasStation(@RequestBody GasStationDto gasStationDto) {
+	public GasStationDto saveGasStation(@RequestBody GasStationDto gasStationDto) {
 		try {
-			gasStationService.saveGasStation(gasStationDto);
+			return gasStationService.saveGasStation(gasStationDto);
 		} catch (PriceException | GPSDataException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
+			return null;
 		}
 	}
 	
@@ -107,6 +108,27 @@ public class GasStationController {
 			tmp = (ArrayList<GasStationDto>) gasStationService.getGasStationsWithCoordinates(myLat, myLon, gasolineType, carSharing);
 			
 		} catch (InvalidGasTypeException | GPSDataException e) {
+
+			System.out.println(e.getMessage());
+			
+			tmp = new ArrayList<GasStationDto>();
+
+		}
+		
+		return tmp;
+	}	
+	
+	
+	@RequestMapping(value = Constants.GET_GASSTATIONS_WITHOUT_COORDINATES, method = RequestMethod.GET)
+	public List<GasStationDto> getGasStationsWithoutCoordinates(@PathVariable String gasolineType, @PathVariable String carSharing) {
+		
+		ArrayList<GasStationDto> tmp = null;
+
+		try {
+			
+			tmp = (ArrayList<GasStationDto>) gasStationService.getGasStationsWithoutCoordinates(gasolineType, carSharing);
+			
+		} catch (InvalidGasTypeException e) {
 
 			System.out.println(e.getMessage());
 			

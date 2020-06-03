@@ -1,10 +1,10 @@
 # GUI  Testing Documentation 
 
-Authors:
+Authors: Aurelio Cirella, Behnam Lotfi, Federica Giorgione, Lorenzo Cardone
 
-Date:
+Date: 31/05/2020
 
-Version:
+Version: 1.0
 
 # GUI testing
 
@@ -19,12 +19,13 @@ This part of the document reports about testing at the GUI level. Tests are end 
 ### 
 
 | Scenario ID | Functional Requirements covered | GUI Test(s) |
-| ----------- | ------------------------------- | ----------- | 
-| 1           | FRx                             |             |             
-| 2           | FRy                             |             |             
-| ...         |                                 |             |         
-| ...         |                                 |             |             
-| ...         |                                 |             |             
+| ----------- | :-------------------------------: | ----------- | 
+| UC3.1       | FR1.2          |    GUItestUC3.1.sikuli
+| UC4.1       | FR1.2          |    GUItestUC4.1.sikuli
+| UC5.1       | FR3.1          |    GUItestUC5.1.sikuli
+| UC6.1       | FR3.2          |    GUItestUC6.1.sikuli
+| UC7.1       | FR5.1          |    GUItestUC7.1.sikuli
+| UC10.1      | FR1.2          |    GUItestUC10.1.sikuli           
 | ...         |                                 |             |             
 
 
@@ -39,10 +40,16 @@ Tests should cover each function of classes in the Controller package
 <Report in this table the test cases defined to cover all methods in Controller classes >
 
 | class.method name | Functional Requirements covered |REST  API Test(s) | 
-| ----------- | ------------------------------- | ----------- | 
-|  ...           | FRx                             |             |     
-|  ...           | FRy                             |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
+| ----------- | :--------------------: | ----------- | 
+|  UserServiceimpl.saveUser()   | FR1.1                |testSaveUser()|   
+|  UserServiceimpl.deleteUser() | FR1.2                |testDeleteUser()|  
+|  UserServiceimpl.getUserById()| FR1.3                |testUserById()|  
+|  UserServiceimpl.getAllUsers()| FR1.4                |testAllUser() |  
+|  UserServiceimpl.testincreaseUserReputation()   | FR1.1                |testincreaseUserReputation()| 
+|  UserServiceimpl.testdecreaseUserReputation()   | FR1.1                |testdecreaseUserReputation()|
+|  UserServiceimpl.testlogin()   | FR1                 |testlogin()|  
+|  GasStationServiceimpl.saveGasStation()   | FR3.1                |testSaveGasStation()|  
+|  GasStationServiceimpl.deleteGasStation()| FR3.2                |testDeleteGasStation() |   
+|  GasStationServiceimpl.getAllGasStations()| FR3.3                |testAllGasStations() |       
+| GasStationServiceimpl.getGasStationsWithCoordinates()| FR4.1|testGasStationWithCoordinate()|
+|  GasStationServiceimpl.testgetGasStation()   | FR4               |testgetGasStation()| 

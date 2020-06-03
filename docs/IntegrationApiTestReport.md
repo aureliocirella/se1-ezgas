@@ -19,6 +19,7 @@ Version:
   - [Step 2](#step-2)
 - [Scenarios](#scenarios)
   - [Scenario UC1.1](#scenario-uc11)
+  - [Scenario UC2.1](#scenario-uc21)
   - [Scenario UC3.1](#scenario-uc31)
   - [Scenario UC4.1](#scenario-uc41)
   - [Scenario UC5.1](#scenario-uc51)
@@ -238,9 +239,9 @@ UserConverter|testUserConverter1_1()|
 |  Precondition     |Account U exists|
 |  Post condition     |  Account U deleted from the system|
 | Step#        | Description  |
-|  1     |  U selects Login |  
-|  2     |  U fills al the form fields and access the User management page |
-| 3 | U requires to delete his account |
+|  1     |  Admin A selects Login |  
+|  2     |  A fills al the form fields and access the Admin management page |
+| 3 | A requires to delete U account |
 | 4 | Account U is deleted from the system|
 
 
