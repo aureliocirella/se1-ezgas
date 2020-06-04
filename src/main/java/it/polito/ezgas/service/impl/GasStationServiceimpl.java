@@ -1,6 +1,7 @@
 package it.polito.ezgas.service.impl;
 
 import java.util.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -259,7 +260,6 @@ public class GasStationServiceimpl implements GasStationService {
 		
 		
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
-		gasStationRepository.delete(gasStationId);
 		gasStation.setDieselPrice(dieselPrice);
 		gasStation.setHasDiesel( (dieselPrice == -1) ? false:true);
 		gasStation.setSuperPrice(superPrice);
@@ -274,9 +274,11 @@ public class GasStationServiceimpl implements GasStationService {
 		User us = userRepository.findOne(userId);
 		Integer obs = 0;
 		gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
-		gasStation.setReportTimestamp(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+        DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
+        Date date = new Date(System.currentTimeMillis());
+		gasStation.setReportTimestamp(date.toString());
 		gasStation.setReportUser(userId);
-		gasStationRepository.save(gasStation); 
+		gasStation.setUser(us);
 		
 	}
 
