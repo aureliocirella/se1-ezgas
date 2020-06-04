@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,8 @@ public class GasStationServiceimpl implements GasStationService {
 	
 	@Autowired 
 	GasStationConverter gasStationConverter; 
+	
+	
 	
 	public GasStationServiceimpl(GasStationRepository gasStationRepositoryInput, UserRepository userRepositoryInput, GasStationConverter gasStationConverterInput) {
 		gasStationRepository= gasStationRepositoryInput;
@@ -78,6 +82,7 @@ public class GasStationServiceimpl implements GasStationService {
 		{
 			gasStationDto.setCarSharing(null);
 		}
+		
 		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
 		GasStation gasStation = gasStationRepository.save(gasStationConverted); 
 		
@@ -258,7 +263,10 @@ public class GasStationServiceimpl implements GasStationService {
 			throw new PriceException("Prices cannot be zero!"); 
 		}
 		
-		
+		gasStationConverter.typeMap(GasStation.class, GasStationDto.class).addMappings(mapper -> {
+			  mapper.map(GasStation::getUser, GasStationDto::setUserDto);
+			 
+			});
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		gasStation.setDieselPrice(dieselPrice);
 		gasStation.setHasDiesel( (dieselPrice == -1) ? false:true);
@@ -276,7 +284,7 @@ public class GasStationServiceimpl implements GasStationService {
 		gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
         DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
         Date date = new Date(System.currentTimeMillis());
-		gasStation.setReportTimestamp(date.toString());
+		gasStation.setReportTimestamp(formatter.format(date).toString());
 		gasStation.setReportUser(userId);
 		gasStation.setUser(us);
 		
