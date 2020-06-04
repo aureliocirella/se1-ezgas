@@ -73,8 +73,13 @@ public class GasStationServiceimpl implements GasStationService {
 		if (gasStationDto.getLat() > 90.0 || gasStationDto.getLat() < -90.0 || gasStationDto.getLon() > 180.0 || gasStationDto.getLon() < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
+		if(gasStationDto.getCarSharing().equals("null"))
+		{
+			gasStationDto.setCarSharing(null);
+		}
 		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
 		GasStation gasStation = gasStationRepository.save(gasStationConverted); 
+		
 		return gasStationConverter.map(gasStation, GasStationDto.class);
 	}
 
