@@ -252,7 +252,7 @@ public class GasStationServiceimpl implements GasStationService {
 		}
 		
 		
-		if(dieselPrice==0||superPrice==0||superPlusPrice==0||gasPrice==0||methanePrice==0)
+		if(dieselPrice<=0||superPrice<=0||superPlusPrice<=0||gasPrice<=0||methanePrice<=0)
 		{
 			throw new PriceException("Prices cannot be zero!"); 
 		}
