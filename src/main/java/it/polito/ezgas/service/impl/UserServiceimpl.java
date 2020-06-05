@@ -167,6 +167,7 @@ public class UserServiceimpl implements UserService {
 	@Override
 	public Integer decreaseUserReputation(Integer userId) throws InvalidUserException {
 		Integer newReputation = changeUserReputation(userId, -1);
+		if(newReputation<0) return newReputation;
 		List<GasStation> gsList = gasStationRepository.findByreportUser(userId);
 		gsList.forEach((gs)-> { 
 			Date today = new Date();
