@@ -2,6 +2,7 @@ package it.polito.ezgas.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -101,7 +102,8 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public LoginDto login(IdPw credentials) throws InvalidLoginDataException {
-		for (Iterator<User> userIt = userRepository.findAll().iterator(); userIt.hasNext(); ) {
+		ArrayList<User> users= userRepository.findByEmail(credentials.getUser());
+		for (Iterator<User> userIt = users.iterator(); userIt.hasNext(); ) {
 			User user =  userIt.next();
 			if(user.getEmail().equals(credentials.getUser()) && user.getPassword().equals(credentials.getPw()) ) 
 				  return userConverter.map(user, LoginDto.class);		 
