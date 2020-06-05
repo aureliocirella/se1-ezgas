@@ -1,5 +1,6 @@
 package it.polito.ezgas.service.impl;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -137,13 +138,15 @@ public class UserServiceimpl implements UserService {
 	public Integer increaseUserReputation(Integer userId) throws InvalidUserException {
 		
 		Integer newReputation = changeUserReputation(userId, 1);
-		List<GasStation> gsList = gasStationRepository.findByreportUser(userId);
+		 
+		List<GasStation> gsList = gasStationRepository.findByReportUser(userId);
 		gsList.forEach((gs)-> { 
 			Date today = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);
+			DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
+			//SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);
 			Date timestamp;
 			try {
-				timestamp = sdf.parse(gs.getReportTimestamp());
+				timestamp = formatter.parse(gs.getReportTimestamp());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -168,7 +171,8 @@ public class UserServiceimpl implements UserService {
 	public Integer decreaseUserReputation(Integer userId) throws InvalidUserException {
 		Integer newReputation = changeUserReputation(userId, -1);
 		if(newReputation<0) return newReputation;
-		List<GasStation> gsList = gasStationRepository.findByreportUser(userId);
+		
+		List<GasStation> gsList = gasStationRepository.findByReportUser(userId);
 		gsList.forEach((gs)-> { 
 			Date today = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);

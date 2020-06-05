@@ -10,6 +10,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
 		ArrayList<User> findByAdmin(Boolean admin); 
 		ArrayList<User> findByEmail(String email);
+		
 	
 
 }

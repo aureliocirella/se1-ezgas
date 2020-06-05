@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
- 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,6 +34,7 @@ import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.dto.IdPw;
 import it.polito.ezgas.dto.LoginDto;
 import it.polito.ezgas.dto.UserDto;
+import it.polito.ezgas.entity.GasStation;
 import it.polito.ezgas.entity.User;
 import it.polito.ezgas.repository.GasStationRepository;
 import it.polito.ezgas.repository.UserRepository;
@@ -48,7 +50,17 @@ public class IntegrationTests {
 	UserRepository userRepository;
 	@Autowired
 	UserConverter userConverter; 
-     @Before
+	
+	Integer oldUser; 
+	
+	@Autowired 
+	UserServiceimpl userServiceImpl;
+	
+	@Autowired 
+	GasStationServiceimpl gasStationServiceImpl; 
+	
+	
+     @BeforeAll
 	 public void setUp() {
 		try {
 			 
@@ -56,21 +68,30 @@ public class IntegrationTests {
 			if(userRepository!=null)
 			{
 			 
-			if(userRepository.findByEmail( "Winters@ezgaz.it" ).isEmpty())
-			{   
-				UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-				UserDto user = new UserDto(1, "Raquel", "Winters", "Winters@ezgaz.it", 1);
-				  userImpl.saveUser(user); 
-			}
+				if(userRepository.findByEmail( "Winters@ezgaz.it" ).isEmpty())
+				{   
+					UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+					UserDto user = new UserDto(1, "Raquel", "Winters", "Winters@ezgaz.it", 1);
+					UserDto u = userImpl.saveUser(user); 
+					ArrayList<GasStation> gasStation = (ArrayList<GasStation>)gasStationRepository.findAll(); 
+//					oldUser = gasStation.get(0).getReportUser();
+					gasStationServiceImpl.setReport(gasStation.get(0).getGasStationId(),2.0,2.0,2.0,2.0,2.0,u.getUserId());
+					
+//					gasStation.get(0).setReportUser(user.getUserId());
+//					gasStationRepository.save(gasStation.get(0)); 
+					
+					
+				}
+				
 			}
 			conn.close(); 
 	
 		}catch (Exception e) 
 		{ 
-			fail ("SetUp Error");
+			fail("SetUp Error");
 			}
 	}
-	 @After
+	 @AfterAll
 	 public void EndTest() {
 		try {
 			 
@@ -78,13 +99,17 @@ public class IntegrationTests {
 			if(userRepository!=null)
 			{
 				ArrayList<User> foundusers=	userRepository.findByEmail( "Winters@ezgaz.it" );
-				if(foundusers.size()>0)
-				 userRepository.delete(foundusers);
+//				if(foundusers.size()>0)
+//				 userRepository.delete(foundusers);
 			
 			
-			  foundusers=	userRepository.findByEmail( "mario.rossi@polito.it" );
-			if(foundusers.size()>0)
-			 userRepository.delete(foundusers);
+			  foundusers =	userRepository.findByEmail( "mario.rossi@polito.it" );
+			  
+			  //GasStation setReport has to be undone			  
+
+			  
+//			if(foundusers.size()>0)
+//			 userRepository.delete(foundusers);
 			
 			}
 			conn.close(); 
@@ -156,14 +181,17 @@ public class IntegrationTests {
 	public void testIntegration1_5() throws SQLException, InvalidUserException {
 	//	setUp() ;
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-
+//		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+		UserServiceimpl userImpl = userServiceImpl;
 		User userfound=userRepository.findByEmail( "Winters@ezgaz.it" ).get(0);
 		Integer id=	userfound.getUserId();
 		Integer PreviousReputation=userfound.getReputation();
 		System.out.println(id);
 		Integer currentReputation=  userImpl.increaseUserReputation(id); 
-		PreviousReputation++;
+		if(PreviousReputation++>5)
+			{
+			PreviousReputation = 5; 
+			};
 		assertEquals(currentReputation,PreviousReputation);
 	 
 		conn.close(); 
@@ -175,16 +203,19 @@ public class IntegrationTests {
 	public void testIntegration1_6() throws SQLException, InvalidUserException {
 	//	setUp() ;
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+//		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
 
 		User userfound=userRepository.findByEmail( "Winters@ezgaz.it" ).get(0);
 		Integer id=	userfound.getUserId();
 		Integer PreviousReputation=userfound.getReputation();
 		System.out.println(id);
 	    System.out.println("reputationis : "+PreviousReputation);
-		Integer currentReputation=  userImpl.decreaseUserReputation(id ); 
+		Integer currentReputation=  userServiceImpl.decreaseUserReputation(id ); 
 		System.out.println("reputation after is : "+PreviousReputation);
-		PreviousReputation--;
+		if(PreviousReputation-- <-5)
+		{
+		PreviousReputation = -5; 
+		};
 		assertEquals(currentReputation,PreviousReputation);
 	 
 		conn.close(); 
@@ -196,19 +227,20 @@ public class IntegrationTests {
 	public void testIntegration1_7() throws SQLException, InvalidUserException {
 		 
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+//		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+		User user= new User("admin", "admin", "admin@ezgas.com", 5);
+		user.setAdmin(true);
+		user.setUserId(1);
+		ArrayList<User> us = userRepository.findByAdmin(true);
 		
-		if(userRepository.findByAdmin(true).isEmpty())
+		if(!us.contains(user))
 		{
-			User user= new User("admin", "admin", "admin@ezgas.com", 5);
-			user.setAdmin(true);
-			user.setUserId(1); 
 			userRepository.save(user); 
 		}
 		IdPw credentials=new IdPw("admin@ezgas.com","admin");
 		LoginDto usDto;
 		try {
-			usDto = userImpl.login(credentials);
+			usDto = userServiceImpl.login(credentials);
 			assertNotNull(usDto);
 		} catch (InvalidLoginDataException e) {
 			fail("Login failed for " +credentials.getUser());

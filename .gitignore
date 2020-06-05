@@ -13,8 +13,11 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-data/*
-
+../data/memo.mv.db
+../.gitignore
+../data/
+.gitignore
+data/memo.mv.db
 
 # External tool builders
 .externalToolBuilders/

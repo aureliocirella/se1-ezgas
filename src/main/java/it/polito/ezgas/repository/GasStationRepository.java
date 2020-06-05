@@ -9,5 +9,5 @@ import it.polito.ezgas.entity.GasStation;
 public interface GasStationRepository extends CrudRepository<GasStation, Integer> {
 
 	List<GasStation> findByCarSharing(String carSharing);
-	List<GasStation> findByreportUser(Integer userId); 
+	List<GasStation> findByReportUser(Integer userId); 
 }
