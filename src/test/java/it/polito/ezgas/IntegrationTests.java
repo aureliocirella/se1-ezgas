@@ -99,8 +99,8 @@ public class IntegrationTests {
 			if(userRepository!=null)
 			{
 				ArrayList<User> foundusers=	userRepository.findByEmail( "Winters@ezgaz.it" );
-//				if(foundusers.size()>0)
-//				 userRepository.delete(foundusers);
+				if(foundusers.size()>0)
+				 userRepository.delete(foundusers);
 			
 			
 			  foundusers =	userRepository.findByEmail( "mario.rossi@polito.it" );
@@ -108,8 +108,8 @@ public class IntegrationTests {
 			  //GasStation setReport has to be undone			  
 
 			  
-//			if(foundusers.size()>0)
-//			 userRepository.delete(foundusers);
+			if(foundusers.size()>0)
+			 userRepository.delete(foundusers);
 			
 			}
 			conn.close(); 
