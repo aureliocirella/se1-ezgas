@@ -258,7 +258,11 @@ public class GasStationServiceimpl implements GasStationService {
 		}
 		
 		
-		if(dieselPrice<=0||superPrice<=0||superPlusPrice<=0||gasPrice<=0||methanePrice<=0)
+		if((dieselPrice<=0 && dieselPrice!=-1) ||
+				(superPrice<=0 && superPrice!=-1) ||
+				(superPlusPrice<=0 && superPlusPrice!=-1) ||
+				(gasPrice<=0 && gasPrice!=-1) ||
+				(methanePrice<=0 && methanePrice!=-1))
 		{
 			throw new PriceException("Prices cannot be zero!"); 
 		}
@@ -268,6 +272,7 @@ public class GasStationServiceimpl implements GasStationService {
 			 
 			});
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
+		System.out.println("serviceImpl before changes "+gasStation.getDieselPrice()+","+gasStation.getSuperPrice()+","+gasStation.getSuperPlusPrice()+","+gasStation.getGasPrice());
 		gasStation.setDieselPrice(dieselPrice);
 		gasStation.setHasDiesel( (dieselPrice == -1) ? false:true);
 		gasStation.setSuperPrice(superPrice);
@@ -278,7 +283,7 @@ public class GasStationServiceimpl implements GasStationService {
 		gasStation.setHasGas( (gasPrice == -1) ? false:true);
 		gasStation.setMethanePrice(methanePrice);
 		gasStation.setHasMethane( (methanePrice == -1) ? false:true);
-		
+
 		User us = userRepository.findOne(userId);
 		Integer obs = 0;
 		gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
@@ -287,7 +292,8 @@ public class GasStationServiceimpl implements GasStationService {
 		gasStation.setReportTimestamp(formatter.format(date).toString());
 		gasStation.setReportUser(userId);
 		gasStation.setUser(us);
-		
+		gasStationRepository.save(gasStation); // don't remove, this line updates the db
+
 	}
 
 	@Override
