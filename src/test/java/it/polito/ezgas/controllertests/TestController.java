@@ -46,13 +46,13 @@ public class TestController {
 	@Test
 	public void testUserById() throws ClientProtocolException, IOException{
 		
-		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/user/getUser/284");
+		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/user/getUser/523");
 		
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
 		 
 		String jsonFromResponse = EntityUtils.toString(response.getEntity());
 		assert(response.getStatusLine().getStatusCode() == 200);
-		assert(jsonFromResponse.contains("284"));
+		assert(jsonFromResponse.contains("523"));
 		
 	}
 	
@@ -98,7 +98,7 @@ public class TestController {
 	public void testGasStationWithCoordinate() throws ClientProtocolException, IOException{
 		
 		
-		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/45.060735/7.923549/superplus/Enjoy");
+		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/41.4632681/15.5227678/superplus/Enjoy");
 		
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
 	    
@@ -106,7 +106,7 @@ public class TestController {
 	    
 	    
 		assert(response.getStatusLine().getStatusCode() == 200);
-	    assert(jsonFromResponse.contains("Garibaldi"));
+	    assert(jsonFromResponse.contains("Federico"));
 		
 		
 	}
@@ -115,14 +115,25 @@ public class TestController {
 	public void testincreaseUserReputation() throws ClientProtocolException, IOException{
 		 try	
 		 {
-		HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/increaseUserReputation/993");
+		HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/increaseUserReputation/640");
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
-		 String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
-			  response = HttpClientBuilder.create().build().execute(httpResuest);
-			  String jsonFromResponse2 = EntityUtils.toString(response.getEntity()); 
-			  jsonFromResponse=  String.valueOf(Integer.valueOf(jsonFromResponse)+1);
-			 // System.out.print(String.format("%1$s == %2$s ",jsonFromResponse,jsonFromResponse2 ) );
-			  assertEquals(jsonFromResponse ,jsonFromResponse2);
+		String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
+		response = HttpClientBuilder.create().build().execute(httpResuest);
+		String jsonFromResponse2 = EntityUtils.toString(response.getEntity()); 
+		
+		Integer reputationBefore = Integer.valueOf(jsonFromResponse)+1;
+		Integer reputationAfter = Integer.valueOf(jsonFromResponse2);
+		
+		if(reputationBefore>5)
+		{
+			reputationBefore = 5; 
+		}
+		
+		assertEquals(reputationBefore,reputationAfter);
+//		jsonFromResponse=  String.valueOf(Integer.valueOf(jsonFromResponse)+1);
+//		
+//		// System.out.print(String.format("%1$s == %2$s ",jsonFromResponse,jsonFromResponse2 ) );
+//		assertEquals(jsonFromResponse ,jsonFromResponse2);
 		 }
 		 catch (Exception e)
 		 {
@@ -135,16 +146,34 @@ public class TestController {
 	public void testdecreaseUserReputation() throws ClientProtocolException, IOException{
 		 try	
 		 {
-		HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/decreaseUserReputation/993");
-		HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
-		 String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
-			  response = HttpClientBuilder.create().build().execute(httpResuest);
-			  String jsonFromResponse2 = EntityUtils.toString(response.getEntity()); 
-			  if(jsonFromResponse!="0")
-			  jsonFromResponse=  String.valueOf(Integer.valueOf(jsonFromResponse)-1);
-			  else
-				  jsonFromResponse= "0";  
-			  assertEquals(jsonFromResponse ,jsonFromResponse2);
+			HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/decreaseUserReputation/640");
+			HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
+			String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
+			response = HttpClientBuilder.create().build().execute(httpResuest);
+			String jsonFromResponse2 = EntityUtils.toString(response.getEntity()); 
+			
+			Integer reputationBefore = Integer.valueOf(jsonFromResponse)-1;
+			Integer reputationAfter = Integer.valueOf(jsonFromResponse2);
+			
+			if(reputationBefore<-5)
+			{
+				reputationBefore = -5; 
+			}
+			
+			assertEquals(reputationBefore,reputationAfter);
+			
+//			if(jsonFromResponse!="0")
+//			{
+//			  Integer reputation = Integer.valueOf(jsonFromResponse); 
+//			  if(reputation--<-5)
+//			  {				
+//				  reputation = -5; 
+//			  }
+//			  	jsonFromResponse=  String.valueOf(Integer.valueOf(reputation));
+//			}
+//		   else
+//			   jsonFromResponse= "0";  
+//		   assertEquals(jsonFromResponse ,jsonFromResponse2);
 		 }
 		 catch (Exception e)
 		 {
@@ -159,17 +188,19 @@ public class TestController {
 		 {
 			 HttpPost  httpResuest = new HttpPost("http://localhost:8080/user/login/");
 		 
-	    String json = "{\"user\":admin@ezgas.it,\"pw\":\"admin\"}";
+	    String json = "{\"user\":\"admin@ezgas.com\",\"pw\":\"admin\"}";
 	    StringEntity entity = new StringEntity(json);
 	    httpResuest.setEntity(entity);
 	    httpResuest.setHeader("Accept", "application/json");
 	    httpResuest.setHeader("Content-type", "application/json");
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
-		 String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
-			  response = HttpClientBuilder.create().build().execute(httpResuest);
-			  
-		  System.out.print(jsonFromResponse );
-			//  assertEquals(jsonFromResponse ,jsonFromResponse2);
+		String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
+		assert(jsonFromResponse.contains("admin@ezgas.com"));
+		assert(response.getStatusLine().getStatusCode() == 200);
+//   	    response = HttpClientBuilder.create().build().execute(httpResuest);
+//			  
+//		 System.out.print(jsonFromResponse );
+//			//  assertEquals(jsonFromResponse ,jsonFromResponse2);
 		 }
 		 catch (Exception e)
 		 {
@@ -183,20 +214,20 @@ public class TestController {
 		 try	
 		 { 
    	     CloseableHttpClient client = HttpClients.createDefault(); 
-   	     HttpPost httpResuest = new HttpPost("http://localhost:8080/gasstation/getGasStation/3"); 
+   	     HttpPost httpResuest = new HttpPost("http://localhost:8080/gasstation/getGasStation/660"); 
 		 HttpResponse response = client.execute(httpResuest);
-		  String jsonFromResponse = EntityUtils.toString(response.getEntity());
-		  
-		 ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
-		    
-         GasStationDto  gasStationDto = mapper.readValue(jsonFromResponse, GasStationDto.class);    
+		 String jsonFromResponse = EntityUtils.toString(response.getEntity());
+		 assert(jsonFromResponse.contains("Federico"));
+//		 ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
+//		    
+//         GasStationDto  gasStationDto = mapper.readValue(jsonFromResponse, GasStationDto.class);    
 		 
          assert(response.getStatusLine().getStatusCode() == 200);
          client.close();
 		 }
 		 catch (Exception e)
 		 {
-			fail("increase User Reputation failed!");
+			fail("getGasStation failed!");
 		 }
 		
 	}
