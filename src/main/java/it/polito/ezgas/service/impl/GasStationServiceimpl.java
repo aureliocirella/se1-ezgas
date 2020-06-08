@@ -84,9 +84,13 @@ public class GasStationServiceimpl implements GasStationService {
 		}
 		
 		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
-		GasStation gasStation = gasStationRepository.save(gasStationConverted); 
 		
-		return gasStationConverter.map(gasStation, GasStationDto.class);
+		if (getGasStationsByProximity(gasStationDto.getLat(), gasStationDto.getLon()).size()==0) {
+			GasStation gasStation = gasStationRepository.save(gasStationConverted); 
+			return gasStationConverter.map(gasStation, GasStationDto.class);
+		}
+		else
+			return null;
 	}
 
 	@Override
