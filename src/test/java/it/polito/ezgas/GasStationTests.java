@@ -2,6 +2,7 @@ package it.polito.ezgas;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -101,6 +102,6 @@ public class GasStationTests {
 		GasStation gs = new GasStation(); 
 		//gs.setReportDependability();
 		Double id = gs.getReportDependability(); 
-		assertNull(id);
+		assertEquals(Double.valueOf(0.0), id);
 	}
 }

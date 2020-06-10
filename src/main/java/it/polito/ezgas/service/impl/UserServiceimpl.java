@@ -1,7 +1,9 @@
 package it.polito.ezgas.service.impl;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -101,7 +103,8 @@ public class UserServiceimpl implements UserService {
 
 	@Override
 	public LoginDto login(IdPw credentials) throws InvalidLoginDataException {
-		for (Iterator<User> userIt = userRepository.findAll().iterator(); userIt.hasNext(); ) {
+		ArrayList<User> users= userRepository.findByEmail(credentials.getUser());
+		for (Iterator<User> userIt = users.iterator(); userIt.hasNext(); ) {
 			User user =  userIt.next();
 			if(user.getEmail().equals(credentials.getUser()) && user.getPassword().equals(credentials.getPw()) ) 
 				  return userConverter.map(user, LoginDto.class);		 
@@ -135,13 +138,15 @@ public class UserServiceimpl implements UserService {
 	public Integer increaseUserReputation(Integer userId) throws InvalidUserException {
 		
 		Integer newReputation = changeUserReputation(userId, 1);
-		List<GasStation> gsList = gasStationRepository.findByreportUser(userId);
+		 
+		List<GasStation> gsList = gasStationRepository.findByReportUser(userId);
 		gsList.forEach((gs)-> { 
 			Date today = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);
+			DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
+			//SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);
 			Date timestamp;
 			try {
-				timestamp = sdf.parse(gs.getReportTimestamp());
+				timestamp = formatter.parse(gs.getReportTimestamp());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -165,7 +170,9 @@ public class UserServiceimpl implements UserService {
 	@Override
 	public Integer decreaseUserReputation(Integer userId) throws InvalidUserException {
 		Integer newReputation = changeUserReputation(userId, -1);
-		List<GasStation> gsList = gasStationRepository.findByreportUser(userId);
+		if(newReputation<0) return newReputation;
+		
+		List<GasStation> gsList = gasStationRepository.findByReportUser(userId);
 		gsList.forEach((gs)-> { 
 			Date today = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss", Locale.ENGLISH);

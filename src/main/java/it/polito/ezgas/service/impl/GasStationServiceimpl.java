@@ -1,12 +1,15 @@
 package it.polito.ezgas.service.impl;
 
 import java.util.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,8 @@ public class GasStationServiceimpl implements GasStationService {
 	
 	@Autowired 
 	GasStationConverter gasStationConverter; 
+	
+	
 	
 	public GasStationServiceimpl(GasStationRepository gasStationRepositoryInput, UserRepository userRepositoryInput, GasStationConverter gasStationConverterInput) {
 		gasStationRepository= gasStationRepositoryInput;
@@ -73,9 +78,19 @@ public class GasStationServiceimpl implements GasStationService {
 		if (gasStationDto.getLat() > 90.0 || gasStationDto.getLat() < -90.0 || gasStationDto.getLon() > 180.0 || gasStationDto.getLon() < -180.0) {
 			throw new GPSDataException("Invalid coordinates!");
 		}
+		if(gasStationDto.getCarSharing().equals("null"))
+		{
+			gasStationDto.setCarSharing(null);
+		}
+		
 		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
-		GasStation gasStation = gasStationRepository.save(gasStationConverted); 
-		return gasStationConverter.map(gasStation, GasStationDto.class);
+		
+		if (getGasStationsByProximity(gasStationDto.getLat(), gasStationDto.getLon()).size()==0) {
+			GasStation gasStation = gasStationRepository.save(gasStationConverted); 
+			return gasStationConverter.map(gasStation, GasStationDto.class);
+		}
+		else
+			return null;
 	}
 
 	@Override
@@ -247,14 +262,21 @@ public class GasStationServiceimpl implements GasStationService {
 		}
 		
 		
-		if(dieselPrice==0||superPrice==0||superPlusPrice==0||gasPrice==0||methanePrice==0)
+		if((dieselPrice<=0 && dieselPrice!=-1) ||
+				(superPrice<=0 && superPrice!=-1) ||
+				(superPlusPrice<=0 && superPlusPrice!=-1) ||
+				(gasPrice<=0 && gasPrice!=-1) ||
+				(methanePrice<=0 && methanePrice!=-1))
 		{
 			throw new PriceException("Prices cannot be zero!"); 
 		}
 		
-		
+		gasStationConverter.typeMap(GasStation.class, GasStationDto.class).addMappings(mapper -> {
+			  mapper.map(GasStation::getUser, GasStationDto::setUserDto);
+			 
+			});
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
-		gasStationRepository.delete(gasStationId);
+		System.out.println("serviceImpl before changes "+gasStation.getDieselPrice()+","+gasStation.getSuperPrice()+","+gasStation.getSuperPlusPrice()+","+gasStation.getGasPrice());
 		gasStation.setDieselPrice(dieselPrice);
 		gasStation.setHasDiesel( (dieselPrice == -1) ? false:true);
 		gasStation.setSuperPrice(superPrice);
@@ -265,14 +287,17 @@ public class GasStationServiceimpl implements GasStationService {
 		gasStation.setHasGas( (gasPrice == -1) ? false:true);
 		gasStation.setMethanePrice(methanePrice);
 		gasStation.setHasMethane( (methanePrice == -1) ? false:true);
-		
+
 		User us = userRepository.findOne(userId);
 		Integer obs = 0;
 		gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
-		gasStation.setReportTimestamp(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+        DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
+        Date date = new Date(System.currentTimeMillis());
+		gasStation.setReportTimestamp(formatter.format(date).toString());
 		gasStation.setReportUser(userId);
-		gasStationRepository.save(gasStation); 
-		
+		gasStation.setUser(us);
+		gasStationRepository.save(gasStation); // don't remove, this line updates the db
+
 	}
 
 	@Override
