@@ -84,9 +84,20 @@ public class GasStationServiceimpl implements GasStationService {
 		}
 		
 		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
-		GasStation gasStation = gasStationRepository.save(gasStationConverted); 
-		
-		return gasStationConverter.map(gasStation, GasStationDto.class);
+		List<GasStationDto> neighbours = getGasStationsByProximity(gasStationDto.getLat(), gasStationDto.getLon());
+		List<GasStationDto> same = new ArrayList<GasStationDto>();
+		neighbours.forEach((gs)->{
+			if (gs.getLat() == gasStationDto.getLat() && gs.getLon() == gasStationDto.getLon() && gs.getGasStationId() == gasStationDto.getGasStationId()) {
+				same.add(gs);
+			}
+		});
+		if (same.size()==0) {
+			GasStation gasStation = gasStationRepository.save(gasStationConverted); 
+			return gasStationConverter.map(gasStation, GasStationDto.class);
+		}
+		else {
+			return same.get(0);
+		}
 	}
 
 	@Override

@@ -188,7 +188,7 @@ public class IntegrationTests {
 		Integer PreviousReputation=userfound.getReputation();
 		System.out.println(id);
 		Integer currentReputation=  userImpl.increaseUserReputation(id); 
-		if(PreviousReputation++>5)
+		if(++PreviousReputation>5)
 			{
 			PreviousReputation = 5; 
 			};
@@ -212,7 +212,7 @@ public class IntegrationTests {
 	    System.out.println("reputationis : "+PreviousReputation);
 		Integer currentReputation=  userServiceImpl.decreaseUserReputation(id ); 
 		System.out.println("reputation after is : "+PreviousReputation);
-		if(PreviousReputation-- <-5)
+		if(--PreviousReputation <-5)
 		{
 		PreviousReputation = -5; 
 		};

@@ -125,7 +125,6 @@ public class UserServiceimpl implements UserService {
 		    }
 		   
 			user.setReputation(reputation);
-			userRepository.save(user);
 			return reputation;
 		}
 		else {
@@ -161,8 +160,6 @@ public class UserServiceimpl implements UserService {
 			//System.out.println(50 * (newReputation+5) / 10 + 50*obs);
 			
 			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
-			gasStationRepository.delete(gs.getGasStationId());
-			gasStationRepository.save(gs);
 		});
 		return newReputation;
 	}
@@ -192,9 +189,6 @@ public class UserServiceimpl implements UserService {
 			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
 
 			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
-			
-			gasStationRepository.delete(gs.getGasStationId());
-			gasStationRepository.save(gs); 
 		});
 		return newReputation;
 	}
