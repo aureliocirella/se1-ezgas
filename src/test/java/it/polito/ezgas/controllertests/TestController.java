@@ -46,13 +46,13 @@ public class TestController {
 	@Test
 	public void testUserById() throws ClientProtocolException, IOException{
 		
-		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/user/getUser/523");
+		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/user/getUser/205");
 		
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
 		 
 		String jsonFromResponse = EntityUtils.toString(response.getEntity());
 		assert(response.getStatusLine().getStatusCode() == 200);
-		assert(jsonFromResponse.contains("523"));
+		assert(jsonFromResponse.contains("205"));
 		
 	}
 	
@@ -115,7 +115,7 @@ public class TestController {
 	public void testincreaseUserReputation() throws ClientProtocolException, IOException{
 		 try	
 		 {
-		HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/increaseUserReputation/640");
+		HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/increaseUserReputation/205");
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
 		String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
 		response = HttpClientBuilder.create().build().execute(httpResuest);
@@ -146,7 +146,7 @@ public class TestController {
 	public void testdecreaseUserReputation() throws ClientProtocolException, IOException{
 		 try	
 		 {
-			HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/decreaseUserReputation/640");
+			HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/decreaseUserReputation/205");
 			HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
 			String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
 			response = HttpClientBuilder.create().build().execute(httpResuest);
@@ -214,7 +214,7 @@ public class TestController {
 		 try	
 		 { 
    	     CloseableHttpClient client = HttpClients.createDefault(); 
-   	     HttpPost httpResuest = new HttpPost("http://localhost:8080/gasstation/getGasStation/660"); 
+   	     HttpPost httpResuest = new HttpPost("http://localhost:8080/gasstation/getGasStation/87"); 
 		 HttpResponse response = client.execute(httpResuest);
 		 String jsonFromResponse = EntityUtils.toString(response.getEntity());
 		 assert(jsonFromResponse.contains("Federico"));

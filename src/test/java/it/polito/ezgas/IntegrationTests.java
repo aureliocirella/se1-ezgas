@@ -183,7 +183,7 @@ public class IntegrationTests {
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
 //		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
 		UserServiceimpl userImpl = userServiceImpl;
-		User userfound=userRepository.findByEmail( "Winters@ezgaz.it" ).get(0);
+		User userfound=userRepository.findByEmail( "admin@ezgas.com" ).get(0);
 		Integer id=	userfound.getUserId();
 		Integer PreviousReputation=userfound.getReputation();
 		System.out.println(id);
@@ -205,7 +205,7 @@ public class IntegrationTests {
 		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
 //		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
 
-		User userfound=userRepository.findByEmail( "Winters@ezgaz.it" ).get(0);
+		User userfound=userRepository.findByEmail( "admin@ezgas.com" ).get(0);
 		Integer id=	userfound.getUserId();
 		Integer PreviousReputation=userfound.getReputation();
 		System.out.println(id);
