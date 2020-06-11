@@ -18,6 +18,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,18 +30,95 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import it.polito.ezgas.dto.GasStationDto;
 import it.polito.ezgas.dto.UserDto;
+import it.polito.ezgas.entity.GasStation;
 
 public class TestController {
 
 	public static UserDto userDto;
 	public static GasStationDto gasStationDto;
 	
-	@BeforeAll
+	
+	   private String testName = "Claudia";
+	    private String testEmail = "claudio@me.it";
+	    private String testPwd = "claudio";
+	    private Integer testReputation = 0;
+		
+		 
+	    private String testGasStationName = "Q8";
+	    private String testGasStationAddress = "Via Federico Spera Foggia Apulia Italy";
+	    private double testLat = 41.4632681;
+	    private double testLon = 15.5227678;
+	    private boolean testHasDiesel = true;
+	    private double testDiesel = 1.2;
+	    private boolean testHasSuper = true;
+	    private double testSuper = 1.4;
+	    private boolean testHasSuperPlus = true;
+	    private double testSuperPlus = 1.45;
+	    private boolean testHasGas = true;
+	    private double testGas = 0.9;
+	    private boolean testHasMethane = true;
+	    private double testMethane = 0.9;
+	    private String testCarSharing = "enjoy";
+	    
+//	    private GasStationDto testGasStation2;
+//	    private String testGasStationName2 = "testGasStation2";
+//	    private String testGasStationAddress2 = "testAddress2";
+//	    private double testLat2 = 60.005;
+//	    private double testLon2 = 60.005;
+//	    private String testCarSharing2 = "testCarSharing2";
+	
+	@Before
 	public void init() throws ClientProtocolException, IOException{
+		   gasStationDto = new GasStationDto();
+	       gasStationDto.setGasStationName(testGasStationName);
+	       gasStationDto.setGasStationAddress(testGasStationAddress);
+	       gasStationDto.setLat(testLat);
+	       gasStationDto.setLon(testLon);
+	       gasStationDto.setHasDiesel(testHasDiesel);
+	       gasStationDto.setDieselPrice(testDiesel);
+	       gasStationDto.setHasSuper(testHasSuper);
+	       gasStationDto.setSuperPrice(testSuper);
+	       gasStationDto.setHasSuperPlus(testHasSuperPlus);
+	       gasStationDto.setSuperPlusPrice(testSuperPlus);
+	       gasStationDto.setHasGas(testHasGas);
+	       gasStationDto.setGasPrice(testGas);
+	       gasStationDto.setHasMethane(testHasMethane);
+	       gasStationDto.setMethanePrice(testMethane);
+	       gasStationDto.setCarSharing(testCarSharing);
+	
+	       CloseableHttpClient GasStationClient = HttpClients.createDefault();
+		    HttpPost httpPostGasStation = new HttpPost("http://localhost:8080/gasstation/saveGasStation");
+		    
+		    String json =String.format("{\"gasStationId\":null,\"gasStationName\":\"%1$s\",\"gasStationAddress\":\"%2$s\","
+		    		+      "\"hasDiesel\":%3$b,\"hasSuper\":%4$b,\"hasSuperPlus\":%5$b,\"hasGas\":%6$b,\"hasMethane\":%7$b,"
+		    		+ "\"carSharing\":\"%8$s\",\"dieselPrice\":%9$s,\"superPrice\":%10$s,\"superPlusPrice\":%11$s,\"gasPrice\":%12$s,"
+		    		+ "\"methanePrice\":%13$s,\"reportUser\":%14$s,\"reportTimestamp\":%15$s,\"lat\":\"%16$s\",\"lon\":\"%17$s\"}",
+		    		gasStationDto.getGasStationName(),gasStationDto.getGasStationAddress(),gasStationDto.getHasDiesel(),gasStationDto.getHasSuper(),
+		    		gasStationDto.getHasSuperPlus(),gasStationDto.getHasGas(),gasStationDto.getHasMethane(),
+		    		gasStationDto.getCarSharing(),gasStationDto.getDieselPrice(),gasStationDto.getSuperPrice(),
+		    		gasStationDto.getSuperPlusPrice(),gasStationDto.getGasPrice(),gasStationDto.getMethanePrice(),
+		    		gasStationDto.getReportUser(),gasStationDto.getReportTimestamp(),gasStationDto.getLat(),
+		    		gasStationDto.getLon()
+		    		); 	
+		    StringEntity entityGasStation = new StringEntity(json);
+		    httpPostGasStation.setEntity(entityGasStation);
+		    httpPostGasStation.setHeader("Accept", "application/json");
+		    httpPostGasStation.setHeader("Content-type", "application/json");
+		 
+		    HttpResponse responseGasStation = GasStationClient.execute(httpPostGasStation);		    
+		    String jsonFromResponseGasStation = EntityUtils.toString(responseGasStation.getEntity()); 
+		    ObjectMapper mapperGasStation = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);     
+		    gasStationDto = mapperGasStation.readValue(jsonFromResponseGasStation, GasStationDto.class); 
+		    GasStationClient.close();
+	  
+		 
+		
+		
 		CloseableHttpClient client = HttpClients.createDefault();
 	    HttpPost httpPost = new HttpPost("http://localhost:8080/user/saveUser");
 	    
-	    String json = "{\"userId\":null,\"userName\":\"Claudia\",\"password\":\"claudio\",\"email\":\"claudio@me.it\",\"reputation\":0,\"admin\":false}";
+	      json =String.format("{\"userId\":null,\"userName\":\"%1$s\",\"password\":\"%2$s\",\"email\":\"%3$s\",\"reputation\":%4$d,\"admin\":false}",
+	    		testName,testPwd,testEmail,testReputation    );
 	    StringEntity entity = new StringEntity(json);
 	    httpPost.setEntity(entity);
 	    httpPost.setHeader("Accept", "application/json");
@@ -59,6 +138,18 @@ public class TestController {
 	    
 		
 	}
+	
+	@After
+	public void Endtest() throws ClientProtocolException, IOException {
+		 
+		CloseableHttpClient client = HttpClients.createDefault();
+		
+		HttpDelete httpDelete = new HttpDelete("http://localhost:8080/user/deleteUser/"+userDto.getUserId());
+		HttpResponse response = client.execute(httpDelete);
+		assert(response.getStatusLine().getStatusCode() == 200);
+	    client.close();
+	}
+	
 	
 	@Test
 	public void testAllUser() throws ClientProtocolException, IOException{
@@ -113,7 +204,6 @@ public class TestController {
 	
 	
 	@Test
-	@AfterAll
 	public void testDeleteUser() 
 	  throws ClientProtocolException, IOException {
 		 
@@ -128,8 +218,11 @@ public class TestController {
 	@Test
 	public void testGasStationWithCoordinate() throws ClientProtocolException, IOException{
 		
+		String GasType=(gasStationDto.getHasSuperPlus())?"superplus":"null";
 		
-		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/gasstation/getGasStationsWithCoordinates/41.4632681/15.5227678/superplus/Enjoy");
+	   String URI=String.format("http://localhost:8080/gasstation/getGasStationsWithCoordinates/%1$s/%2$s/%3$s/%4$s",gasStationDto.getLat(),gasStationDto.getLon(),GasType,gasStationDto.getCarSharing());
+	   
+		HttpUriRequest httpGet = new HttpGet(URI);
 		
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
 	    
@@ -273,8 +366,9 @@ public class TestController {
 		 try	
 		 { 
    	     CloseableHttpClient client = HttpClients.createDefault(); 
-   	     HttpPost httpResuest = new HttpPost("http://localhost:8080/gasstation/getGasStation/87"); 
-		 HttpResponse response = client.execute(httpResuest);
+   	     String URI=String.format("http://localhost:8080/gasstation/getGasStation/%1$d",gasStationDto.getGasStationId());
+   	     HttpPost httpResuest = new HttpPost(URI); 
+	      HttpResponse response = client.execute(httpResuest);
 		 String jsonFromResponse = EntityUtils.toString(response.getEntity());
 		 assert(jsonFromResponse.contains("Federico"));
 //		 ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
@@ -306,16 +400,17 @@ public class TestController {
 	}
 		
 	@Test
-	@AfterAll
 	public void testDeleteGasStation() 
 	  throws ClientProtocolException, IOException {
 		 
 		CloseableHttpClient client = HttpClients.createDefault();
-		
-		HttpDelete httpDelete = new HttpDelete("http://localhost:8080/user/deleteUser/"+gasStationDto.getGasStationId());
+	    String URI=String.format("http://localhost:8080/gasstation/deleteGasStation/%1$d",gasStationDto.getGasStationId());
+	   	  
+		HttpDelete httpDelete = new HttpDelete(URI);
 		HttpResponse response = client.execute(httpDelete);
 		assert(response.getStatusLine().getStatusCode() == 200);
 	    client.close();
 	}
+	
 	
 }
