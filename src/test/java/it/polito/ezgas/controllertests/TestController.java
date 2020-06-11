@@ -20,6 +20,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.springframework.core.annotation.Order;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +34,32 @@ public class TestController {
 	public static UserDto userDto;
 	public static GasStationDto gasStationDto;
 	
+	@BeforeAll
+	public void init() throws ClientProtocolException, IOException{
+		CloseableHttpClient client = HttpClients.createDefault();
+	    HttpPost httpPost = new HttpPost("http://localhost:8080/user/saveUser");
+	    
+	    String json = "{\"userId\":null,\"userName\":\"Claudia\",\"password\":\"claudio\",\"email\":\"claudio@me.it\",\"reputation\":0,\"admin\":false}";
+	    StringEntity entity = new StringEntity(json);
+	    httpPost.setEntity(entity);
+	    httpPost.setHeader("Accept", "application/json");
+	    httpPost.setHeader("Content-type", "application/json");
+	 
+	    HttpResponse response = client.execute(httpPost);
+	    
+	    String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
+	    
+	    ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
+	    
+	    userDto = mapper.readValue(jsonFromResponse, UserDto.class);
+	   
+	    
+	    client.close();
+	    
+	    
+		
+	}
+	
 	@Test
 	public void testAllUser() throws ClientProtocolException, IOException{
 		
@@ -40,19 +68,6 @@ public class TestController {
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
 		 
 		assert(response.getStatusLine().getStatusCode() == 200);
-		
-	}
-	
-	@Test
-	public void testUserById() throws ClientProtocolException, IOException{
-		
-		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/user/getUser/205");
-		
-		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
-		 
-		String jsonFromResponse = EntityUtils.toString(response.getEntity());
-		assert(response.getStatusLine().getStatusCode() == 200);
-		assert(jsonFromResponse.contains("205"));
 		
 	}
 	
@@ -74,12 +89,28 @@ public class TestController {
 	    
 	    ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
 	    
-	    userDto = mapper.readValue(jsonFromResponse, UserDto.class); 
+	    userDto = mapper.readValue(jsonFromResponse, UserDto.class);
+	    
  
 	    assert(response.getStatusLine().getStatusCode() == 200);
 	    assert(userDto.getEmail().equals("claudio@me.it"));
 	    client.close();
 	}
+	
+	@Test
+	public void testUserById() throws ClientProtocolException, IOException{
+		
+		HttpUriRequest httpGet = new HttpGet("http://localhost:8080/user/getUser/"+userDto.getUserId());
+		
+		HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
+		 
+		String jsonFromResponse = EntityUtils.toString(response.getEntity());
+		assert(response.getStatusLine().getStatusCode() == 200);
+		assert(jsonFromResponse.contains(userDto.getUserId().toString()));
+		
+	}
+	
+	
 	
 	@Test
 	@AfterAll
@@ -115,21 +146,22 @@ public class TestController {
 	public void testincreaseUserReputation() throws ClientProtocolException, IOException{
 		 try	
 		 {
-		HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/increaseUserReputation/205");
-		HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
-		String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
-		response = HttpClientBuilder.create().build().execute(httpResuest);
-		String jsonFromResponse2 = EntityUtils.toString(response.getEntity()); 
-		
-		Integer reputationBefore = Integer.valueOf(jsonFromResponse)+1;
-		Integer reputationAfter = Integer.valueOf(jsonFromResponse2);
-		
-		if(reputationBefore>5)
-		{
-			reputationBefore = 5; 
-		}
-		
-		assertEquals(reputationBefore,reputationAfter);
+	
+			HttpUriRequest httpGet = new HttpGet("http://localhost:8080/user/getUser/"+userDto.getUserId());
+			HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
+			String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
+			ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
+		    Integer reputationBefore = mapper.readValue(jsonFromResponse, UserDto.class).getReputation();
+				 
+			HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/increaseUserReputation/"+userDto.getUserId());
+			response = HttpClientBuilder.create().build().execute(httpResuest);
+			jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
+			
+			Integer reputationAfter = Integer.valueOf(jsonFromResponse);
+			
+			reputationBefore= ( reputationBefore>=5)?5:reputationBefore+1;
+			
+			assertEquals(reputationBefore,reputationAfter);
 //		jsonFromResponse=  String.valueOf(Integer.valueOf(jsonFromResponse)+1);
 //		
 //		// System.out.print(String.format("%1$s == %2$s ",jsonFromResponse,jsonFromResponse2 ) );
@@ -146,20 +178,18 @@ public class TestController {
 	public void testdecreaseUserReputation() throws ClientProtocolException, IOException{
 		 try	
 		 {
-			HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/decreaseUserReputation/205");
-			HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
-			String jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
+			HttpUriRequest httpGet = new HttpGet("http://localhost:8080/user/getUser/"+userDto.getUserId());
+			HttpResponse response = HttpClientBuilder.create().build().execute(httpGet); 
+			String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
+			ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
+		    Integer reputationBefore = mapper.readValue(jsonFromResponse, UserDto.class).getReputation();					 
+			HttpUriRequest httpResuest = new HttpPost("http://localhost:8080/user/decreaseUserReputation/"+userDto.getUserId());
 			response = HttpClientBuilder.create().build().execute(httpResuest);
-			String jsonFromResponse2 = EntityUtils.toString(response.getEntity()); 
-			
-			Integer reputationBefore = Integer.valueOf(jsonFromResponse)-1;
-			Integer reputationAfter = Integer.valueOf(jsonFromResponse2);
-			
-			if(reputationBefore<-5)
-			{
-				reputationBefore = -5; 
-			}
-			
+			jsonFromResponse = EntityUtils.toString(response.getEntity()); 	 
+			Integer reputationAfter = Integer.valueOf(jsonFromResponse);
+				
+			reputationBefore= ( reputationBefore<=-5)?-5:reputationBefore-1;
+				
 			assertEquals(reputationBefore,reputationAfter);
 			
 //			if(jsonFromResponse!="0")
@@ -188,14 +218,14 @@ public class TestController {
 		 {
 			 HttpPost  httpResuest = new HttpPost("http://localhost:8080/user/login/");
 		 
-	    String json = "{\"user\":\"admin@ezgas.com\",\"pw\":\"admin\"}";
+	    String json = "{\"user\":\""+userDto.getEmail()+"\",\"pw\":\""+userDto.getPassword()+"\"}";
 	    StringEntity entity = new StringEntity(json);
 	    httpResuest.setEntity(entity);
 	    httpResuest.setHeader("Accept", "application/json");
 	    httpResuest.setHeader("Content-type", "application/json");
 		HttpResponse response = HttpClientBuilder.create().build().execute(httpResuest);
 		String jsonFromResponse = EntityUtils.toString(response.getEntity()); 
-		assert(jsonFromResponse.contains("admin@ezgas.com"));
+		assert(jsonFromResponse.contains(userDto.getEmail()));
 		assert(response.getStatusLine().getStatusCode() == 200);
 //   	    response = HttpClientBuilder.create().build().execute(httpResuest);
 //			  
@@ -204,34 +234,10 @@ public class TestController {
 		 }
 		 catch (Exception e)
 		 {
-			fail("increase User Reputation failed!");
+			fail("Login failed!");
 		 }
 		
 	}
-	
-	@Test
-	public void testgetGasStation() throws ClientProtocolException, IOException{
-		 try	
-		 { 
-   	     CloseableHttpClient client = HttpClients.createDefault(); 
-   	     HttpPost httpResuest = new HttpPost("http://localhost:8080/gasstation/getGasStation/87"); 
-		 HttpResponse response = client.execute(httpResuest);
-		 String jsonFromResponse = EntityUtils.toString(response.getEntity());
-		 assert(jsonFromResponse.contains("Federico"));
-//		 ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
-//		    
-//         GasStationDto  gasStationDto = mapper.readValue(jsonFromResponse, GasStationDto.class);    
-		 
-         assert(response.getStatusLine().getStatusCode() == 200);
-         client.close();
-		 }
-		 catch (Exception e)
-		 {
-			fail("getGasStation failed!");
-		 }
-		
-	}
-	
 	
 	@Test 
 	public void testSaveGasStation() 
@@ -261,6 +267,32 @@ public class TestController {
 	    assert(gasStationDto.getLat()==41.4632681 && gasStationDto.getLon()==15.5227678);
 	    client.close();
 	}
+	
+	@Test
+	public void testgetGasStation() throws ClientProtocolException, IOException{
+		 try	
+		 { 
+   	     CloseableHttpClient client = HttpClients.createDefault(); 
+   	     HttpPost httpResuest = new HttpPost("http://localhost:8080/gasstation/getGasStation/87"); 
+		 HttpResponse response = client.execute(httpResuest);
+		 String jsonFromResponse = EntityUtils.toString(response.getEntity());
+		 assert(jsonFromResponse.contains("Federico"));
+//		 ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
+//		    
+//         GasStationDto  gasStationDto = mapper.readValue(jsonFromResponse, GasStationDto.class);    
+		 
+         assert(response.getStatusLine().getStatusCode() == 200);
+         client.close();
+		 }
+		 catch (Exception e)
+		 {
+			fail("getGasStation failed!");
+		 }
+		
+	}
+	
+	
+	
 	
 	@Test
 	public void testAllGasStations() throws ClientProtocolException, IOException{

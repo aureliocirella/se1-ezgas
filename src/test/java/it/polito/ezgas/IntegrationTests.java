@@ -268,7 +268,7 @@ public class IntegrationTests {
 		Integer PreviousReputation=userfound.getReputation();
  
 		Integer currentReputation=  userImpl.increaseUserReputation(id); 
-		PreviousReputation= ( PreviousReputation>5)?5:PreviousReputation+1;
+		PreviousReputation= ( PreviousReputation>=5)?5:PreviousReputation+1;
 		 
 		assertEquals(currentReputation,PreviousReputation);
 	 
@@ -285,7 +285,7 @@ public class IntegrationTests {
  
 		Integer currentReputation=  userServiceImpl.decreaseUserReputation(id ); 
  
-		PreviousReputation= ( PreviousReputation<-5)?-5:PreviousReputation-1;
+		PreviousReputation= ( PreviousReputation<=-5)?-5:PreviousReputation-1;
 	
 		assertEquals(currentReputation,PreviousReputation);
 	 
