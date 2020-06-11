@@ -180,7 +180,7 @@ public class IntegrationTests {
 	
 		}catch (Exception e) 
 		{ 
-		//	fail("SetUp Error");
+		 fail("SetUp Error");
 			}
 	}
 	 @After 
@@ -190,18 +190,17 @@ public class IntegrationTests {
  
 			if(userRepository!=null)
 			{
-				ArrayList<User> foundusers=	userRepository.findByEmail( testEmail);
-				if(foundusers.size()>0)
-				 userRepository.delete(foundusers);
-			
-	 
-			 
+							 
 			 GasStation foundgas1 =	gasStationRepository.findOne(testGasStation.getGasStationId() );
-			 GasStation foundgas2 =	gasStationRepository.findOne(testGasStation.getGasStationId() );
+			 GasStation foundgas2 =	gasStationRepository.findOne(testGasStation2.getGasStationId() );
 				if(foundgas1!=null) 
 				gasStationServiceImpl.deleteGasStation(foundgas1.getGasStationId() );
 				if(foundgas2!=null) 
 				gasStationServiceImpl.deleteGasStation(foundgas2.getGasStationId() );
+				
+				ArrayList<User> foundusers=	userRepository.findByEmail( testEmail);
+				if(foundusers.size()>0)
+				 userRepository.delete(foundusers);
 		 
 			
 			}
@@ -209,7 +208,7 @@ public class IntegrationTests {
 	
 		}catch (Exception e) 
 		{ 
-			//fail ("SetUp Error");
+			 fail ("SetUp Error");
 			}
 	}
 	
