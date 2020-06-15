@@ -84,6 +84,7 @@ public class GasStationServiceimpl implements GasStationService {
 		}
 		
 		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
+<<<<<<< src/main/java/it/polito/ezgas/service/impl/GasStationServiceimpl.java
 		List<GasStationDto> neighbours = getGasStationsByProximity(gasStationDto.getLat(), gasStationDto.getLon());
 		List<GasStationDto> same = new ArrayList<GasStationDto>();
 		neighbours.forEach((gs)->{
@@ -98,6 +99,15 @@ public class GasStationServiceimpl implements GasStationService {
 		else {
 			return same.get(0);
 		}
+=======
+		
+		if (getGasStationsByProximity(gasStationDto.getLat(), gasStationDto.getLon()).size()==0) {
+			GasStation gasStation = gasStationRepository.save(gasStationConverted); 
+			return gasStationConverter.map(gasStation, GasStationDto.class);
+		}
+		else
+			return null;
+>>>>>>> src/main/java/it/polito/ezgas/service/impl/GasStationServiceimpl.java
 	}
 
 	@Override
