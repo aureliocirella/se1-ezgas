@@ -93,7 +93,7 @@ public class UserServiceimpl implements UserService {
 		 // Check if exists in db
 		if(!userRepository.exists(userId))
 		{
-			return null; 
+			return false; 
 		}
 		 userRepository.delete(userId);	
 		  return true;
@@ -159,7 +159,7 @@ public class UserServiceimpl implements UserService {
 			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
 			//System.out.println(50 * (newReputation+5) / 10 + 50*obs);
 			
-			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
+			//gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
 		});
 		return newReputation;
 	}
@@ -188,7 +188,7 @@ public class UserServiceimpl implements UserService {
 			
 			Integer obs = (int) ((diff > 7) ? 0:(1-(diff/7)));
 
-			gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
+			//gs.setReportDependability(50 * (newReputation+5) / 10 + 50*obs);
 		});
 		return newReputation;
 	}
