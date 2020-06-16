@@ -84,7 +84,6 @@ public class GasStationServiceimpl implements GasStationService {
 		}
 		
 		GasStation gasStationConverted = gasStationConverter.map(gasStationDto, GasStation.class);
-<<<<<<< src/main/java/it/polito/ezgas/service/impl/GasStationServiceimpl.java
 		List<GasStationDto> neighbours = getGasStationsByProximity(gasStationDto.getLat(), gasStationDto.getLon());
 		List<GasStationDto> same = new ArrayList<GasStationDto>();
 		neighbours.forEach((gs)->{
@@ -99,15 +98,6 @@ public class GasStationServiceimpl implements GasStationService {
 		else {
 			return same.get(0);
 		}
-=======
-		
-		if (getGasStationsByProximity(gasStationDto.getLat(), gasStationDto.getLon()).size()==0) {
-			GasStation gasStation = gasStationRepository.save(gasStationConverted); 
-			return gasStationConverter.map(gasStation, GasStationDto.class);
-		}
-		else
-			return null;
->>>>>>> src/main/java/it/polito/ezgas/service/impl/GasStationServiceimpl.java
 	}
 
 	@Override
@@ -265,8 +255,8 @@ public class GasStationServiceimpl implements GasStationService {
 	}
 
 	@Override
-	public void setReport(Integer gasStationId, double dieselPrice, double superPrice, double superPlusPrice,
-			double gasPrice, double methanePrice, Integer userId)
+	public void setReport(Integer gasStationId, Double dieselPrice, Double superPrice, Double superPlusPrice,
+			Double gasPrice, Double methanePrice, Double premiumDieselPrice, Integer userId) 
 			throws InvalidGasStationException, PriceException, InvalidUserException {
 		//System.out.println("setReport\ninput: " + gasStationId + ", " + dieselPrice + ", " + superPrice + ", " + gasPrice + ", " + methanePrice + ", " + userId);
 		if(userId<0)
@@ -277,37 +267,74 @@ public class GasStationServiceimpl implements GasStationService {
 		{
 			throw new InvalidGasStationException("Invalid gasStationId!"); 
 		}
-		
-		
-		if((dieselPrice<=0 && dieselPrice!=-1) ||
-				(superPrice<=0 && superPrice!=-1) ||
-				(superPlusPrice<=0 && superPlusPrice!=-1) ||
-				(gasPrice<=0 && gasPrice!=-1) ||
-				(methanePrice<=0 && methanePrice!=-1))
-		{
-			throw new PriceException("Prices cannot be zero!"); 
-		}
-		
+
 		gasStationConverter.typeMap(GasStation.class, GasStationDto.class).addMappings(mapper -> {
 			  mapper.map(GasStation::getUser, GasStationDto::setUserDto);
-			 
 			});
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
-		System.out.println("serviceImpl before changes "+gasStation.getDieselPrice()+","+gasStation.getSuperPrice()+","+gasStation.getSuperPlusPrice()+","+gasStation.getGasPrice());
-		gasStation.setDieselPrice(dieselPrice);
-		gasStation.setHasDiesel( (dieselPrice == -1) ? false:true);
-		gasStation.setSuperPrice(superPrice);
-		gasStation.setHasSuper( (superPrice == -1) ? false:true);
-		gasStation.setSuperPlusPrice(superPlusPrice);
-		gasStation.setHasSuperPlus( (superPlusPrice == -1) ? false:true);
-		gasStation.setGasPrice(gasPrice);
-		gasStation.setHasGas( (gasPrice == -1) ? false:true);
-		gasStation.setMethanePrice(methanePrice);
-		gasStation.setHasMethane( (methanePrice == -1) ? false:true);
+		
+		if((dieselPrice!=null && dieselPrice<0 && gasStation.getHasDiesel()) ||
+				(superPrice!=null && superPrice<0 && gasStation.getHasSuper()) ||
+				(superPlusPrice!=null && superPlusPrice<0 && gasStation.getHasSuperPlus()) ||
+				(gasPrice!=null && gasPrice<0 && gasStation.getHasGas()) ||
+				(methanePrice!=null && methanePrice<0 && gasStation.getHasMethane()) ||
+				(premiumDieselPrice!=null && premiumDieselPrice<0 && gasStation.getHasPremiumDiesel()))
+		{
+			throw new PriceException("Prices cannot be negative!"); 
+		}
+		
+		//System.out.println("serviceImpl before changes "+gasStation.getDieselPrice()+","+gasStation.getSuperPrice()+","+gasStation.getSuperPlusPrice()+","+gasStation.getGasPrice());
+		if(gasStation.getHasDiesel()) {
+			gasStation.setDieselPrice(dieselPrice);
+		}
+		/*else if(dieselPrice!=null) {
+			gasStation.setDieselPrice(dieselPrice);
+			gasStation.setHasDiesel(true);
+		}*/
+		//super
+		if(gasStation.getHasSuper()) {
+			gasStation.setSuperPrice(superPrice);
+		}
+		/*else if(superPrice!=null) {
+			gasStation.setDieselPrice(superPrice);
+			gasStation.setHasSuper(true);
+		}*/
+		//super plus
+		if(gasStation.getHasSuperPlus()) {
+			gasStation.setSuperPlusPrice(superPlusPrice);
+		}
+		/*else if(superPlusPrice!=null) {
+			gasStation.setDieselPrice(superPlusPrice);
+			gasStation.setHasSuperPlus(true);
+		}*/
+		//gas
+		if(gasStation.getHasGas()) {
+			gasStation.setGasPrice(gasPrice);
+		}
+		/*else if(gasPrice!=null) {
+			gasStation.setDieselPrice(gasPrice);
+			gasStation.setHasGas(true);
+		}*/
+		//methane
+		if(gasStation.getHasMethane()) {
+			gasStation.setMethanePrice(methanePrice);
+		}
+		/*else if(methanePrice!=null) {
+			gasStation.setDieselPrice(methanePrice);
+			gasStation.setHasMethane(true);
+		}*/
+		//premium diesel
+		if(gasStation.getHasPremiumDiesel()) {
+			gasStation.setPremiumDieselPrice(premiumDieselPrice);
+		}
+		/*else if(premiumDieselPrice!=null) {
+			gasStation.setDieselPrice(premiumDieselPrice);
+			gasStation.setHasPremiumDiesel(true);
+		}*/
 
 		User us = userRepository.findOne(userId);
 		Integer obs = 0;
-		gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
+		//gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
         DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
         Date date = new Date(System.currentTimeMillis());
 		gasStation.setReportTimestamp(formatter.format(date).toString());
