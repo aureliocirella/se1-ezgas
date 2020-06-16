@@ -15,4 +15,3 @@ List below the most likely risks, ranked by probability * impact>
 | technical | Developing the wrong functions/user interfaces | medium | medium |
 | project | OpenStreet no more available/Shortalls in externally performed tasks | low | high |
 
-

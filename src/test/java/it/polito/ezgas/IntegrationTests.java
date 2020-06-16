@@ -50,6 +50,10 @@ public class IntegrationTests {
 	UserRepository userRepository;
 	@Autowired
 	UserConverter userConverter; 
+	@Autowired 
+	GasStationRepository gasStationRepository;
+	@Autowired
+	GasStationConverter gasStationConverter; 
 	
 	Integer oldUser; 
 	
@@ -60,106 +64,185 @@ public class IntegrationTests {
 	GasStationServiceimpl gasStationServiceImpl; 
 	
 	
-     @BeforeAll
+    private String testName = "Raquel";
+    private String testEmail = "Winters@ezgaz.it";
+    private String testPwd = "Winters";
+    private String testName2 = "Hancock";
+    private String testEmail2 = "Hancock@ezgas.com";
+    private String testPwd2 = "Layla";
+    private String testNameAdmin = "admin";
+    private String testEmailAdmin = "admin@ezgas.com";
+    private String testPwdAdmin = "testPwd_admin";
+    private Integer testReputation = 1;
+	
+	private GasStationDto testGasStation;
+    private String testGasStationName = "testGasStation";
+    private String testGasStationAddress = "testAddress";
+    private double testLat = 60.0;
+    private double testLon = 60.0;
+    private boolean testHasDiesel = true;
+    private double testDiesel = 1.2;
+    private boolean testHasSuper = true;
+    private double testSuper = 1.4;
+    private boolean testHasSuperPlus = true;
+    private double testSuperPlus = 1.45;
+    private boolean testHasGas = true;
+    private double testGas = 0.9;
+    private boolean testHasMethane = true;
+    private double testMethane = 0.9;
+    private String testCarSharing = "testCarSharing";
+    
+    private GasStationDto testGasStation2;
+    private String testGasStationName2 = "testGasStation2";
+    private String testGasStationAddress2 = "testAddress2";
+    private double testLat2 = 60.005;
+    private double testLon2 = 60.005;
+    private String testCarSharing2 = "testCarSharing2";
+
+    
+     @Before
 	 public void setUp() {
 		try {
-			 
-			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-			if(userRepository!=null)
+			   testGasStation = new GasStationDto();
+		        testGasStation.setGasStationName(testGasStationName);
+		        testGasStation.setGasStationAddress(testGasStationAddress);
+		        testGasStation.setLat(testLat);
+		        testGasStation.setLon(testLon);
+		        testGasStation.setHasDiesel(testHasDiesel);
+		        testGasStation.setDieselPrice(testDiesel);
+		        testGasStation.setHasSuper(testHasSuper);
+		        testGasStation.setSuperPrice(testSuper);
+		        testGasStation.setHasSuperPlus(testHasSuperPlus);
+		        testGasStation.setSuperPlusPrice(testSuperPlus);
+		        testGasStation.setHasGas(testHasGas);
+		        testGasStation.setGasPrice(testGas);
+		        testGasStation.setHasMethane(testHasMethane);
+		        testGasStation.setMethanePrice(testMethane);
+		        testGasStation.setCarSharing(testCarSharing);
+		        testGasStation2 = new GasStationDto();
+		        testGasStation2.setGasStationName(testGasStationName2);
+		        testGasStation2.setGasStationAddress(testGasStationAddress2);
+		        testGasStation2.setLat(testLat2);
+		        testGasStation2.setLon(testLon2);
+		        testGasStation2.setHasDiesel(testHasDiesel);
+		        testGasStation2.setDieselPrice(testDiesel);
+		        testGasStation2.setHasSuper(testHasSuper);
+		        testGasStation2.setSuperPrice(testSuper);
+		        testGasStation2.setHasSuperPlus(testHasSuperPlus);
+		        testGasStation2.setSuperPlusPrice(testSuperPlus);
+		        testGasStation2.setHasGas(testHasGas);
+		        testGasStation2.setGasPrice(testGas);
+		        testGasStation2.setHasMethane(testHasMethane);
+		        testGasStation2.setMethanePrice(testMethane);
+		        testGasStation2.setCarSharing(testCarSharing2);
+		        GasStation gasstationdemo= gasStationConverter.map(testGasStation, GasStation.class);
+		        gasStationRepository.save(gasstationdemo);
+		        testGasStation.setGasStationId(gasstationdemo.getGasStationId());
+			    GasStation gasstationdemo2= gasStationConverter.map(testGasStation2, GasStation.class);
+			    gasStationRepository.save(gasstationdemo2);
+			    testGasStation2.setGasStationId(gasstationdemo2.getGasStationId());
+		 	if(userRepository!=null)
 			{
 			 
-				if(userRepository.findByEmail( "Winters@ezgaz.it" ).isEmpty())
+				if(userRepository.findByEmail(testEmail).isEmpty())
 				{   
 					UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-					UserDto user = new UserDto(1, "Raquel", "Winters", "Winters@ezgaz.it", 1);
+				    UserDto user = new UserDto(1,testName ,testPwd , testEmail,testReputation);
 					UserDto u = userImpl.saveUser(user); 
-					ArrayList<GasStation> gasStation = (ArrayList<GasStation>)gasStationRepository.findAll(); 
-//					oldUser = gasStation.get(0).getReportUser();
-					gasStationServiceImpl.setReport(gasStation.get(0).getGasStationId(),2.0,2.0,2.0,2.0,2.0,u.getUserId());
+				 	 
+					gasStationServiceImpl.setReport(testGasStation.getGasStationId(),testGasStation.getDieselPrice(),testGasStation.getSuperPrice()
+							,testGasStation.getSuperPlusPrice(),testGasStation.getGasPrice(),testGasStation.getMethanePrice(),u.getUserId());
+ 	 	
+				}
+				if(userRepository.findByEmail( testEmail2 ).isEmpty())
+				{   
+					UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+				    UserDto user = new UserDto(2,testName2 ,testPwd2 , testEmail2,testReputation);
+					UserDto u = userImpl.saveUser(user); 
+				 	 
 					
-//					gasStation.get(0).setReportUser(user.getUserId());
-//					gasStationRepository.save(gasStation.get(0)); 
-					
-					
+				}
+
+				
+				if(userRepository.findByEmail( "admin@ezgas.com" ).isEmpty())
+				{   
+					UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+					UserDto user = new UserDto(3, testNameAdmin, testPwdAdmin, testEmailAdmin, 5);
+					UserDto u = userImpl.saveUser(user); 
+				 	 
+					gasStationServiceImpl.setReport(testGasStation2.getGasStationId(),testGasStation2.getDieselPrice(),testGasStation2.getSuperPrice()
+							,testGasStation2.getSuperPlusPrice(),testGasStation2.getGasPrice(),testGasStation2.getMethanePrice(),u.getUserId());
+ 	 	
 				}
 				
 			}
-			conn.close(); 
+			 
 	
 		}catch (Exception e) 
 		{ 
-			fail("SetUp Error");
+		 fail("SetUp Error");
 			}
 	}
-	 @AfterAll
+	 @After 
 	 public void EndTest() {
 		try {
 			 
-			Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+ 
 			if(userRepository!=null)
 			{
-				ArrayList<User> foundusers=	userRepository.findByEmail( "Winters@ezgaz.it" );
+							 
+			 GasStation foundgas1 =	gasStationRepository.findOne(testGasStation.getGasStationId() );
+			 GasStation foundgas2 =	gasStationRepository.findOne(testGasStation2.getGasStationId() );
+				if(foundgas1!=null) 
+				gasStationServiceImpl.deleteGasStation(foundgas1.getGasStationId() );
+				if(foundgas2!=null) 
+				gasStationServiceImpl.deleteGasStation(foundgas2.getGasStationId() );
+				
+				ArrayList<User> foundusers=	userRepository.findByEmail( testEmail);
 				if(foundusers.size()>0)
 				 userRepository.delete(foundusers);
-			
-			
-			  foundusers =	userRepository.findByEmail( "mario.rossi@polito.it" );
-			  
-			  //GasStation setReport has to be undone			  
-
-			  
-			if(foundusers.size()>0)
-			 userRepository.delete(foundusers);
+		 
 			
 			}
-			conn.close(); 
+			 
 	
 		}catch (Exception e) 
 		{ 
-			fail ("SetUp Error");
+			 fail ("SetUp Error");
 			}
 	}
 	
 	@Test
 	public void testIntegration1_1() throws SQLException {
 	 
-		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
 		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-		UserDto us = new UserDto(1, "Mario Rossi", "MR", "mario.rossi@polito.it", 1);
+		UserDto us = new UserDto(1,testName ,testPwd , testEmail,testReputation);
     	UserDto usw = userImpl.saveUser(us); 
 		assertNotNull(usw);
-	 
-		conn.close(); 
-		
-		
+ 
 	}
 	
 	@Test
 	public void testIntegration1_2() throws SQLException, InvalidUserException {
-		 
-		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+
 		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-		UserDto us = new UserDto(1, "Mario Rossi", "MR", "mario.rossi@polito.it", 1);
-    	UserDto usw = userImpl.saveUser(us); 
-    	Boolean deleted = userImpl.deleteUser(usw.getUserId()); 
-		assertTrue(deleted);
+		User userfound=userRepository.findByEmail( testEmail2 ).get(0);
 	 
-		conn.close(); 
-		
-		
+		Integer id= userfound.getUserId();
+    	Boolean deleted = userImpl.deleteUser(id); 
+		assertTrue(deleted);
+	
 	}
 
 	@Test
 	public void testIntegration1_3() throws SQLException, InvalidUserException {
 		 
-		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
+		 
 		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-		UserDto us = new UserDto(1, "Mario Rossi", "MR", "mario.rossi@polito.it", 1);
-    	UserDto usw = userImpl.saveUser(us); 
-    	UserDto usDto = userImpl.getUserById(usw.getUserId()); 
-		assertNotNull(usDto);
+		User userfound=userRepository.findByEmail( testEmail  ).get(0);
+    	UserDto usDto = userImpl.getUserById(userfound.getUserId()); 
+		assertEquals(usDto.getEmail(), userfound.getEmail());
 	 
-		conn.close(); 
 		
 		
 	}
@@ -167,68 +250,51 @@ public class IntegrationTests {
 	@Test
 	public void testIntegration1_4() throws SQLException, InvalidUserException {
 		 
-		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+	    UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
     	ArrayList<UserDto> usDto = (ArrayList<UserDto>) userImpl.getAllUsers(); 
 		assertTrue(!usDto.isEmpty());
 	 
-		conn.close(); 
+ 
 		
 		
 	}
 
 	@Test
 	public void testIntegration1_5() throws SQLException, InvalidUserException {
-	//	setUp() ;
-		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-//		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
+  	
 		UserServiceimpl userImpl = userServiceImpl;
-		User userfound=userRepository.findByEmail( "Winters@ezgaz.it" ).get(0);
+		User userfound=userRepository.findByEmail( testEmailAdmin ).get(0);
 		Integer id=	userfound.getUserId();
 		Integer PreviousReputation=userfound.getReputation();
-		System.out.println(id);
+ 
 		Integer currentReputation=  userImpl.increaseUserReputation(id); 
-		if(PreviousReputation++>5)
-			{
-			PreviousReputation = 5; 
-			};
+		PreviousReputation= ( PreviousReputation>=5)?5:PreviousReputation+1;
+		 
 		assertEquals(currentReputation,PreviousReputation);
 	 
-		conn.close(); 
-	//	EndTest();
+	 
 		
 	}
 
 	@Test
 	public void testIntegration1_6() throws SQLException, InvalidUserException {
-	//	setUp() ;
-		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-//		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-
-		User userfound=userRepository.findByEmail( "Winters@ezgaz.it" ).get(0);
+ 
+		User userfound=userRepository.findByEmail( testEmailAdmin ).get(0);
 		Integer id=	userfound.getUserId();
 		Integer PreviousReputation=userfound.getReputation();
-		System.out.println(id);
-	    System.out.println("reputationis : "+PreviousReputation);
+ 
 		Integer currentReputation=  userServiceImpl.decreaseUserReputation(id ); 
-		System.out.println("reputation after is : "+PreviousReputation);
-		if(PreviousReputation-- <-5)
-		{
-		PreviousReputation = -5; 
-		};
+ 
+		PreviousReputation= ( PreviousReputation<=-5)?-5:PreviousReputation-1;
+	
 		assertEquals(currentReputation,PreviousReputation);
 	 
-		conn.close(); 
-	//	EndTest();
-		
+	 
 	}
 
 	@Test
 	public void testIntegration1_7() throws SQLException, InvalidUserException {
-		 
-		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-//		UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-		User user= new User("admin", "admin", "admin@ezgas.com", 5);
+	 	User user= new User(testNameAdmin,testPwdAdmin, testEmailAdmin, 5);
 		user.setAdmin(true);
 		user.setUserId(1);
 		ArrayList<User> us = userRepository.findByAdmin(true);
@@ -237,7 +303,7 @@ public class IntegrationTests {
 		{
 			userRepository.save(user); 
 		}
-		IdPw credentials=new IdPw("admin@ezgas.com","admin");
+		IdPw credentials=new IdPw(testEmailAdmin,testPwdAdmin);
 		LoginDto usDto;
 		try {
 			usDto = userServiceImpl.login(credentials);
@@ -247,21 +313,15 @@ public class IntegrationTests {
 			 
 		} 
     		
-		conn.close(); 
-		//EndTest(); 
-		
+		 
 	}
 
-	@Autowired 
-	GasStationRepository gasStationRepository;
-	@Autowired
-	GasStationConverter gasStationConverter; 
+
 	
 	@Test
 	public void testIntegration1_8() throws SQLException, PriceException, GPSDataException, InvalidGasStationException {
 
-		Connection conn = DriverManager.getConnection("jdbc:h2:./data/memo", "sa", "password");
-		GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository, gasStationConverter);
+	   GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository, gasStationConverter);
 		GasStationDto gs = new GasStationDto(1, "GSName", "Address", true, false, false, false, false, "SharingCompany", 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, null, null, 0.0);
 		GasStationDto gsw = gasStationImpl.saveGasStation(gs); 
 		assertNotNull(gsw);
@@ -274,9 +334,7 @@ public class IntegrationTests {
 
     	Boolean deleted = gasStationImpl.deleteGasStation(gsw.getGasStationId()); 
 		assertTrue(deleted);
-		
-
-		conn.close(); 
+		 
 	}
 	
 
