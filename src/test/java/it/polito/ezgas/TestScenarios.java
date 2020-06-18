@@ -82,11 +82,11 @@ public class TestScenarios {
 			
 			
 			ArrayList<GasStation> gslist = new ArrayList<GasStation>();
-			GasStation gasStation00 = new GasStation("Q8", "Corso Galileo Ferraris 36/A Turin Piemont Italy", false, false, false, false, false,false, "", 45.0627865, 7.6686337, -1.0, -1.0, -1.0,-1.0,  -1.0, -1.0, -1, "", -1.0);
-			GasStation gasStation01 = new GasStation("Tamoil", "Marche Turin Piemont Italy ", true, true, false, false, false,false, "Enjoy", 45.0677551, 7.6824892, 1.5, 1.2, -1.0, -1.0,-1.0,  -1.0, user00.getUserId(), "05-28-2020", 1.2);
-			GasStation gasStation02 = new GasStation("Eni Station", "Corso Giacomo Matteotti 12/Q Turin Piemont Italy", true, false, false, true, true,false, "Enjoy", 45.0303838, 7.6690677, -1.0, -1.0, -1.0, -1.0, 1.5, 2.1, user00.getUserId(), "05-30-2020", 2.4);
-			GasStation gasStation03 = new GasStation("Esso", "Via Francesco Cigna 40/B Turin Piemont Italy", true, false, true, false, false,false, "Car2Go", 45.0829594, 7.6792507,  -1.0, -1.0, 1.78,  -1.0, -1.0, -1.0, user01.getUserId(), "05-20-2020", 1.0);
-			GasStation gasStation04 = new GasStation("GPL Torino", "Corso Enrico Tazzoli 183/A Turin Piemont Italy", true, false, false, false, false,false, "Car2Go", 45.0355852, 7.6236845, -1.0,  -1.0,  -1.0,  -1.0, -1.0, -1.0, -1, "", -1.0);
+			GasStation gasStation00 = new GasStation("Q8", "Corso Galileo Ferraris 36/A Turin Piemont Italy", false, false, false, false, false,false, "", 45.0627865, 7.6686337, null, null, null,null, null, null, -1, "", -1.0);
+			GasStation gasStation01 = new GasStation("Tamoil", "Marche Turin Piemont Italy ", true, true, false, false, false,false, "Enjoy", 45.0677551, 7.6824892, 1.5, 1.2, null, null, null, null, user00.getUserId(), "05-28-2020", 1.2);
+			GasStation gasStation02 = new GasStation("Eni Station", "Corso Giacomo Matteotti 12/Q Turin Piemont Italy", true, false, false, true, true,false, "Enjoy", 45.0303838, 7.6690677, null, null, null, null, 1.5, 2.1, user00.getUserId(), "05-30-2020", 2.4);
+			GasStation gasStation03 = new GasStation("Esso", "Via Francesco Cigna 40/B Turin Piemont Italy", true, false, true, false, false,false, "Car2Go", 45.0829594, 7.6792507,  null, null, 1.78,  null, null, null, user01.getUserId(), "05-20-2020", 1.0);
+			GasStation gasStation04 = new GasStation("GPL Torino", "Corso Enrico Tazzoli 183/A Turin Piemont Italy", true, false, false, false, false,false, "Car2Go", 45.0355852, 7.6236845, null, null, null, null, null, null, -1, "", -1.0);
 		    
 			gslist.add(gasStation00);
 			gslist.add(gasStation01);
