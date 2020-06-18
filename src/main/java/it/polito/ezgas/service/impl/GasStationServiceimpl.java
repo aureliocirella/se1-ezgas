@@ -2,10 +2,12 @@ package it.polito.ezgas.service.impl;
 
 import java.util.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -285,74 +287,172 @@ public class GasStationServiceimpl implements GasStationService {
 			});
 		GasStation gasStation = gasStationRepository.findOne(gasStationId); 
 		
-		if((dieselPrice!=null && dieselPrice<0) ||
-				(superPrice!=null && superPrice<0) ||
-				(superPlusPrice!=null && superPlusPrice<0) ||
-				(gasPrice!=null && gasPrice<0) ||
-				(methanePrice!=null && methanePrice<0) ||
-				(premiumDieselPrice!=null && premiumDieselPrice<0))
+		
+		User reportUser = gasStation.getUser(); //report user
+		
+		
+		if(reportUser!=null)//there's already a price report
 		{
-			throw new PriceException("Prices cannot be negative!"); 
+			String stringTimestamp = gasStation.getReportTimestamp();
+			DateFormat format = new SimpleDateFormat("MM-dd-YYYY");
+			Date dateTimestamp = null;
+			try {
+				dateTimestamp = format.parse(stringTimestamp);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Long diff = (new Date()).getTime() - dateTimestamp.getTime();
+			Integer diffDays = Math.abs((int) (diff / (24 * 60 * 60 * 1000)));
+			
+			User oldUser = userRepository.findOne(reportUser.getUserId()); 
+			User newUser =userRepository.findOne(userId);  
+			if((oldUser.getReputation()<=newUser.getReputation())
+					||(diffDays>4))//report has to be overwritten
+			{
+				reportUser = newUser; 
+				if((dieselPrice!=null && dieselPrice<0) ||
+						(superPrice!=null && superPrice<0) ||
+						(superPlusPrice!=null && superPlusPrice<0) ||
+						(gasPrice!=null && gasPrice<0) ||
+						(methanePrice!=null && methanePrice<0) ||
+						(premiumDieselPrice!=null && premiumDieselPrice<0))
+				{
+					throw new PriceException("Prices cannot be negative!"); 
+				}
+				
+				//System.out.println("serviceImpl before changes "+gasStation.getDieselPrice()+","+gasStation.getSuperPrice()+","+gasStation.getSuperPlusPrice()+","+gasStation.getGasPrice());
+				if(gasStation.getHasDiesel()) {
+					gasStation.setDieselPrice(dieselPrice);
+				}
+				/*else if(dieselPrice!=null) {
+					gasStation.setDieselPrice(dieselPrice);
+					gasStation.setHasDiesel(true);
+				}*/
+				//super
+				if(gasStation.getHasSuper()) {
+					gasStation.setSuperPrice(superPrice);
+				}
+				/*else if(superPrice!=null) {
+					gasStation.setDieselPrice(superPrice);
+					gasStation.setHasSuper(true);
+				}*/
+				//super plus
+				if(gasStation.getHasSuperPlus()) {
+					gasStation.setSuperPlusPrice(superPlusPrice);
+				}
+				/*else if(superPlusPrice!=null) {
+					gasStation.setDieselPrice(superPlusPrice);
+					gasStation.setHasSuperPlus(true);
+				}*/
+				//gas
+				if(gasStation.getHasGas()) {
+					gasStation.setGasPrice(gasPrice);
+				}
+				/*else if(gasPrice!=null) {
+					gasStation.setDieselPrice(gasPrice);
+					gasStation.setHasGas(true);
+				}*/
+				//methane
+				if(gasStation.getHasMethane()) {
+					gasStation.setMethanePrice(methanePrice);
+				}
+				/*else if(methanePrice!=null) {
+					gasStation.setDieselPrice(methanePrice);
+					gasStation.setHasMethane(true);
+				}*/
+				//premium diesel
+				if(gasStation.getHasPremiumDiesel()) {
+					gasStation.setPremiumDieselPrice(premiumDieselPrice);
+				}
+				/*else if(premiumDieselPrice!=null) {
+					gasStation.setDieselPrice(premiumDieselPrice);
+					gasStation.setHasPremiumDiesel(true);
+				}*/
+				
+				
+				//gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
+		        DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
+		        Date date = new Date(System.currentTimeMillis());
+				gasStation.setReportTimestamp(formatter.format(date).toString());
+				gasStation.setReportUser(reportUser.getUserId());
+				gasStation.setUser(reportUser);
+				gasStationRepository.save(gasStation); // don't remove, this line updates the db
+			}else {//there's no report 
+				if((dieselPrice!=null && dieselPrice<0) ||
+						(superPrice!=null && superPrice<0) ||
+						(superPlusPrice!=null && superPlusPrice<0) ||
+						(gasPrice!=null && gasPrice<0) ||
+						(methanePrice!=null && methanePrice<0) ||
+						(premiumDieselPrice!=null && premiumDieselPrice<0))
+				{
+					throw new PriceException("Prices cannot be negative!"); 
+				}
+				
+				//System.out.println("serviceImpl before changes "+gasStation.getDieselPrice()+","+gasStation.getSuperPrice()+","+gasStation.getSuperPlusPrice()+","+gasStation.getGasPrice());
+				if(gasStation.getHasDiesel()) {
+					gasStation.setDieselPrice(dieselPrice);
+				}
+				/*else if(dieselPrice!=null) {
+					gasStation.setDieselPrice(dieselPrice);
+					gasStation.setHasDiesel(true);
+				}*/
+				//super
+				if(gasStation.getHasSuper()) {
+					gasStation.setSuperPrice(superPrice);
+				}
+				/*else if(superPrice!=null) {
+					gasStation.setDieselPrice(superPrice);
+					gasStation.setHasSuper(true);
+				}*/
+				//super plus
+				if(gasStation.getHasSuperPlus()) {
+					gasStation.setSuperPlusPrice(superPlusPrice);
+				}
+				/*else if(superPlusPrice!=null) {
+					gasStation.setDieselPrice(superPlusPrice);
+					gasStation.setHasSuperPlus(true);
+				}*/
+				//gas
+				if(gasStation.getHasGas()) {
+					gasStation.setGasPrice(gasPrice);
+				}
+				/*else if(gasPrice!=null) {
+					gasStation.setDieselPrice(gasPrice);
+					gasStation.setHasGas(true);
+				}*/
+				//methane
+				if(gasStation.getHasMethane()) {
+					gasStation.setMethanePrice(methanePrice);
+				}
+				/*else if(methanePrice!=null) {
+					gasStation.setDieselPrice(methanePrice);
+					gasStation.setHasMethane(true);
+				}*/
+				//premium diesel
+				if(gasStation.getHasPremiumDiesel()) {
+					gasStation.setPremiumDieselPrice(premiumDieselPrice);
+				}
+				/*else if(premiumDieselPrice!=null) {
+					gasStation.setDieselPrice(premiumDieselPrice);
+					gasStation.setHasPremiumDiesel(true);
+				}*/
+				
+				
+				//gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
+				User us = userRepository.findOne(userId);
+				DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
+		        Date date = new Date(System.currentTimeMillis());
+				gasStation.setReportTimestamp(formatter.format(date).toString());
+				gasStation.setReportUser(userId);
+				gasStation.setUser(us);
+				gasStationRepository.save(gasStation); // don't remove, this line updates the db
+			}
+			
 		}
 		
-		//System.out.println("serviceImpl before changes "+gasStation.getDieselPrice()+","+gasStation.getSuperPrice()+","+gasStation.getSuperPlusPrice()+","+gasStation.getGasPrice());
-		if(gasStation.getHasDiesel()) {
-			gasStation.setDieselPrice(dieselPrice);
-		}
-		/*else if(dieselPrice!=null) {
-			gasStation.setDieselPrice(dieselPrice);
-			gasStation.setHasDiesel(true);
-		}*/
-		//super
-		if(gasStation.getHasSuper()) {
-			gasStation.setSuperPrice(superPrice);
-		}
-		/*else if(superPrice!=null) {
-			gasStation.setDieselPrice(superPrice);
-			gasStation.setHasSuper(true);
-		}*/
-		//super plus
-		if(gasStation.getHasSuperPlus()) {
-			gasStation.setSuperPlusPrice(superPlusPrice);
-		}
-		/*else if(superPlusPrice!=null) {
-			gasStation.setDieselPrice(superPlusPrice);
-			gasStation.setHasSuperPlus(true);
-		}*/
-		//gas
-		if(gasStation.getHasGas()) {
-			gasStation.setGasPrice(gasPrice);
-		}
-		/*else if(gasPrice!=null) {
-			gasStation.setDieselPrice(gasPrice);
-			gasStation.setHasGas(true);
-		}*/
-		//methane
-		if(gasStation.getHasMethane()) {
-			gasStation.setMethanePrice(methanePrice);
-		}
-		/*else if(methanePrice!=null) {
-			gasStation.setDieselPrice(methanePrice);
-			gasStation.setHasMethane(true);
-		}*/
-		//premium diesel
-		if(gasStation.getHasPremiumDiesel()) {
-			gasStation.setPremiumDieselPrice(premiumDieselPrice);
-		}
-		/*else if(premiumDieselPrice!=null) {
-			gasStation.setDieselPrice(premiumDieselPrice);
-			gasStation.setHasPremiumDiesel(true);
-		}*/
-
-		User us = userRepository.findOne(userId);
-		Integer obs = 0;
-		//gasStation.setReportDependability(50 * (us.getReputation()+5) / 10 + 50*obs);
-        DateFormat formatter = new SimpleDateFormat("MM-dd-YYYY");
-        Date date = new Date(System.currentTimeMillis());
-		gasStation.setReportTimestamp(formatter.format(date).toString());
-		gasStation.setReportUser(userId);
-		gasStation.setUser(us);
-		gasStationRepository.save(gasStation); // don't remove, this line updates the db
+		
+		
 
 	}
 
