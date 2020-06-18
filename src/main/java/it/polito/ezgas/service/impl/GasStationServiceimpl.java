@@ -378,7 +378,9 @@ public class GasStationServiceimpl implements GasStationService {
 				gasStation.setReportUser(reportUser.getUserId());
 				gasStation.setUser(reportUser);
 				gasStationRepository.save(gasStation); // don't remove, this line updates the db
-			}else {//there's no report 
+			}
+		}
+		else {//there's no report 
 				if((dieselPrice!=null && dieselPrice<0) ||
 						(superPrice!=null && superPrice<0) ||
 						(superPlusPrice!=null && superPlusPrice<0) ||
@@ -448,12 +450,6 @@ public class GasStationServiceimpl implements GasStationService {
 				gasStation.setUser(us);
 				gasStationRepository.save(gasStation); // don't remove, this line updates the db
 			}
-			
-		}
-		
-		
-		
-
 	}
 
 	@Override
