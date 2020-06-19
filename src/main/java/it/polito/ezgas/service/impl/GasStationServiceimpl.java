@@ -159,23 +159,24 @@ public class GasStationServiceimpl implements GasStationService {
         	throw new InvalidGasTypeException("Invalid gasoline type!");
        
         //Get the stream of gasstations and then filter by the gas type
-        Stream<GasStation> gasStationList = ((List<GasStation>) gasStationRepository.findAll()).stream();
+     
+        List<GasStation> gasStationList=null;
         if(hasDiesel)
-        	gasStationList = gasStationList.filter(gs ->gs.getHasDiesel()==hasDiesel).sorted(Comparator.comparingDouble(gs->gs.getDieselPrice()));
+        	gasStationList = gasStationRepository.findByHasDiesel(hasDiesel);
         else if(hasSuper)
-        	gasStationList = gasStationList.filter(gs ->gs.getHasSuper()==hasSuper).sorted(Comparator.comparingDouble(gs->gs.getSuperPrice()));
+        	gasStationList = gasStationRepository.findByHasSuper(hasSuper);
         else if(hasSuperPlus)
-        	gasStationList = gasStationList.filter(gs ->gs.getHasSuperPlus()==hasSuperPlus).sorted(Comparator.comparingDouble(gs->gs.getSuperPlusPrice()));
+        	gasStationList = gasStationRepository.findByHasSuperPlus(hasSuperPlus);
 		else if(hasGas)
-			gasStationList = gasStationList.filter(gs ->gs.getHasGas()==hasGas).sorted(Comparator.comparingDouble(gs->gs.getGasPrice()));
+			gasStationList = gasStationRepository.findByHasGas(hasGas);
 		else if(hasMethane)
-			gasStationList = gasStationList.filter(gs ->gs.getHasMethane()==hasMethane).sorted(Comparator.comparingDouble(gs->gs.getMethanePrice()));
+			gasStationList = gasStationRepository.findByHasMethane(hasMethane);
 		else if(hasPremiumDiesel)
-			gasStationList = gasStationList.filter(gs ->gs.getHasPremiumDiesel()==hasMethane).sorted(Comparator.comparingDouble(gs->gs.getPremiumDieselPrice()));
+			gasStationList = gasStationRepository.findByHasPremiumDiesel(hasPremiumDiesel);
 		  
         // convert gasGtationDto list to gasStation list
         List<GasStationDto> gasStationDtoList =  new ArrayList<GasStationDto>();
-        gasStationList.collect(Collectors.toList()).forEach((gs)->{
+        gasStationList.forEach((gs)->{
         	gasStationDtoList.add(gasStationConverter.map(gs, GasStationDto.class)); 
         });
 	
