@@ -44,6 +44,12 @@ public class TestScenarios {
 	GasStationRepository gasStationRepository;
 	@Autowired
 	GasStationConverter gasStationConverter; 
+	@Autowired 
+	UserServiceimpl userServiceImpl;
+	
+	@Autowired 
+	GasStationServiceimpl gasStationServiceImpl; 
+	
 	Integer GasStationId=0;
 	@Before public void initialize() {
 		try {
@@ -154,14 +160,10 @@ public class TestScenarios {
 	public void testScenario1() {
 		try {
 			 
-			UserServiceimpl userImpl = new UserServiceimpl(userRepository,userConverter);
-			 
-			GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository,gasStationConverter);
-		 
-			LoginDto userdto=	userImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));
-			 
+			
+			LoginDto userdto=	userServiceImpl.login(new IdPw("Pierre@ezgaz.com","Cox"));
 			ArrayList<User> log = userRepository.findByEmail(userdto.getEmail());
-			List<GasStationDto> gsdl = gasStationImpl.getGasStationsWithCoordinates(45.0677551, 7.6824892,1, "Diesel", "Enjoy");
+			List<GasStationDto> gsdl = gasStationServiceImpl.getGasStationsWithCoordinates(45.0677551, 7.6824892,1, "Diesel", "Enjoy");
 			if(log.size()==1)
 				{
 				
@@ -172,17 +174,14 @@ public class TestScenarios {
 					 fail("No gas station found");
 				 GasStationDto gsd = gsdl.get(0);
 				System.out.println(gsd.getGasStationId()+", "+gsd.getDieselPrice()+","+gsd.getSuperPrice()+","+gsd.getSuperPlusPrice()+","+gsd.getGasPrice()+","+ gsd.getMethanePrice()+","+gsd.getPremiumDieselPrice()+","+foundUser.getUserId());
-				gasStationImpl.setReport(gsd.getGasStationId(), 1.0, 1.0, 1.0, 2.1, 1.0,1.0, foundUser.getUserId());
+				gasStationServiceImpl.setReport(gsd.getGasStationId(), 1.0, 1.0, null, null, null,null, foundUser.getUserId());
 				
 				GasStation gs = gasStationRepository.findOne(gsd.getGasStationId());
 				System.out.println(gsd.getGasStationId()+", "+gsd.getDieselPrice()+","+gsd.getSuperPrice()+","+gsd.getSuperPlusPrice()+","+gsd.getGasPrice()+","+ gsd.getMethanePrice()+","+gsd.getPremiumDieselPrice()+","+foundUser.getUserId());
 
 				Assert.assertEquals(gs.getDieselPrice(), 1.0, 0);
 				Assert.assertTrue(gs.getSuperPrice()==1.0);
-				Assert.assertTrue(gs.getSuperPlusPrice()==1.0);
-				Assert.assertTrue(gs.getGasPrice()==2.1);
-				Assert.assertTrue(gs.getMethanePrice()==-1.0);
-				Assert.assertTrue(gs.getPremiumDieselPrice()==1.0);
+				
 				}
 			 
 		} catch (Exception e) {
