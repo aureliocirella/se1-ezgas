@@ -59,6 +59,7 @@ public class TestController {
 	    private boolean testHasMethane = true;
 	    private double testMethane = 0.9;
 	    private String testCarSharing = "enjoy";
+	    private Integer radius=1;
 	    
 //	    private GasStationDto testGasStation2;
 //	    private String testGasStationName2 = "testGasStation2";
@@ -220,7 +221,7 @@ public class TestController {
 		
 		String GasType=(gasStationDto.getHasSuperPlus())?"superplus":"null";
 		
-	   String URI=String.format("http://localhost:8080/gasstation/getGasStationsWithCoordinates/%1$s/%2$s/%3$s/%4$s",gasStationDto.getLat(),gasStationDto.getLon(),GasType,gasStationDto.getCarSharing());
+	   String URI=String.format("http://localhost:8080/gasstation/getGasStationsWithCoordinates/%1$s/%2$s/%3$s/%4$s/%5$s",gasStationDto.getLat(),gasStationDto.getLon(),radius,GasType,gasStationDto.getCarSharing());
 	   
 		HttpUriRequest httpGet = new HttpGet(URI);
 		
@@ -338,7 +339,10 @@ public class TestController {
 	    CloseableHttpClient client = HttpClients.createDefault();
 	    HttpPost httpPost = new HttpPost("http://localhost:8080/gasstation/saveGasStation");
 	    
-	    String json = "{\"gasStationId\":null,\"gasStationName\":\"Q8\",\"gasStationAddress\":\"Via Federico Spera Foggia Apulia Italy\",\"hasDiesel\":true,\"hasSuper\":true,\"hasSuperPlus\":true,\"hasGas\":false,\"hasMethane\":false,\"carSharing\":\"Enjoy\",\"dieselPrice\":-1,\"superPrice\":-1,\"superPlusPrice\":-1,\"gasPrice\":-1,\"methanePrice\":-1,\"reportUser\":-1,\"reportTimestamp\":null,\"lat\":\"41.4632681\",\"lon\":\"15.5227678\"}";
+
+	    String json =String.format("{\"gasStationId\":%1$s,\"gasStationName\":\"%2$s\",\"gasStationAddress\":\"%3$s\",\"hasDiesel\":%4$s,\"hasSuper\":%5$s,\"hasSuperPlus\":%6$s,\"hasGas\":%7$s,\"hasMethane\":%8$s,\"hasPremiumDiesel\":%9$s,\"carSharing\":\"%10$s\",\"lat\":\"%11$s\",\"lon\":\"%12$s\",\"dieselPrice\":%13$s,\"superPrice\":%14$s,\"superPlusPrice\":%15$s,\"gasPrice\":%16$s,\"methanePrice\":%17$s,\"premiumDieselPrice\":%18$s,\"reportUser\":%19$s,\"userDto\":%20$s,\"reportTimestamp\":%21$s,\"reportDependability\":%22$s}",
+	    		                      null,"Q8","Via Federico Spera Foggia Apulia Italy",true,true,true,true,false,false,"Enjoy", 41.4632681,15.5227678,1.4,1.45,0.9,0.7,0.8,0.9,null,null,null,0.0);
+	 
 	    StringEntity entity = new StringEntity(json);
 	    httpPost.setEntity(entity);
 	    httpPost.setHeader("Accept", "application/json");
