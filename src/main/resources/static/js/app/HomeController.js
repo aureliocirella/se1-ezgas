@@ -499,30 +499,17 @@ module.controller("HomeController", [ "$scope", "HomeService",
 				if (window.clearMap) {
 					window.clearMap();
 				}
-				
-				
-				$scope.searchParameters.myLat = null;
-				$scope.searchParameters.myLon = null;
+
+
 				if (!$scope.searchParameters.gasolineType) $scope.searchParameters.gasolineType = "null";
 				if (!$scope.searchParameters.carSharing) $scope.searchParameters.carSharing = "null";
 
-				if ($scope.searchParameters.myAddress) {
-					const regexpSize = /^(\d+\.?\d*) (\d+\.?\d*)$/;
-					const isMatch = regexpSize.test($scope.searchParameters.myAddress);
-					if(isMatch == true) {
-						const match = $scope.searchParameters.myAddress.match(regexpSize);
-						$scope.searchParameters.myLat = parseFloat(match[1]);
-						$scope.searchParameters.myLon = parseFloat(match[2]);
-					}
-				}
+
+
 
 				//**************************************************************************
 				/*if ($scope.searchParameters.myLat && $scope.searchParameters.myLon) {
-						
-					}
-					
-					else {
-					
+
 						HomeService.getGasStationsWithCoordinates($scope.searchParameters.myLat, $scope.searchParameters.myLon, $scope.searchParameters.gasolineType, $scope.searchParameters.carSharing).then(function(value) {
 							$scope.searchGasStationResults = value.data;
 
@@ -550,25 +537,6 @@ module.controller("HomeController", [ "$scope", "HomeService",
 				}
 
 				else if ($scope.searchParameters.gasolineType) {
-<<<<<<< HEAD
-					
-					if($scope.searchParameters.carSharing == "null") {
-					
-						HomeService.searchGasStationsByGasolineType($scope.searchParameters.gasolineType).then(function(value) {
-							$scope.searchGasStationResults = value.data;
-						});
-						
-					}
-					
-					else {	
-					
-						HomeService.getGasStationsWithoutCoordinates($scope.searchParameters.gasolineType, $scope.searchParameters.carSharing).then(function(value) {
-							$scope.searchGasStationResults = value.data;
-						});
-					
-					}
-					
-=======
 
 
 						HomeService.searchGasStationsWithoutCoordinates($scope.searchParameters.gasolineType).then(function(value) {
@@ -580,7 +548,6 @@ module.controller("HomeController", [ "$scope", "HomeService",
 						});
 
 
->>>>>>> fix: carsharing data in UI
 				}
 
 
