@@ -27,13 +27,6 @@ public class PriceReportDtoTests {
 	}
 	
 	@Test
-	public void testPriceReportDto1_3() {
-		PriceReportDto prd = new PriceReportDto(null, 1.2, 1.1, 1.5, 0.8, 0.5, 1.4, -1);
-		Integer userId = prd.getUserId();
-		Assert.assertTrue(userId == -1);
-	}
-	
-	@Test
 	public void testPriceReportDto2_1() {
 		PriceReportDto prd = new PriceReportDto(null, 1.2, 1.1, 1.5, 0.8, 0.5, 1.4, null);
 		Integer gsId = prd.getGasStationId();
@@ -45,13 +38,6 @@ public class PriceReportDtoTests {
 		PriceReportDto prd = new PriceReportDto(1, 1.2, 1.1, 1.5, 0.8, 0.5, 1.4, null);
 		Integer gsId = prd.getGasStationId();
 		Assert.assertTrue(gsId == 1);
-	}
-
-	@Test
-	public void testPriceReportDto2_3() {
-		PriceReportDto prd = new PriceReportDto(-1, 1.2, 1.1, 1.5, 0.8, 0.5, 1.4, null);
-		Integer gsId = prd.getGasStationId();
-		Assert.assertTrue(gsId == -1);
 	}
 	
 	@Test
