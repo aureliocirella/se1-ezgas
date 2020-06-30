@@ -539,7 +539,7 @@ module.controller("HomeController", [ "$scope", "HomeService",
 				else if ($scope.searchParameters.gasolineType) {
 
 
-						HomeService.getGasStationsWithoutCoordinates($scope.searchParameters.gasolineType, $scope.searchParameters.carSharing).then(function(value) {
+						HomeService.searchGasStationsWithoutCoordinates($scope.searchParameters.gasolineType).then(function(value) {
 							value.data.forEach(gs => {
 								if(gs.carSharing === "null")
 									gs.carSharing = null;
