@@ -537,28 +537,9 @@ module.controller("HomeController", [ "$scope", "HomeService",
 				}
 
 				else if ($scope.searchParameters.gasolineType) {
-<<<<<<< HEAD
-					
-					if($scope.searchParameters.carSharing == "null") {
-					
-						HomeService.searchGasStationsByGasolineType($scope.searchParameters.gasolineType).then(function(value) {
-							$scope.searchGasStationResults = value.data;
-						});
-						
-					}
-					
-					else {	
-					
+
+
 						HomeService.getGasStationsWithoutCoordinates($scope.searchParameters.gasolineType, $scope.searchParameters.carSharing).then(function(value) {
-							$scope.searchGasStationResults = value.data;
-						});
-					
-					}
-					
-=======
-
-
-						HomeService.searchGasStationsWithoutCoordinates($scope.searchParameters.gasolineType).then(function(value) {
 							value.data.forEach(gs => {
 								if(gs.carSharing === "null")
 									gs.carSharing = null;
@@ -567,7 +548,6 @@ module.controller("HomeController", [ "$scope", "HomeService",
 						});
 
 
->>>>>>> fix: carsharing data in UI
 				}
 
 
