@@ -151,7 +151,7 @@ public class IntegrationTests {
 					UserDto u = userImpl.saveUser(user); 
 				 	 
 					gasStationServiceImpl.setReport(testGasStation.getGasStationId(),testGasStation.getDieselPrice(),testGasStation.getSuperPrice()
-							,testGasStation.getSuperPlusPrice(),testGasStation.getGasPrice(),testGasStation.getMethanePrice(),u.getUserId());
+							,testGasStation.getSuperPlusPrice(),testGasStation.getGasPrice(),testGasStation.getMethanePrice(),testGasStation2.getPremiumDieselPrice(),u.getUserId());
  	 	
 				}
 				if(userRepository.findByEmail( testEmail2 ).isEmpty())
@@ -171,7 +171,7 @@ public class IntegrationTests {
 					UserDto u = userImpl.saveUser(user); 
 				 	 
 					gasStationServiceImpl.setReport(testGasStation2.getGasStationId(),testGasStation2.getDieselPrice(),testGasStation2.getSuperPrice()
-							,testGasStation2.getSuperPlusPrice(),testGasStation2.getGasPrice(),testGasStation2.getMethanePrice(),u.getUserId());
+							,testGasStation2.getSuperPlusPrice(),testGasStation2.getGasPrice(),testGasStation2.getMethanePrice(),testGasStation2.getPremiumDieselPrice(),u.getUserId());
  	 	
 				}
 				
@@ -322,7 +322,7 @@ public class IntegrationTests {
 	public void testIntegration1_8() throws SQLException, PriceException, GPSDataException, InvalidGasStationException {
 
 	   GasStationServiceimpl gasStationImpl = new GasStationServiceimpl(gasStationRepository, userRepository, gasStationConverter);
-		GasStationDto gs = new GasStationDto(1, "GSName", "Address", true, false, false, false, false, "SharingCompany", 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, null, null, 0.0);
+		GasStationDto gs = new GasStationDto(1, "GSName", "Address", true, false, false, false, false, false, "SharingCompany", 1.0, 1.0, 1.0, 0.0, 0.0, 0.0,0.0, 0.0, null, null, 0.0);
 		GasStationDto gsw = gasStationImpl.saveGasStation(gs); 
 		assertNotNull(gsw);
 

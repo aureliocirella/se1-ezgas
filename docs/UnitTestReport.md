@@ -152,74 +152,6 @@ Version: 1.0
 |False|Valid|getGasStationName()-> "Agip"| testGasStation1_6|
 
 
-### **Class *GasStation* - method *setReportDependability(double reportDependability)***
-
-**Criteria for method *setReportDependability(double reportDependability)*:**
-	
- - Range
- - Sign
-  
-  
-**Predicates for method *setReportDependability(double reportDependability)*:**
-
-| Criteria | Predicate |
-| -------- | :---------: |
-|  Range    |  reportDependability ≥ maxint    |
-|           |  reportDependability ≤ minint    |
-|           | minint ≤ reportDependability ≤ maxint    |
-|  Sign     |  reportDependability > 0         |
-|           |  reportDependability < 0         |
-
-
-**Boundaries**:
-
-| Criteria | Boundary values |
-| -------- | :---------: |
-|  Range    |  minint, maxint    |
-|  Sign     |  0        |
-
-
-
-**Combination of predicates**:
-
-
-| Range|Sign| Valid / Invalid | Description of the test case | JUnit test case
-|:-------:|:-------:|:-------:|-------|-------|
-|reportDependability ≥ maxint|reportDependability > 0 |Valid|setReportDependability(Double.MAX_VALUE+1)-> Double.MAX_VALUE| testGasStation2_1|
-||reportDependability < 0 |Invalid|-| |
-|reportDependability ≤ minint|reportDependability > 0 |Invalid|-| |
-|minint ≤ reportDependability ≤ maxint|reportDependability > 0 |Valid|setReportDependability(4.2)-> 4.2| testGasStation2_2|
-||reportDependability < 0 |Valid|setReportDependability(-4.2)-> -4.2|testGasStation2_3 |
-
-### **Class *GasStation* - method *getReportDependability()***
-
-**Criteria for method *getReportDependability()*:**
-	
- - ReportDependability is null
-  
-**Predicates for method *getReportDependability()*:**
-
-| Criteria | Predicate |
-| -------- | :---------: |
-| ReportDependability is null    |  True    |
-|                                |  False   |
-
-**Boundaries**:
-
-| Criteria | Boundary values |
-| -------- | --------------- |
-
-
-**Combination of predicates**:
-
-
-| ReportDependability is null| Valid / Invalid | Description of the test case | JUnit test case 
-|:-------:|:-------:|-------|-------|
-|True|Valid|getReportDependability()-> NULL| testGasStation2_4 |
-|False|Valid|getReportDependability()-> 4.2| testGasStation2_2 |
-
-
-
  ### **Class *GasStation* - method *getUserId()***
 
 **Criteria for method *getUserId()*:**
@@ -401,8 +333,8 @@ Version: 1.0
 
 | reputation is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getReputation()-> NULL| testGasStation2_1 |
-|False|Valid|getReputation()-> 1| testGasStation2_2|
+|True|Valid|getReputation()-> NULL| testUser2_1 |
+|False|Valid|getReputation()-> 1| testUser2_2|
 
 
 
@@ -732,8 +664,8 @@ Version: 1.0
 
 | reputation is null| Valid / Invalid | Description of the test case | JUnit test case 
 |:-------:|:-------:|-------|-------|
-|True|Valid|getReputation()-> NULL| testGasStation2_1 |
-|False|Valid|getReputation()-> 1| testGasStation2_2|
+|True|Valid|getReputation()-> NULL| testUserDto2_1 |
+|False|Valid|getReputation()-> 1| testUserDto2_2|
 
 
 
@@ -885,6 +817,65 @@ Version: 1.0
 |<0|Invalid|Not feasible |Not feasible|
 |>max array size|Invalid|str = string of length > max array size|setPw(str) -> java.lang.OutOfMemoryError: Requested array size exceeds VM limit|
 
+### **Class *PriceReportDto* - method *getUserId()***
+
+**Criteria for *getUserId()*:**
+
+ - userId is null
+  
+**Predicates for method *getUserId()*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+| userId is null    |  True    |
+|                                |  False   |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+
+
+**Combination of predicates**:
+
+
+| gasStationId is null| Valid / Invalid | Description of the test case | JUnit test case 
+|:-------:|:-------:|-------|-------|
+|True|Valid|getGasStationId()-> NULL| testPriceReportDto1_1 |
+|False|Valid|getGasStationId()-> 1| testPriceReportDto1_2|
+
+
+### **Class *PriceReportDto* - method *get\*Price()***
+
+**Criteria for *get\*Price()*:**
+	
+ - price is null
+ - sign
+  
+**Predicates for method *get\*Price()*:**
+
+| Criteria | Predicate |
+| -------- | :---------: |
+| price is null    |  True    |
+|                                |  False   |
+| sign | price < 0.0 |
+||       price >= 0.0 | 
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+| sign     | 0.0 |
+
+**Combination of predicates**:
+
+
+| price is null| sign | Valid / Invalid | Description of the test case | JUnit test case 
+|:-------:|:-------:|:-------:|-------|-------|
+|True|\*|Valid|get\*Price()-> NULL| testPriceReportDto3_2 |
+|False|price < 0|Valid|get\*Price()-> -1.0| testPriceReportDto3_3|
+|False|price >= 0|Valid|get\*Price()-> 1.0| testPriceReportDto3_1|
+
 
 # White Box Unit Tests
 
@@ -893,6 +884,13 @@ Version: 1.0
 
 | Unit name | JUnit test case |
 |--|--|
+|PriceReportDto.get\*Price()|testPriceReportDto3_1|
+||testPriceReportDto3_2| 
+||testPriceReportDto3_3| 
+|PriceReportDto.getUserId()|testPriceReportDto2_1|
+||testPriceReportDto2_2| 
+|PriceReportDto.getGasStationId()|testPriceReportDto1_1|
+||testPriceReportDto1_2| 
 |UserDto.getReputation|testUserDto2_1|
 ||testUserDto2_2|
 ||testUserDto2_3|
@@ -932,11 +930,6 @@ Version: 1.0
 ||testGasStation1_7|
 |GasStation.getGasStationName|testGasStation1_8|
 || testGasStation1_6|
-|GasStation.setReportDependeability| testGasStation2_1|
-||testGasStation2_2|
-||testGasStation2_3|
-|GasStation.getReportDependeability|testGasStation2_4|
-||testGasStation2_2|
 |User.setUserId|testUser1_1|
 ||testUser1_2|
 ||testUser1_3|

@@ -3,9 +3,14 @@
 
 Authors: Aurelio Cirella, Behnam Lotfi, Federica Giorgione, Lorenzo Cardone
 
-Date: 01/05/2020
+Date: 21/06/2020
 
-Version: 1.1
+Version: 2.0
+
+|List of changes |
+|---|
+| Added PriceReportDto and PriceReport| 
+
 
 
 
@@ -363,6 +368,20 @@ class IdPw{
     +String reportTimestamp
     +double reportDependability
     }
+    
+     class PriceReportDto{
+    +Integer gasStationId;
+    +Double dieselPrice;
+    +Double superPrice;
+    +Double superPlusPrice;
+    +Double gasPrice;
+    +Double methanePrice;
+    +Double premiumDieselPrice;
+    +Integer userId;
+         
+        
+    }
+
 }
 
 package "it.polito.ezgas.entity" as pkgent {
@@ -403,6 +422,18 @@ class GasStation {
     +String reportTimestamp
     +double reportDependability
 }
+class PriceReport{
+    +Integer gasStationId;
+    +Double dieselPrice;
+    +Double superPrice;
+    +Double superPlusPrice;
+    +Double gasPrice;
+    +Double methanePrice;
+    +Double premiumDieselPrice;
+    +Integer userId;
+         
+        
+    }
 }
 
 package "it.polito.ezgas.repository" as pkgrep {
@@ -449,6 +480,9 @@ GasStation -- GasStationConverter
 GasStationConverter -- GasStationDto 
 GasStation -- GasStationRepository
 GasStationRepository -- GasStationDto
+
+GasStationController -- PriceReportDto
+PriceReportDto -- PriceReport
 @enduml
 ```
 

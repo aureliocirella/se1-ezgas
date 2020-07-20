@@ -73,35 +73,21 @@ public class GasStationTests {
 		assertNull(gsname);
 	}
 
-	@Test
-	public void testGasStation2_1(){
-		GasStation gs = new GasStation(); 
-		gs.setReportDependability(Double.MAX_VALUE+1);
-		Double id = gs.getReportDependability(); 
-		assertTrue(id == Double.MAX_VALUE);
-	}
-
-	@Test
-	public void testGasStation2_2(){
-		GasStation gs = new GasStation(); 
-		gs.setReportDependability(4.2);
-		Double id = gs.getReportDependability(); 
-		assertTrue(id == 4.2);
-	}
-	
-	@Test
-	public void testGasStation2_3(){
-		GasStation gs = new GasStation(); 
-		gs.setReportDependability(-4.2);
-		Double id = gs.getReportDependability(); 
-		assertTrue(id == -4.2);
-	}
-	
-	@Test
-	public void testGasStation2_4(){
-		GasStation gs = new GasStation(); 
-		//gs.setReportDependability();
-		Double id = gs.getReportDependability(); 
-		assertEquals(Double.valueOf(0.0), id);
-	}
+	/*
+	 * @Test public void testGasStation2_1(){ GasStation gs = new GasStation();
+	 * gs.setReportDependability(Double.MAX_VALUE+1); Double id =
+	 * gs.getReportDependability(); assertTrue(id == Double.MAX_VALUE); }
+	 * 
+	 * @Test public void testGasStation2_2(){ GasStation gs = new GasStation();
+	 * gs.setReportDependability(4.2); Double id = gs.getReportDependability();
+	 * assertTrue(id == 4.2); }
+	 * 
+	 * @Test public void testGasStation2_3(){ GasStation gs = new GasStation();
+	 * gs.setReportDependability(-4.2); Double id = gs.getReportDependability();
+	 * assertTrue(id == -4.2); }
+	 * 
+	 * @Test public void testGasStation2_4(){ GasStation gs = new GasStation();
+	 * //gs.setReportDependability(); Double id = gs.getReportDependability();
+	 * assertEquals(Double.valueOf(0.0), id); }
+	 */
 }

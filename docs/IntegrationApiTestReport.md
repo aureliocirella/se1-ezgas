@@ -149,7 +149,7 @@ UserServiceImpl --> UserRepository
 # Integration approach
 
 Integration test are performed using bottom up approach. <br>
-Step1: User, UserDto, UserRepository, UserConverter, GasStation, GasStationDto, GasStationRepository, GasStationConverter<br>
+Step1: User, UserDto, UserRepository, UserConverter, GasStation, GasStationDto, GasStationRepository, GasStationConverter, PriceReportDto<br>
 Step2: UserServiceImpl + UserConverter, UserServiceImpl + User,UserServiceImpl + User+ UserRepository,UserServiceImpl + User+ IdPw, GasStationServiceImpl + GasStationConverter, GasStationServiceImpl + GasStation, GasStationServiceImpl + GasStation + GasStationRepository  
 
   
@@ -180,6 +180,7 @@ UserConverter|testUserConverter1_1()|
 ||testGasStationRepository1_4()|
 |GasStationConverter| testGasStationConverter1_1()|
 ||testGasStationConverter1_2()|
+|PriceReportDto | See Unit Test case for PriceReportDto|
 
 
 ## Step 2
@@ -364,6 +365,7 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Non Functional Requirement | Test name |
 | -------------------------- | --------- |
+| NFR2                       | - (junit time)|
 | NFR5                       |testScenario1()|
 
 
